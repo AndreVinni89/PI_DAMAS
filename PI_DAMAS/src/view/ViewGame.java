@@ -31,11 +31,15 @@ public class ViewGame extends JFrame {
 				if ((contY % 2 == 0 && contX % 2 != 0) || (contY % 2 != 0 && contX % 2 == 0)) {
 								
 					
-					if ((contX >= 0 && contX <= 2) || (contX >= 5 && contX <= 7)) {
-						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\white_piece.jpg"));
+					if (contX >= 0 && contX <= 2){
+						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\white_piece.png"));
+						
 					}
 					
-					
+					else if (contX >= 5 && contX <= 7) {
+						
+						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\black_piece.png"));
+					}
 					
 					
 					
@@ -73,10 +77,10 @@ public class ViewGame extends JFrame {
 				// CODIGO DE SELEÇÂO DA COR
 				if (contY % 2 == 0) {
 					if (contX % 2 == 0) {
-						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\white_field.jpg"));
+						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\white_field.png"));
 
 					} else {
-						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\black_field.jpg"));
+						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\black_field.png"));
 					}
 
 				}
@@ -84,9 +88,9 @@ public class ViewGame extends JFrame {
 				else {
 
 					if (contX % 2 == 0) {
-						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\black_field.jpg"));
+						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\black_field.png"));
 					} else {
-						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\white_field.jpg"));
+						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\white_field.png"));
 					}
 
 				}
