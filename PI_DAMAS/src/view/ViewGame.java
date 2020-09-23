@@ -10,37 +10,50 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-
 public class ViewGame extends JFrame {
+
+	JButton[][] listPos;
 
 	private JPanel contentPane;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ViewGame frame = new ViewGame();
-					frame.setVisible(true);
-					frame.setSize(1024, 576);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
+
+	public void posicionarPecas() {
+
+		for (int contX = 0; contX < 8; contX++) {
+			for (int contY = 0; contY < 8; contY++) {
+				
+				
+				
+				
+				if ((contY % 2 == 0 && contX % 2 != 0) || (contY % 2 != 0 && contX % 2 == 0)) {
+								
+					
+					if ((contX >= 0 && contX <= 2) || (contX >= 5 && contX <= 7)) {
+						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\white_piece.jpg"));
+					}
+					
+					
+					
+					
+					
+				}
+				
+				
+				
+				
+			}
+		}
+	}
+
 	public ViewGame() {
 
-		JButton[][] listPos = new JButton[8][8];
+		listPos = new JButton[8][8];
 		int posIniX = 300;
 		int posIniY = 65;
-		
+
 		int x = posIniX;
 		int y = posIniY;
 		int tamBt = 50;
@@ -51,7 +64,7 @@ public class ViewGame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		for (int contX = 0; contX < 8; contX++) {
 			for (int contY = 0; contY < 8; contY++) {
 				listPos[contX][contY] = new JButton();
@@ -60,30 +73,22 @@ public class ViewGame extends JFrame {
 				// CODIGO DE SELEÇÂO DA COR
 				if (contY % 2 == 0) {
 					if (contX % 2 == 0) {
-						listPos[contX][contY].setIcon(new ImageIcon(
-								"src\\img\\white_field.jpg"));
+						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\white_field.jpg"));
 
-							
-
-						
 					} else {
-						listPos[contX][contY].setIcon(new ImageIcon(
-								"src\\img\\black_field.jpg"));
+						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\black_field.jpg"));
 					}
 
 				}
 
 				else {
 
-					if (contY % 2 != 0) {
-						if (contX % 2 == 0) {
-							listPos[contX][contY].setIcon(new ImageIcon(
-									"src\\img\\black_field.jpg"));
-						} else {
-							listPos[contX][contY].setIcon(new ImageIcon(
-									"src\\img\\white_field.jpg"));
-						}
+					if (contX % 2 == 0) {
+						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\black_field.jpg"));
+					} else {
+						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\white_field.jpg"));
 					}
+
 				}
 
 				contentPane.add(listPos[contX][contY]);
@@ -97,12 +102,6 @@ public class ViewGame extends JFrame {
 
 			}
 		}
-		
-		
-		listPos[5][5].setIcon(new ImageIcon(
-				"src\\img\\white_piece.jpg"));
-
-
 
 	}
 }
