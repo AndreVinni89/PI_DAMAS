@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class ViewGame extends JFrame {
@@ -50,7 +52,7 @@ public class ViewGame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		
 		for (int contX = 0; contX < 8; contX++) {
 			for (int contY = 0; contY < 8; contY++) {
 				listPos[contX][contY] = new JButton();
@@ -60,13 +62,14 @@ public class ViewGame extends JFrame {
 				if (contY % 2 == 0) {
 					if (contX % 2 == 0) {
 						listPos[contX][contY].setIcon(new ImageIcon(
-								"C:\\Users\\andre\\Documents\\GitHub\\PI_DAMAS\\PI_DAMAS\\src\\img\\white_field.jpg"));
+								"src\\img\\white_field.jpg"));
 
 							
 
+						
 					} else {
 						listPos[contX][contY].setIcon(new ImageIcon(
-								"C:\\Users\\andre\\Documents\\GitHub\\PI_DAMAS\\PI_DAMAS\\src\\img\\black_field.jpg"));
+								"src\\img\\black_field.jpg"));
 					}
 
 				}
@@ -76,10 +79,10 @@ public class ViewGame extends JFrame {
 					if (contY % 2 != 0) {
 						if (contX % 2 == 0) {
 							listPos[contX][contY].setIcon(new ImageIcon(
-									"C:\\Users\\andre\\Documents\\GitHub\\PI_DAMAS\\PI_DAMAS\\src\\img\\black_field.jpg"));
+									"src\\img\\black_field.jpg"));
 						} else {
 							listPos[contX][contY].setIcon(new ImageIcon(
-									"C:\\Users\\andre\\Documents\\GitHub\\PI_DAMAS\\PI_DAMAS\\src\\img\\white_field.jpg"));
+									"src\\img\\white_field.jpg"));
 						}
 					}
 				}
@@ -98,7 +101,7 @@ public class ViewGame extends JFrame {
 		
 		
 		listPos[5][5].setIcon(new ImageIcon(
-				"C:\\Users\\andre\\Documents\\GitHub\\PI_DAMAS\\PI_DAMAS\\src\\img\\white_piece.jpg"));
+				"src\\img\\white_piece.jpg"));
 
 
 
