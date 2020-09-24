@@ -2,30 +2,33 @@ package main;
 
 import java.awt.EventQueue;
 
-import view.ViewGame;
+import controller.ControllerMainScreen;
+import view.ViewMainScreen;
 
 public class Main {
 
 	public static void main(String[] args) {
+		
+		ControllerMainScreen controllerMainScreen = new ControllerMainScreen();
+		
+		
+		//Abrindo tela inicial
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ViewGame frame = new ViewGame();
+					ViewMainScreen frame = new ViewMainScreen(controllerMainScreen);
 					frame.setVisible(true);
 					frame.setSize(1024, 576);
-					frame.posicionarPecas();
-
-
-					
-					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-			
 		});
 
 		
+		
+		
+
 		
 		
 		
@@ -33,10 +36,6 @@ public class Main {
 		
 		
 	}
-	
-	
-	
-	
 	
 	
 }

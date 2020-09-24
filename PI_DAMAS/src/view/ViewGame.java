@@ -8,6 +8,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 
 public class ViewGame extends JFrame {
@@ -19,6 +21,7 @@ public class ViewGame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
 
 	public void posicionarPecas() {
 
@@ -62,13 +65,16 @@ public class ViewGame extends JFrame {
 		int y = posIniY;
 		int tamBt = 50;
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
+
+		
+		
 		for (int contX = 0; contX < 8; contX++) {
 			for (int contY = 0; contY < 8; contY++) {
 				listPos[contX][contY] = new JButton();
