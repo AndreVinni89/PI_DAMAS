@@ -48,6 +48,7 @@ public class Tabuleiro {
 					}
 
 				}
+				System.out.printf("-  ");
 
 
 

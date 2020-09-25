@@ -1,21 +1,28 @@
 package view;
 
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
+
+import controller.ControllerPartida;
 
 
 public class ViewPartida extends JFrame {
 
-	private JButton[][] listPos;
+	private JButton[][] viewTabuleiroBts;
 
 	private JPanel contentPane;
 
+	
+
 	public JButton[][] getListPos(){
-		return listPos;
+		return viewTabuleiroBts;
 	}
 	
 	public void posicionarPecas() {
@@ -26,13 +33,13 @@ public class ViewPartida extends JFrame {
 				if ((contY % 2 == 0 && contX % 2 != 0) || (contY % 2 != 0 && contX % 2 == 0)) {
 
 					if (contX >= 0 && contX <= 2) {
-						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\white_piece.png"));
+						viewTabuleiroBts[contX][contY].setIcon(new ImageIcon("src\\img\\white_piece.png"));
 
 					}
 
 					else if (contX >= 5 && contX <= 7) {
 
-						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\black_piece.png"));
+						viewTabuleiroBts[contX][contY].setIcon(new ImageIcon("src\\img\\black_piece.png"));
 					}
 
 				}
@@ -41,9 +48,9 @@ public class ViewPartida extends JFrame {
 		}
 	}
 	
-	public ViewPartida() {
+	public ViewPartida( ) {
 
-		listPos = new JButton[8][8];
+		viewTabuleiroBts = new JButton[8][8];
 		int posIniX = 300;
 		int posIniY = 65;
 
@@ -63,16 +70,18 @@ public class ViewPartida extends JFrame {
 		
 		for (int contX = 0; contX < 8; contX++) {
 			for (int contY = 0; contY < 8; contY++) {
-				listPos[contX][contY] = new JButton();
-				listPos[contX][contY].setBounds(x, y, tamBt, tamBt);
+				int posX = contX;
+				int posY = contY;
+				viewTabuleiroBts[contX][contY] = new JButton();
+				viewTabuleiroBts[contX][contY].setBounds(x, y, tamBt, tamBt);
 
 				// CODIGO DE SELEÇÂO DA COR
 				if (contY % 2 == 0) {
 					if (contX % 2 == 0) {
-						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\white_field.png"));
+						viewTabuleiroBts[contX][contY].setIcon(new ImageIcon("src\\img\\white_field.png"));
 
 					} else {
-						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\black_field.png"));
+						viewTabuleiroBts[contX][contY].setIcon(new ImageIcon("src\\img\\black_field.png"));
 					}
 
 				}
@@ -80,14 +89,25 @@ public class ViewPartida extends JFrame {
 				else {
 
 					if (contX % 2 == 0) {
-						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\black_field.png"));
+						viewTabuleiroBts[contX][contY].setIcon(new ImageIcon("src\\img\\black_field.png"));
 					} else {
-						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\white_field.png"));
+						viewTabuleiroBts[contX][contY].setIcon(new ImageIcon("src\\img\\white_field.png"));
 					}
 
 				}
+				
+				viewTabuleiroBts[contX][contY].addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent arg0) {
+						notify();
+						
+						
+						//controller.selectPiece(posX, posY);
+					}
+				});
+				
 
-				contentPane.add(listPos[contX][contY]);
+				contentPane.add(viewTabuleiroBts[contX][contY]);
 				// LOGICA DE POSICIONAMENTO
 				x += 50;
 
