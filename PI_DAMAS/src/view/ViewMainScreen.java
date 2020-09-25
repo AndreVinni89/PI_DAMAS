@@ -26,6 +26,9 @@ public class ViewMainScreen extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
+	
+	
 	public ViewMainScreen(ControllerMainScreen controller) {
 		this.controller = controller;
 		setBounds(100, 100, 450, 300);
@@ -38,15 +41,7 @@ public class ViewMainScreen extends JFrame {
 		btnPlay.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				
 				controller.play();
-				try {
-					this.finalize();
-				} catch (Throwable e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
 			}
 		});
 		btnPlay.setBounds(168, 122, 89, 23);

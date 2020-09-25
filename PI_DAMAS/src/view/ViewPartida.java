@@ -1,61 +1,47 @@
 package view;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionEvent;
 
-public class ViewGame extends JFrame {
 
-	JButton[][] listPos;
+public class ViewPartida extends JFrame {
+
+	private JButton[][] listPos;
 
 	private JPanel contentPane;
 
-	/**
-	 * Create the frame.
-	 */
+	public JButton[][] getListPos(){
+		return listPos;
+	}
 	
-
 	public void posicionarPecas() {
 
 		for (int contX = 0; contX < 8; contX++) {
 			for (int contY = 0; contY < 8; contY++) {
-				
-				
-				
-				
+
 				if ((contY % 2 == 0 && contX % 2 != 0) || (contY % 2 != 0 && contX % 2 == 0)) {
-								
-					
-					if (contX >= 0 && contX <= 2){
+
+					if (contX >= 0 && contX <= 2) {
 						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\white_piece.png"));
-						
+
 					}
-					
+
 					else if (contX >= 5 && contX <= 7) {
-						
+
 						listPos[contX][contY].setIcon(new ImageIcon("src\\img\\black_piece.png"));
 					}
-					
-					
-					
+
 				}
-				
-				
-				
-				
+
 			}
 		}
 	}
-
-	public ViewGame() {
+	
+	public ViewPartida() {
 
 		listPos = new JButton[8][8];
 		int posIniX = 300;
