@@ -15,7 +15,7 @@ public class Partida {
 	public void selectPiece(int x, int y) {
 		
 		
-		System.out.printf("Selecionou a peça: X: %d  Y: %d", x, y );
+		System.out.printf("Selecionou a peça: X: %d  Y: %d\n", x, y );
 		
 		
 		

@@ -9,7 +9,7 @@ public class ControllerMainScreen {
 		
 		ControllerPartida ctrlGame = new ControllerPartida();
 		
-		ctrlGame.init();
+		ctrlGame.init(ctrlGame);
 		
 	}
 	

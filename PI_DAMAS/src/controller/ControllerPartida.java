@@ -11,12 +11,12 @@ public class ControllerPartida {
 	private ViewPartida frame;
 	
 
-	public void init() {
+	public void init(ControllerPartida ctrl) {
 	
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new ViewPartida();
+					frame = new ViewPartida(ctrl);
 					frame.setVisible(true);
 					frame.setSize(1024, 576);
 					frame.posicionarPecas();
@@ -42,9 +42,7 @@ public class ControllerPartida {
 	
 	
 	public void  selectPiece(int x, int y) {
-		
-
-		//game.selectPiece(x, y);
+		game.selectPiece(x, y);
 	}
 
 

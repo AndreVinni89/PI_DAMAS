@@ -18,7 +18,8 @@ public class ViewPartida extends JFrame {
 	private JButton[][] viewTabuleiroBts;
 
 	private JPanel contentPane;
-
+	
+	private ControllerPartida controller;
 	
 
 	public JButton[][] getListPos(){
@@ -48,8 +49,8 @@ public class ViewPartida extends JFrame {
 		}
 	}
 	
-	public ViewPartida( ) {
-
+	public ViewPartida( ControllerPartida ctrl) {
+		this.controller = ctrl;
 		viewTabuleiroBts = new JButton[8][8];
 		int posIniX = 300;
 		int posIniY = 65;
@@ -99,10 +100,7 @@ public class ViewPartida extends JFrame {
 				viewTabuleiroBts[contX][contY].addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
-						notify();
-						
-						
-						//controller.selectPiece(posX, posY);
+						controller.selectPiece(posX, posY);
 					}
 				});
 				
