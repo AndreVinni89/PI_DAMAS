@@ -4,14 +4,35 @@ public class Posicao {
 	private int x;
 	private int y;
 	private Peca peca; 
+	private Boolean temPeca;
 	
 	
 	
+	
+	
+	public Boolean getTemPeca() {
+		return temPeca;
+	}
+
+	public void setTemPeca(Boolean temPeca) {
+		this.temPeca = temPeca;
+	}
+
 	public Posicao(int x, int y, Peca peca) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.peca = peca;
+		this.temPeca = true;
+		
+	}
+	
+	public Posicao(int x, int y) {
+		super();
+		this.x = x;
+		this.y = y;
+		this.temPeca = false;
+		
 	}
 	
 	

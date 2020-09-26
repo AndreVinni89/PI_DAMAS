@@ -22,7 +22,13 @@ public class Tabuleiro {
 						tabuleiro[contX][contY] = new Posicao(contX, contY, new Peca(0));
 
 					}
+					else {
+						tabuleiro[contX][contY] = new Posicao(contX, contY);
+					}
 
+				}
+				else {
+					tabuleiro[contX][contY] = new Posicao(contX, contY);
 				}
 
 			}

@@ -22,7 +22,7 @@ public class ControllerPartida {
 					frame.posicionarPecas();
 					
 					
-					game = new Partida();
+					game = new Partida(ctrl);
 					
 					
 					
