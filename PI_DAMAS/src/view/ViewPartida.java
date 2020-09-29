@@ -28,17 +28,17 @@ public class ViewPartida extends JFrame {
 	
 	public void posicionarPecas() {
 
-		for (int contX = 0; contX < 8; contX++) {
-			for (int contY = 0; contY < 8; contY++) {
+		for (int contY = 0; contY < 8; contY++) {
+			for (int contX = 0; contX < 8; contX++) {
 
 				if ((contY % 2 == 0 && contX % 2 != 0) || (contY % 2 != 0 && contX % 2 == 0)) {
 
-					if (contX >= 0 && contX <= 2) {
+					if (contY >= 0 && contY <= 2) {
 						viewTabuleiroBts[contX][contY].setIcon(new ImageIcon("src\\img\\white_piece.png"));
 
 					}
 
-					else if (contX >= 5 && contX <= 7) {
+					else if (contY >= 5 && contY <= 7) {
 
 						viewTabuleiroBts[contX][contY].setIcon(new ImageIcon("src\\img\\black_piece.png"));
 					}
@@ -50,6 +50,7 @@ public class ViewPartida extends JFrame {
 	}
 	
 	public ViewPartida( ControllerPartida ctrl) {
+
 		this.controller = ctrl;
 		viewTabuleiroBts = new JButton[8][8];
 		int posIniX = 300;
@@ -69,8 +70,8 @@ public class ViewPartida extends JFrame {
 
 		
 		
-		for (int contX = 0; contX < 8; contX++) {
-			for (int contY = 0; contY < 8; contY++) {
+		for (int contY = 0; contY < 8; contY++) {
+			for (int contX = 0; contX < 8; contX++) {
 				int posX = contX;
 				int posY = contY;
 				viewTabuleiroBts[contX][contY] = new JButton();
@@ -100,6 +101,7 @@ public class ViewPartida extends JFrame {
 				viewTabuleiroBts[contX][contY].addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
+						System.out.println("posX: " + posX);
 						controller.selectPiece(posX, posY);
 					}
 				});
@@ -107,7 +109,7 @@ public class ViewPartida extends JFrame {
 
 				contentPane.add(viewTabuleiroBts[contX][contY]);
 				// LOGICA DE POSICIONAMENTO
-				x += 50;
+				x += tamBt;
 
 				if (x >= posIniX + (tamBt * 8)) {
 					x = posIniX;
@@ -118,4 +120,15 @@ public class ViewPartida extends JFrame {
 		}
 
 	}
+
+	public void movePiece(int x, int y, int destinyX, int destinyY) {
+		
+		System.out.println("ORIGEM: "+ x + " " + y);
+		System.out.println("DESTINO: "+ destinyX + " " + destinyY);
+		
+		
+		
+	}
+	
+
 }

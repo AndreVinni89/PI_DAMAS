@@ -1,7 +1,7 @@
 package controller;
 
 import java.awt.EventQueue;
-import java.awt.Frame;
+
 
 import model.Partida;
 import view.ViewPartida;
@@ -44,6 +44,9 @@ public class ControllerPartida {
 	public void  selectPiece(int x, int y) {
 		game.selectPiece(x, y);
 	}
-
+	public void movePiece(int x, int y, int destinyX, int destinyY) {
+		frame.movePiece(x, y, destinyX, destinyY);
+	}
+	
 
 }

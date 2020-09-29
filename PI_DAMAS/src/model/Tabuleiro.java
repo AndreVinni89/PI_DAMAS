@@ -8,17 +8,17 @@ public class Tabuleiro {
 
 	public Tabuleiro() {
 
-		for (int contX = 0; contX < 8; contX++) {
-			for (int contY = 0; contY < 8; contY++) {
+		for (int contY = 0; contY < 8; contY++) {
+			for (int contX = 0; contX < 8; contX++) {
 
 
 				if ((contY % 2 == 0 && contX % 2 != 0) || (contY % 2 != 0 && contX % 2 == 0)) {
 
-					if (contX >= 0 && contX <= 2) {
+					if (contY >= 0 && contY <= 2) {
 						tabuleiro[contX][contY] = new Posicao(contX, contY, new Peca(1));
 					}
 
-					else if (contX >= 5 && contX <= 7) {
+					else if (contY >= 5 && contY <= 7) {
 						tabuleiro[contX][contY] = new Posicao(contX, contY, new Peca(0));
 
 					}
