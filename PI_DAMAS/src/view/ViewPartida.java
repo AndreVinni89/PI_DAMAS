@@ -15,19 +15,16 @@ import controller.ControllerPartida;
 
 public class ViewPartida extends JFrame {
 
+	//MATRIZ COM OS BOTÕES DO TABULEIRO
 	private JButton[][] viewTabuleiroBts;
 
 	private JPanel contentPane;
 	
+	//INSTANCIA DO CONTROLLER
 	private ControllerPartida controller;
-	
 
-	public JButton[][] getListPos(){
-		return viewTabuleiroBts;
-	}
-	
 	public void posicionarPecas() {
-
+		//LOGICA DE POSICIONAR AS PEÇAS
 		for (int contY = 0; contY < 8; contY++) {
 			for (int contX = 0; contX < 8; contX++) {
 
@@ -77,7 +74,7 @@ public class ViewPartida extends JFrame {
 				viewTabuleiroBts[contX][contY] = new JButton();
 				viewTabuleiroBts[contX][contY].setBounds(x, y, tamBt, tamBt);
 
-				// CODIGO DE SELEÇÂO DA COR
+				// CODIGO DE SELEÇÂO DA COR DO CAMPO
 				if (contY % 2 == 0) {
 					if (contX % 2 == 0) {
 						viewTabuleiroBts[contX][contY].setIcon(new ImageIcon("src\\img\\white_field.png"));
@@ -98,10 +95,10 @@ public class ViewPartida extends JFrame {
 
 				}
 				
+				//ADICIONANDO O EVENT LISTENER A TODOS OS BOTOES PARA ACIONAR O CONTROLLER QUANDO ELES FOREM DISPARADO
 				viewTabuleiroBts[contX][contY].addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
-						System.out.println("posX: " + posX);
 						controller.selectPiece(posX, posY);
 					}
 				});
@@ -126,8 +123,9 @@ public class ViewPartida extends JFrame {
 		System.out.println("ORIGEM: "+ x + " " + y);
 		System.out.println("DESTINO: "+ destinyX + " " + destinyY);
 		
-		
-		
+		viewTabuleiroBts[x][y].setIcon(new ImageIcon("src\\img\\black_field.png"));
+		viewTabuleiroBts[destinyX][destinyY].setIcon(new ImageIcon("src\\img\\black_piece.png"));
+
 	}
 	
 

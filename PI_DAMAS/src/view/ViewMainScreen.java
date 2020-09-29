@@ -17,19 +17,13 @@ import controller.ControllerMainScreen;
 public class ViewMainScreen extends JFrame {
 
 	private JPanel contentPane;
+	//REFERENCIA DO CONTROLLER DA MAIN SCREEN
 	private ControllerMainScreen controller;
 	
-	/**
-	 * Launch the application.
-	 */
 
-	/**
-	 * Create the frame.
-	 */
-	
-	
 	
 	public ViewMainScreen(ControllerMainScreen controller) {
+		// ATRIBUINDO AO ATRIBUTO CONTROLLER A REFERENCIA AO CONTROLLER DA MAINSCREEN
 		this.controller = controller;
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -38,18 +32,22 @@ public class ViewMainScreen extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnPlay = new JButton("JOGAR");
+		//LISTENER DO BOTÃO DE PLAY
 		btnPlay.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				//DISPARA O METODO PLAY DO CONTROLLER
 				controller.play();
 			}
 		});
 		btnPlay.setBounds(168, 122, 89, 23);
 		contentPane.add(btnPlay);
 		
+		//LISTENER DO BOTÃO RANKING PARA ACESSAR A TELA DE RANKING
 		JButton btnRanking = new JButton("RANKING");
 		btnRanking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//TODO NAVEGAÇÃO PARA A TELA DE RANKING
 			}
 		});
 		btnRanking.setBounds(168, 175, 89, 23);

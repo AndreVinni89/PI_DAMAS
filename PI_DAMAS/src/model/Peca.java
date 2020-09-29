@@ -1,7 +1,7 @@
 package model;
 
 public class Peca {
-	
+	//ATRIBUTO QUE IDENTIFICA A COR DA PEÇA
 	private int cor;
 	
 	//0 - REPRESENTA PRETO
