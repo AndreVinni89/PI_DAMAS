@@ -22,7 +22,7 @@ public class Partida {
 	}
 
 	// FUNCAO DISPARADA NO MOMENTO QUE O JOGADOR CLICA EM UM CAMPO
-	public void selectPiece(int x, int y) {
+	public void selectField(int x, int y) {
 		/*
 		 * VERIFICANDO SE EXISTEM MOVIMENTOS POSSIVEIS POIS SE NAO TIVER SIDO
 		 * SELECIONADA NENHUMA PECA OU NAO NAO HAVER MOVIMENTOS POSSIVEIS PARA A PECA
@@ -43,7 +43,6 @@ public class Partida {
 						possibleMovements[0] = null;
 					}
 				}
-
 			}
 		//SE NAO HOUVER MOVIMENTOS POSSIVEIS VALIDA-SE SE O CAMPO SELECIONADO CONTEM UMA PEÇA
 		} else if (tabuleiro.getTabuleiro()[x][y].getTemPeca() == true) {
@@ -67,6 +66,7 @@ public class Partida {
 		
 		// MODO DE SALVAR AS POSIÇÕES VALIDAS
 		possibleMovements[0] = new Posicao(5, 4);
+		
 
 		// TODO VERIFICAÇÃO DE MOVIMENTOS VALIDOS
 

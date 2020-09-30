@@ -9,15 +9,11 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		//INSTANCIA-SE O CONTROLLER DA MAIN SCREEN
-		ControllerMainScreen controllerMainScreen = new ControllerMainScreen();
-		
-		
 		//INSTANCIANDO-SE A TELA PRINCIPAL
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ViewMainScreen frame = new ViewMainScreen(controllerMainScreen);
+					ViewMainScreen frame = new ViewMainScreen();
 					frame.setVisible(true);
 					//DEFININDO TAMANHO DA JANELA
 					frame.setSize(1024, 576);

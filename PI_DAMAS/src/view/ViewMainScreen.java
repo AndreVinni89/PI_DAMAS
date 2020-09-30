@@ -22,9 +22,9 @@ public class ViewMainScreen extends JFrame {
 	
 
 	
-	public ViewMainScreen(ControllerMainScreen controller) {
-		// ATRIBUINDO AO ATRIBUTO CONTROLLER A REFERENCIA AO CONTROLLER DA MAINSCREEN
-		this.controller = controller;
+	public ViewMainScreen() {
+		// INSTANCIANDO-SE O CONTROLLER DA MAIN SCREEN
+		this.controller = new ControllerMainScreen();
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
