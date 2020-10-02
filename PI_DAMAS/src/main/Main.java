@@ -2,7 +2,7 @@ package main;
 
 import java.awt.EventQueue;
 
-import controller.ControllerMainScreen;
+
 import view.ViewMainScreen;
 
 public class Main {

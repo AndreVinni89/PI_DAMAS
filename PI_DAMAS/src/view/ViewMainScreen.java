@@ -38,6 +38,7 @@ public class ViewMainScreen extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				//DISPARA O METODO PLAY DO CONTROLLER
 				controller.play();
+
 			}
 		});
 		btnPlay.setBounds(168, 122, 89, 23);
@@ -57,5 +58,19 @@ public class ViewMainScreen extends JFrame {
 		lblNewLabel.setFont(new Font("Vladimir Script", Font.PLAIN, 22));
 		lblNewLabel.setBounds(157, 25, 162, 69);
 		contentPane.add(lblNewLabel);
+		
+		JButton btnCadastrar = new JButton("CADASTRAR-SE");
+		btnCadastrar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				//TODO NAVAGAÇÃO PARA A TELA DE CADASTRO
+				
+				
+				
+				
+			}
+		});
+		btnCadastrar.setBounds(152, 227, 109, 23);
+		contentPane.add(btnCadastrar);
 	}
 }
