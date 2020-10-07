@@ -45,6 +45,12 @@ public class Tabuleiro {
 
 	}
 
+	public void movePiece(int x, int y, int destinyX, int destinyY) {
+		tabuleiro[x][y].setTemPeca(false);
+		tabuleiro[destinyX][destinyY].setTemPeca(true);
+		tabuleiro[destinyX][destinyY].setPeca(tabuleiro[x][y].getPeca());
+		tabuleiro[x][y].setPeca(null);
+	}
 	
 	public Posicao[][] getTabuleiro() {
 		return tabuleiro;
