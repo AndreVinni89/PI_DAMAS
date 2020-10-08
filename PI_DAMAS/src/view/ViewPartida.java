@@ -109,13 +109,19 @@ public class ViewPartida extends JFrame {
 		}
 	}
 
-	public void movePiece(int x, int y, int destinyX, int destinyY) {
+	public void movePiece(int x, int y, int destinyX, int destinyY, int cor) {
 		
 		System.out.println("ORIGEM: "+ x + " " + y);
 		System.out.println("DESTINO: "+ destinyX + " " + destinyY);
-		
-		viewTabuleiroBts[x][y].setIcon(new ImageIcon("src\\img\\black_field.png"));
-		viewTabuleiroBts[destinyX][destinyY].setIcon(new ImageIcon("src\\img\\black_piece.png"));
+		if(cor == 0) {
+			viewTabuleiroBts[x][y].setIcon(new ImageIcon("src\\img\\black_field.png"));
+			viewTabuleiroBts[destinyX][destinyY].setIcon(new ImageIcon("src\\img\\black_piece.png"));
+		}
+		else if (cor == 1) {
+			viewTabuleiroBts[x][y].setIcon(new ImageIcon("src\\img\\black_field.png"));
+			viewTabuleiroBts[destinyX][destinyY].setIcon(new ImageIcon("src\\img\\white_piece.png"));
+		}
+
 
 	}
 	

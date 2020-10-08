@@ -46,10 +46,14 @@ public class Tabuleiro {
 	}
 
 	public void movePiece(int x, int y, int destinyX, int destinyY) {
-		tabuleiro[x][y].setTemPeca(false);
+		
+		//MOVENDO A PEÇA DA POSIÇÃO INICIAL PARA A POSIÇÃO DESTINO
 		tabuleiro[destinyX][destinyY].setTemPeca(true);
 		tabuleiro[destinyX][destinyY].setPeca(tabuleiro[x][y].getPeca());
+		
+		//EXLUINDO A PEÇA DA POSIÇÃO ORIGINAL
 		tabuleiro[x][y].setPeca(null);
+		tabuleiro[x][y].setTemPeca(false);
 	}
 	
 	public Posicao[][] getTabuleiro() {

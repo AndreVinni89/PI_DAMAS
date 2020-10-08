@@ -52,9 +52,9 @@ public class ControllerPartida {
 		//NO MOMENTO EM QUE O USUARIO CLICA NUM CAMPO ESSA FUNÇÃO E DISPARADA ACIONANDO O MODEL PARTIDA PARA REALIZAR AS VALIDAÇÕES
 		game.selectField(x, y);
 	}
-	public void movePiece(int x, int y, int destinyX, int destinyY) {
+	public void movePiece(int x, int y, int destinyX, int destinyY, int cor) {
 		//MANDA PARA A VIEW
-		view.movePiece(x, y, destinyX, destinyY);
+		view.movePiece(x, y, destinyX, destinyY, cor);
 	}
 	
 

@@ -12,8 +12,6 @@ public class Partida {
 	private Posicao selectedField;
 	// ARRAY COM OS MOVIMENTOS POSSIVEIS
 	List<Posicao> possibleMovements = new ArrayList<>();
-	// VARIAVEL PARA CONTROLAR A ULTIMA POSIÇÃO DO ARRAY POSSIBLE MOVEMENTS
-	private int i = 0;
 	// INSTANCIA DO CONTROLLER
 	private ControllerPartida controller;
 
@@ -41,10 +39,10 @@ public class Partida {
 				// MOVIMENTO POSSIVEL
 				if (possibleMovements.get(cont).getX() == x && possibleMovements.get(cont).getY() == y) {
 					// EXECUTANDO O METODO DE REALIZAR MOVIMENTO
-					movePiece(selectedField.getX(), selectedField.getY(), x, y);
-					// TODO LOGICA PARA DEFINIR COMO NULL TODOS OS MOVIMENTOS POSSIVEIS POIS O
-					// MOVIMENTO JA FOI REALIZADO
+					movePiece(selectedField.getX(), selectedField.getY(), x, y, selectedField.getPeca().getCor());
+					//ZERANDO O VETOR DE MOVIMENTOS POSSIVEIS POIS O MOVIMENTO JA FOI REALIZADO
 					possibleMovements.clear();
+
 					break;
 				}
 			}
@@ -59,10 +57,11 @@ public class Partida {
 
 	}
 
-	private void movePiece(int x, int y, int destinyX, int destinyY) {
+	private void movePiece(int x, int y, int destinyX, int destinyY, int cor) {
 		// MANDA PARA O CONTROLLER E O CONTROLLER MANDA PARA A VIEW
-		controller.movePiece(x, y, destinyX, destinyY);
+		controller.movePiece(x, y, destinyX, destinyY, cor);
 		tabuleiro.movePiece(x, y, destinyX, destinyY);
+		//ZERANDO O VALOR O CAMPO SELECIONADO POIS O MOVIMENTO JA FOI REALIZADO
 		selectedField = null; 
 		// TODO MANDAR PARA A MODEL DO TABULEIRO PARA REALIZAR O MOVIMENTO
 
@@ -112,6 +111,46 @@ public class Partida {
 				}
 
 			}
+		}
+		// VALIDAÇÃO PARA PEÇAS BRANCAS
+		if (selectedField.getPeca().getCor() == 1) {
+			// VERIFICAÇÃO DE MOVIMENTOS PARA AS PEÇA QUE ESTÃO NA ULTIMA CASA DA DIREITA
+			// PARA ESQUERDA
+			if (selectedField.getX() == 0) {
+				if (tabuleiro.getTabuleiro()[selectedField.getX() + 1][selectedField.getY() + 1]
+						.getTemPeca() == false) {
+					possibleMovements.add(new Posicao(selectedField.getX() + 1, selectedField.getY() + 1));
+
+				}
+			}
+			// VERIFICAÇÃO DE MOVIMENTOS PARA AS PEÇA QUE ESTÃO NA ULTIMA CASA DA ESQUERDA
+			// PARA DIREITA
+			else if (selectedField.getX() == 7) {
+				if (tabuleiro.getTabuleiro()[selectedField.getX() - 1][selectedField.getY() + 1]
+						.getTemPeca() == false) {
+					possibleMovements.add(new Posicao(selectedField.getX() - 1, selectedField.getY() + 1));
+
+				}
+			}
+			// VERIFICAÇÃO PARA AS DEMAIS PEÇAS
+			else {
+				if (tabuleiro.getTabuleiro()[selectedField.getX() + 1][selectedField.getY() + 1]
+						.getTemPeca() == false) {
+					possibleMovements.add(new Posicao(selectedField.getX() + 1, selectedField.getY() + 1));
+
+				}
+				if (tabuleiro.getTabuleiro()[selectedField.getX() - 1][selectedField.getY() + 1]
+						.getTemPeca() == false) {
+					possibleMovements.add(new Posicao(selectedField.getX() - 1, selectedField.getY() + 1));
+
+				}
+
+			}
+			
+			
+			
+			
+			
 		}
 
 	}
