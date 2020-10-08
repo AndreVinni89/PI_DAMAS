@@ -18,16 +18,18 @@ public class Partida {
 	private ControllerPartida controller;
 	
 	//JOGADORES DA PARTIDA
-	private Player player1 = new Player("Andre", "123", 5, 3, 2, 500);
-	private Player player2 = new Player("Adailson", "123", 3, 2, 0, 1000);
+	private Player player1;
+	private Player player2;
 
 	// CONSTRUTOR
-	public Partida(ControllerPartida controller) {
+	public Partida(ControllerPartida controller, Player p1, Player p2) {
 		// RECEBE A INSTANCIA DO CONTROLLER
 		this.controller = controller;
 		// INSTANCIA O TABULEIRO
 		this.tabuleiro = new Tabuleiro();
-
+		
+		this.player1 = p1;
+		this.player2 = p2;
 	}
 
 	// FUNCAO DISPARADA NO MOMENTO QUE O JOGADOR CLICA EM UM CAMPO
@@ -41,10 +43,10 @@ public class Partida {
 		if (possibleCaptureMovements.size() > 0) {
 			System.out.println("VERIFICAÇÃO DE CAPTURA");
 			System.out.println(possibleCaptureMovements);
-			for (int cont = 0; cont < possibleNormalMovements.size(); cont++) {
+			for (int cont = 0; cont < possibleCaptureMovements.size(); cont++) {
 				// VERIFICANDO SE AS COORDENADAS DO CAMPO SELECIONADO CORRESPONDEM A DE UM
 				// MOVIMENTO DE CAPTURA POSSIVEL
-
+				System.out.println("Posição clicada como destino: X: " + x + " Y: " + y);
 				if (possibleCaptureMovements.get(cont).getX() == x && possibleCaptureMovements.get(cont).getY() == y) {
 					// EXECUTANDO O METODO DE REALIZAR MOVIMENTO
 					capturePiece(selectedField.getX(), selectedField.getY(), x, y, selectedField.getPeca().getCor());
@@ -54,6 +56,7 @@ public class Partida {
 			// ZERANDO O VETOR DE MOVIMENTOS POSSIVEIS POIS O MOVIMENTO JA FOI REALIZADO
 			possibleCaptureMovements.clear();
 			possibleNormalMovements.clear();
+			selectedField = null;
 
 		} else if (possibleNormalMovements.size() > 0) {
 			System.out.println("VERIFICAÇÃO DE MOVIMENTOS NORMAIS");
@@ -65,10 +68,12 @@ public class Partida {
 					// EXECUTANDO O METODO DE REALIZAR MOVIMENTO
 					movePiece(selectedField.getX(), selectedField.getY(), x, y, selectedField.getPeca().getCor());
 					// ZERANDO O VETOR DE MOVIMENTOS POSSIVEIS POIS O MOVIMENTO JA FOI REALIZADO
-					possibleNormalMovements.clear();
 					break;
 				}
+				
 			}
+			possibleNormalMovements.clear();
+			selectedField = null;
 
 		}
 		// SE NAO HOUVER MOVIMENTOS POSSIVEIS VALIDA-SE SE O CAMPO SELECIONADO CONTEM

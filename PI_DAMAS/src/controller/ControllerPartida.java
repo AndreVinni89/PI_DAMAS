@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 
 import model.Partida;
+import model.Player;
 import view.ViewPartida;
 
 public class ControllerPartida {
@@ -12,6 +13,8 @@ public class ControllerPartida {
 	//INSTANCIA DA VIEW
 	private ViewPartida view;
 	
+	private Player player1 = new Player("Andre", "123", 5, 3, 2, 500, 0);
+	private Player player2 = new Player("Adailson", "123", 3, 2, 0, 1000, 1);
 
 	public void init(ControllerPartida ctrl) {
 		//CRIANDO A TELA DO JOGO
@@ -20,11 +23,11 @@ public class ControllerPartida {
 				try {
 					
 					//INSTANCIANDO O MODEL PARTIDA
-					game = new Partida(ctrl);
+					game = new Partida(ctrl, player1, player2);
 					
 					//INSTANCIANDO A VIEW
 					//PASSANDO UMA INSTANCIA DE SI MESMO PARA A VIEW
-					view = new ViewPartida(ctrl);
+					view = new ViewPartida(ctrl, player1, player2);
 					view.setVisible(true);
 					view.setSize(1024, 576);
 					view.posicionarPecas();

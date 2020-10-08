@@ -7,10 +7,12 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.ControllerPartida;
+import model.Player;
 
 
 public class ViewPartida extends JFrame {
@@ -39,7 +41,7 @@ public class ViewPartida extends JFrame {
 		}
 	}
 	
-	public ViewPartida( ControllerPartida ctrl) {
+	public ViewPartida( ControllerPartida ctrl, Player p1, Player p2) {
 
 		this.controller = ctrl;
 		viewTabuleiroBts = new JButton[8][8];
@@ -56,6 +58,14 @@ public class ViewPartida extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		JLabel player1 = new JLabel(p1.toString());
+		player1.setBounds(800, 380, 200, 42);
+		contentPane.add(player1);
+		
+		JLabel player2 = new JLabel(p2.toString());
+		player2.setBounds(65, 40, 200, 42);
+		contentPane.add(player2);
 
 
 		
@@ -131,6 +141,4 @@ public class ViewPartida extends JFrame {
 			viewTabuleiroBts[destinyX][destinyY].setIcon(new ImageIcon("src\\img\\white_piece.png"));
 		}
 	}
-	
-
 }
