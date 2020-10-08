@@ -64,5 +64,11 @@ public class Posicao {
 	public void setPeca(Peca peca) {
 		this.peca = peca;
 	}
+	
+	@Override
+	public String toString() {
+		return "X: " + getX() +  " Y: " + getY();
+	}
+	
 
 }

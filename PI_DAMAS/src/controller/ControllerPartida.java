@@ -56,6 +56,11 @@ public class ControllerPartida {
 		//MANDA PARA A VIEW
 		view.movePiece(x, y, destinyX, destinyY, cor);
 	}
+	public void capturePiece(int x, int y, int destinyX, int destinyY, int capturedPieceX, int capturedPieceY, int cor) {
+		
+		view.capturePiece(x, y, destinyX, destinyY, capturedPieceX, capturedPieceY, cor);
+		
+	}
 	
 
 }
