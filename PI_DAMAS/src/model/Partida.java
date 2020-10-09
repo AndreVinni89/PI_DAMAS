@@ -16,6 +16,8 @@ public class Partida {
 	private List<Posicao> possibleCaptureMovements = new ArrayList<>();
 	// INSTANCIA DO CONTROLLER
 	private ControllerPartida controller;
+	//VARIAVEL QUE CONTROLA O JOGADOR DA VEZ
+	private int corDaVez = 1;
 	
 	//JOGADORES DA PARTIDA
 	private Player player1;
@@ -60,6 +62,7 @@ public class Partida {
 
 		} else if (possibleNormalMovements.size() > 0) {
 			System.out.println("VERIFICAÇÃO DE MOVIMENTOS NORMAIS");
+			System.out.println(possibleNormalMovements);
 			// ITERANDO PELO ARRAY DE MOVIMENTOS POSSIVEIS
 			for (int cont = 0; cont < possibleNormalMovements.size(); cont++) {
 				// VERIFICANDO SE AS COORDENADAS DO CAMPO SELECIONADO CORRESPONDEM A DE UM
@@ -79,7 +82,7 @@ public class Partida {
 		// SE NAO HOUVER MOVIMENTOS POSSIVEIS VALIDA-SE SE O CAMPO SELECIONADO CONTEM
 		// UMA PEÇA
 
-		else if (tabuleiro.getTabuleiro()[x][y].getTemPeca() == true) {
+		else if (tabuleiro.getTabuleiro()[x][y].getTemPeca() == true && tabuleiro.getTabuleiro()[x][y].getPeca().getCor() == corDaVez ) {
 			System.out.println("SELEÇÃO DA PEÇA");
 			// GUARDANDO NA VARIAVEL SELECTEDFIELD A POSIÇÃO SELECIONADA
 			selectedField = tabuleiro.getTabuleiro()[x][y];
@@ -97,6 +100,12 @@ public class Partida {
 		tabuleiro.movePiece(x, y, destinyX, destinyY);
 		// ZERANDO O VALOR O CAMPO SELECIONADO POIS O MOVIMENTO JA FOI REALIZADO
 		selectedField = null;
+		if(corDaVez == 1) {
+			corDaVez = 0;
+		}else { 
+			corDaVez = 1;
+		}
+		
 
 	}
 	private void capturePiece(int x, int y, int destinyX, int destinyY, int cor) {
@@ -121,6 +130,11 @@ public class Partida {
 		tabuleiro.capturePiece(x, y, destinyX, destinyY, capturedPieceX, capturedPieceY);
 		
 		selectedField = null;
+		if(corDaVez == 1) {
+			corDaVez = 0;
+		}else { 
+			corDaVez = 1;
+		}
 		
 	}
 

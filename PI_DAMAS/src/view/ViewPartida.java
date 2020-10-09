@@ -22,6 +22,8 @@ public class ViewPartida extends JFrame {
 
 	private JPanel contentPane;
 	
+	private JLabel indicadorCorAtual;
+	
 	//INSTANCIA DO CONTROLLER
 	private ControllerPartida controller;
 
@@ -66,6 +68,10 @@ public class ViewPartida extends JFrame {
 		JLabel player2 = new JLabel(p2.toString());
 		player2.setBounds(65, 40, 200, 42);
 		contentPane.add(player2);
+		
+		indicadorCorAtual = new JLabel("VEZ DAS PEÇAS BRANCAS");
+		indicadorCorAtual.setBounds(378, 11, 300, 14);
+		contentPane.add(indicadorCorAtual);
 
 
 		
@@ -123,9 +129,11 @@ public class ViewPartida extends JFrame {
 		viewTabuleiroBts[x][y].setIcon(new ImageIcon("src\\img\\black_field.png"));
 		if(cor == 0) {
 			viewTabuleiroBts[destinyX][destinyY].setIcon(new ImageIcon("src\\img\\black_piece.png"));
+			indicadorCorAtual.setText("VEZ DAS PEÇAS BRANCAS");
 		}
 		else if (cor == 1) {
 			viewTabuleiroBts[destinyX][destinyY].setIcon(new ImageIcon("src\\img\\white_piece.png"));
+			indicadorCorAtual.setText("VEZ DAS PEÇAS PRETAS");
 		}
 
 
@@ -136,9 +144,11 @@ public class ViewPartida extends JFrame {
 		
 		if(cor == 0) {
 			viewTabuleiroBts[destinyX][destinyY].setIcon(new ImageIcon("src\\img\\black_piece.png"));
+			indicadorCorAtual.setText("VEZ DAS PEÇAS BRANCAS");
 		}
 		else if (cor == 1) {
 			viewTabuleiroBts[destinyX][destinyY].setIcon(new ImageIcon("src\\img\\white_piece.png"));
+			indicadorCorAtual.setText("VEZ DAS PEÇAS PRETAS");
 		}
 	}
 }
