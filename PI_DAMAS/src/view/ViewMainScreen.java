@@ -38,7 +38,7 @@ public class ViewMainScreen extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				//DISPARA O METODO PLAY DO CONTROLLER
 				controller.play();
-
+				
 			}
 		});
 		btnPlay.setBounds(168, 122, 89, 23);
