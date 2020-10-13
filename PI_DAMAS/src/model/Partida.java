@@ -115,6 +115,8 @@ public class Partida {
 		return movimentosView;
 	}
 
+	
+	//COMANDO DE MOVER PEÇA
 	private void movePiece(Posicao origem, Posicao destino) {
 		// MANDA PARA O CONTROLLER E O CONTROLLER MANDA PARA A VIEW
 		controller.movePiece(origem, destino);
@@ -128,7 +130,9 @@ public class Partida {
 		}
 
 	}
-
+	
+	
+	//COMANDO DE CAPTURAR PEÇA
 	private void capturePiece(Posicao origem, Posicao destino) {
 		int capturedPieceX;
 		int capturedPieceY;
@@ -156,6 +160,9 @@ public class Partida {
 		}
 	}
 
+	
+	
+	//FUNÇÃO QUE CHAMA AS VERIFICAÇÕES
 	private void verifyPossibleMoviments() {
 		// REALIZA A VERIFICAÇÃO E SALVA NO ARRAY POSSIBLEMOVEMENTS OS MOVIMENTOS
 		// VALIDOS
@@ -164,6 +171,9 @@ public class Partida {
 		verifyNormalMovements();
 	}
 
+	
+	
+	//VERIFICAÇÃO DE MOVIMENTOS NORMAIS
 	private void verifyNormalMovements() {
 
 		// VALIDAÇÃO PARA PEÇAS PRETAS
@@ -272,7 +282,7 @@ public class Partida {
 	
 	
 	
-
+	//VERIFICAÇÃO DE CAPTURA
 	private Boolean verifyCaptureMovement() {
 
 		// VERIFICAÇÃO DE MOVIMENTOS PARA AS PEÇA QUE ESTÃO NA ULTIMA CASA DA DIREITA
