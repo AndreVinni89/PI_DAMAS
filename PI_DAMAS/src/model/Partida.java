@@ -220,6 +220,7 @@ public class Partida {
 					verifyNormalMovementRigTop();
 				}
 			} else {
+				//TODO bugzin 
 				verifyNormalMovementLefTop();
 				verifyNormalMovementRigTop();
 				verifyNormalMovementLefBot();
