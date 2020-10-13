@@ -1,10 +1,11 @@
 package controller;
 
 import java.awt.EventQueue;
-
+import java.util.List;
 
 import model.Partida;
 import model.Player;
+import model.Posicao;
 import view.ViewPartida;
 
 public class ControllerPartida {
@@ -51,17 +52,17 @@ public class ControllerPartida {
 	
 	
 	
-	public void  selectPiece(int x, int y) {
+	public List<Posicao> selectPiece(int x, int y) {
 		//NO MOMENTO EM QUE O USUARIO CLICA NUM CAMPO ESSA FUNÇÃO E DISPARADA ACIONANDO O MODEL PARTIDA PARA REALIZAR AS VALIDAÇÕES
-		game.selectField(x, y);
+		return game.selectField(x, y);
 	}
-	public void movePiece(int x, int y, int destinyX, int destinyY, int cor) {
+	public void movePiece(Posicao origem, Posicao destino) {
 		//MANDA PARA A VIEW
-		view.movePiece(x, y, destinyX, destinyY, cor);
+		view.movePiece(origem, destino);
 	}
-	public void capturePiece(int x, int y, int destinyX, int destinyY, int capturedPieceX, int capturedPieceY, int cor) {
+	public void capturePiece(Posicao origem, Posicao destino, Posicao capturedPiece) {
 		
-		view.capturePiece(x, y, destinyX, destinyY, capturedPieceX, capturedPieceY, cor);
+		view.capturePiece(origem, destino, capturedPiece);
 		
 	}
 	

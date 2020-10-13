@@ -1,42 +1,46 @@
 package model;
 
-
-
 public class Tabuleiro {
 
-	//ATRIBUTO DO TABULEIRO QUE CONTEM A MATRIZ DE POSIÇÕES
+	// ATRIBUTO DO TABULEIRO QUE CONTEM A MATRIZ DE POSIÇÕES
 	private Posicao[][] tabuleiro = new Posicao[8][8];
 
 	public Tabuleiro() {
-		/*LOGICA DE CRIAÇÃO DA MATRIZ DO TABULEIRO SEGUE A MESMA LOGICA UTILIZADA NA VIEW PARA REALIZAR O
-		POSICIONAMENTO DAS PEÇAS PARA ELES FICAREM SINCRONIZADOS NO INICIO DE JOGO*/
-		
+		/*
+		 * LOGICA DE CRIAÇÃO DA MATRIZ DO TABULEIRO SEGUE A MESMA LOGICA UTILIZADA NA
+		 * VIEW PARA REALIZAR O POSICIONAMENTO DAS PEÇAS PARA ELES FICAREM SINCRONIZADOS
+		 * NO INICIO DE JOGO
+		 */
+
 		for (int contY = 0; contY < 8; contY++) {
 			for (int contX = 0; contX < 8; contX++) {
-
 
 				if ((contY % 2 == 0 && contX % 2 != 0) || (contY % 2 != 0 && contX % 2 == 0)) {
 
 					if (contY >= 0 && contY <= 2) {
-						/*GUARDA NA POSIÇÃO DA MATRIZ UM OBJETO POSIÇÃO QUE CONTEM AS COORDENADAS E UM OBJETO PECA IDENTIFICANDO-SE
-						SUA COR SENDO 1 PARA BRANCO E 0 PARA PRETO*/
+						/*
+						 * GUARDA NA POSIÇÃO DA MATRIZ UM OBJETO POSIÇÃO QUE CONTEM AS COORDENADAS E UM
+						 * OBJETO PECA IDENTIFICANDO-SE SUA COR SENDO 1 PARA BRANCO E 0 PARA PRETO
+						 */
 						tabuleiro[contX][contY] = new Posicao(contX, contY, new Peca(1));
 					}
 
 					else if (contY >= 5 && contY <= 7) {
-						/*GUARDA NA POSIÇÃO DA MATRIZ UM OBJETO POSIÇÃO QUE CONTEM AS COORDENADAS E UM OBJETO PECA IDENTIFICANDO-SE
-						SUA COR SENDO 1 PARA BRANCO E 0 PARA PRETO*/
+						/*
+						 * GUARDA NA POSIÇÃO DA MATRIZ UM OBJETO POSIÇÃO QUE CONTEM AS COORDENADAS E UM
+						 * OBJETO PECA IDENTIFICANDO-SE SUA COR SENDO 1 PARA BRANCO E 0 PARA PRETO
+						 */
 						tabuleiro[contX][contY] = new Posicao(contX, contY, new Peca(0));
 
-					}
-					else {
-						//CASO SEJA UMA POSIÇÃO QUE NAO CONTENHA UMA PEÇA É INSTANCIADO UMA POSIÇÃO SEM O ATRIBUTO PEÇA
+					} else {
+						// CASO SEJA UMA POSIÇÃO QUE NAO CONTENHA UMA PEÇA É INSTANCIADO UMA POSIÇÃO SEM
+						// O ATRIBUTO PEÇA
 						tabuleiro[contX][contY] = new Posicao(contX, contY);
 					}
 
-				}
-				else {
-					//CASO SEJA UMA POSIÇÃO QUE NAO CONTENHA UMA PEÇA É INSTANCIADO UMA POSIÇÃO SEM O ATRIBUTO PEÇA
+				} else {
+					// CASO SEJA UMA POSIÇÃO QUE NAO CONTENHA UMA PEÇA É INSTANCIADO UMA POSIÇÃO SEM
+					// O ATRIBUTO PEÇA
 					tabuleiro[contX][contY] = new Posicao(contX, contY);
 				}
 
@@ -45,34 +49,44 @@ public class Tabuleiro {
 
 	}
 
-	public void movePiece(int x, int y, int destinyX, int destinyY) {
-		
-		//MOVENDO A PEÇA DA POSIÇÃO INICIAL PARA A POSIÇÃO DESTINO
-		tabuleiro[destinyX][destinyY].setTemPeca(true);
-		tabuleiro[destinyX][destinyY].setPeca(tabuleiro[x][y].getPeca());
-		
-		//EXLUINDO A PEÇA DA POSIÇÃO ORIGINAL
-		tabuleiro[x][y].setPeca(null);
-		tabuleiro[x][y].setTemPeca(false);
-	}
-	
-	public void capturePiece(int x, int y, int destinyX, int destinyY, int capturedPieceX, int capturedPieceY) {
-		//MOVENDO A PEÇA DA POSIÇÃO INICIAL PARA A POSIÇÃO DESTINO
-		tabuleiro[destinyX][destinyY].setTemPeca(true);
-		tabuleiro[destinyX][destinyY].setPeca(tabuleiro[x][y].getPeca());
-		
-		//EXLUINDO A PEÇA DA POSIÇÃO ORIGINAL
-		tabuleiro[x][y].setPeca(null);
-		tabuleiro[x][y].setTemPeca(false);
-		
-		tabuleiro[capturedPieceX][capturedPieceY].setTemPeca(false);
-		tabuleiro[capturedPieceX][capturedPieceY].setPeca(null);
+	public void movePiece(Posicao origem, Posicao destino) {
 
-		
+		// MOVENDO A PEÇA DA POSIÇÃO INICIAL PARA A POSIÇÃO DESTINO
+		tabuleiro[destino.getX()][destino.getY()].setTemPeca(true);
+		tabuleiro[destino.getX()][destino.getY()].setPeca(tabuleiro[origem.getX()][origem.getY()].getPeca());
+
+		// EXLUINDO A PEÇA DA POSIÇÃO ORIGINAL
+		tabuleiro[origem.getX()][origem.getY()].setPeca(null);
+		tabuleiro[origem.getX()][origem.getY()].setTemPeca(false);
+
+		if ((destino.getY() == 0 && tabuleiro[destino.getX()][destino.getY()].getPeca().getCor() == 0)
+				|| (destino.getY() == 7 && tabuleiro[destino.getX()][destino.getY()].getPeca().getCor() == 1)) {
+			tabuleiro[destino.getX()][destino.getY()].getPeca().setDama(true);
+		}
+
 	}
-	
-	
-	
+
+	public void capturePiece(Posicao origem, Posicao destino, Posicao capturedPiece) {
+		// MOVENDO A PEÇA DA POSIÇÃO INICIAL PARA A POSIÇÃO DESTINO
+		tabuleiro[destino.getX()][destino.getY()].setTemPeca(true);
+		tabuleiro[destino.getX()][destino.getY()].setPeca(tabuleiro[origem.getX()][origem.getY()].getPeca());
+
+		// EXLUINDO A PEÇA DA POSIÇÃO ORIGINAL
+		tabuleiro[origem.getX()][origem.getY()].setPeca(null);
+		tabuleiro[origem.getX()][origem.getY()].setTemPeca(false);
+
+		// EXCLUINDO A PEÇA CAPTURADA
+		tabuleiro[capturedPiece.getX()][capturedPiece.getY()].setPeca(null);
+		tabuleiro[capturedPiece.getX()][capturedPiece.getY()].setTemPeca(false);
+
+		if ((destino.getY() == 0 && tabuleiro[destino.getX()][destino.getY()].getPeca().getCor() == 0)
+				|| (destino.getY() == 7 && tabuleiro[destino.getX()][destino.getY()].getPeca().getCor() == 1)) {
+			tabuleiro[destino.getX()][destino.getY()].getPeca().setDama(true);
+			System.out.println("VIROU DAMA");
+		}
+
+	}
+
 	public Posicao[][] getTabuleiro() {
 		return tabuleiro;
 	}

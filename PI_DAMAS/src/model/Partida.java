@@ -16,10 +16,10 @@ public class Partida {
 	private List<Posicao> possibleCaptureMovements = new ArrayList<>();
 	// INSTANCIA DO CONTROLLER
 	private ControllerPartida controller;
-	//VARIAVEL QUE CONTROLA O JOGADOR DA VEZ
+	// VARIAVEL QUE CONTROLA O JOGADOR DA VEZ
 	private int corDaVez = 1;
-	
-	//JOGADORES DA PARTIDA
+
+	// JOGADORES DA PARTIDA
 	private Player player1;
 	private Player player2;
 
@@ -29,18 +29,22 @@ public class Partida {
 		this.controller = controller;
 		// INSTANCIA O TABULEIRO
 		this.tabuleiro = new Tabuleiro();
-		
+
 		this.player1 = p1;
 		this.player2 = p2;
 	}
 
 	// FUNCAO DISPARADA NO MOMENTO QUE O JOGADOR CLICA EM UM CAMPO
-	public void selectField(int x, int y) {
+	public List<Posicao> selectField(int x, int y) {
 		/*
 		 * VERIFICANDO SE EXISTEM MOVIMENTOS POSSIVEIS POIS SE NAO TIVER SIDO
 		 * SELECIONADA NENHUMA PECA OU NAO NAO HAVER MOVIMENTOS POSSIVEIS PARA A PECA
 		 * SELECIONADO TORNANDO ASSIM SEM SENTIDO SEGUIR COM AS VALIDAÇÕES DE MOVIMENTO
 		 */
+		
+		List<Posicao> movimentosView = new ArrayList<>();
+		
+		
 		System.out.println("PEÇA SELECIONADA: " + selectedField);
 		if (possibleCaptureMovements.size() > 0) {
 			System.out.println("VERIFICAÇÃO DE CAPTURA");
@@ -51,7 +55,7 @@ public class Partida {
 				System.out.println("Posição clicada como destino: X: " + x + " Y: " + y);
 				if (possibleCaptureMovements.get(cont).getX() == x && possibleCaptureMovements.get(cont).getY() == y) {
 					// EXECUTANDO O METODO DE REALIZAR MOVIMENTO
-					capturePiece(selectedField.getX(), selectedField.getY(), x, y, selectedField.getPeca().getCor());
+					capturePiece(selectedField, new Posicao(x, y));
 					break;
 				}
 			}
@@ -69,11 +73,11 @@ public class Partida {
 				// MOVIMENTO POSSIVEL
 				if (possibleNormalMovements.get(cont).getX() == x && possibleNormalMovements.get(cont).getY() == y) {
 					// EXECUTANDO O METODO DE REALIZAR MOVIMENTO
-					movePiece(selectedField.getX(), selectedField.getY(), x, y, selectedField.getPeca().getCor());
+					movePiece(selectedField, new Posicao(x, y));
 					// ZERANDO O VETOR DE MOVIMENTOS POSSIVEIS POIS O MOVIMENTO JA FOI REALIZADO
 					break;
 				}
-				
+
 			}
 			possibleNormalMovements.clear();
 			selectedField = null;
@@ -82,60 +86,70 @@ public class Partida {
 		// SE NAO HOUVER MOVIMENTOS POSSIVEIS VALIDA-SE SE O CAMPO SELECIONADO CONTEM
 		// UMA PEÇA
 
-		else if (tabuleiro.getTabuleiro()[x][y].getTemPeca() == true && tabuleiro.getTabuleiro()[x][y].getPeca().getCor() == corDaVez ) {
+		else if (tabuleiro.getTabuleiro()[x][y].getTemPeca() == true
+				&& tabuleiro.getTabuleiro()[x][y].getPeca().getCor() == corDaVez) {
 			System.out.println("SELEÇÃO DA PEÇA");
 			// GUARDANDO NA VARIAVEL SELECTEDFIELD A POSIÇÃO SELECIONADA
 			selectedField = tabuleiro.getTabuleiro()[x][y];
 			System.out.println("PEÇA SELECIONADA ALTERADA PARA" + selectedField);
 			// EXECUTANDO O METODO QUE IDENTIFICA OS MOVIMENTOS VALIDOS
 			verifyPossibleMoviments();
+			
+			//ADICIONANDO A POSIÇAO DA PEÇA SELECIONADA
+			movimentosView.add(tabuleiro.getTabuleiro()[x][y]);
+			//ADICIONANDO AS POSIÇÕES DOS MOVIMENTOS NORMAIS POSSIVEIS
+			for(Posicao movimentos : possibleNormalMovements) {
+				movimentosView.add(movimentos);
+			}
+			for(Posicao movimentos : possibleCaptureMovements) {
+				movimentosView.add(movimentos);
+			}
+
+			
 		}
 		System.out.println("------------------------------------------------------");
-
+		return movimentosView;
 	}
 
-	private void movePiece(int x, int y, int destinyX, int destinyY, int cor) {
+	private void movePiece(Posicao origem, Posicao destino) {
 		// MANDA PARA O CONTROLLER E O CONTROLLER MANDA PARA A VIEW
-		controller.movePiece(x, y, destinyX, destinyY, cor);
-		tabuleiro.movePiece(x, y, destinyX, destinyY);
+		controller.movePiece(origem, destino);
+		tabuleiro.movePiece(origem, destino);
 		// ZERANDO O VALOR O CAMPO SELECIONADO POIS O MOVIMENTO JA FOI REALIZADO
 		selectedField = null;
-		if(corDaVez == 1) {
+		if (corDaVez == 1) {
 			corDaVez = 0;
-		}else { 
+		} else {
 			corDaVez = 1;
 		}
-		
 
 	}
-	private void capturePiece(int x, int y, int destinyX, int destinyY, int cor) {
+
+	private void capturePiece(Posicao origem, Posicao destino) {
 		int capturedPieceX;
 		int capturedPieceY;
-		
-		//LOGICA PARA IDENTIFICAR A POSIÇÃO DA PEÇA CAPTURADA
-		if (destinyX > x) {
-			capturedPieceX = x + 1;
+
+		// LOGICA PARA IDENTIFICAR A POSIÇÃO DA PEÇA CAPTURADA
+		if (destino.getX() > origem.getX()) {
+			capturedPieceX = origem.getX() + 1;
 		} else {
-			capturedPieceX = x - 1;
+			capturedPieceX = origem.getX() - 1;
 		}
-		if (destinyY > y) {
-			capturedPieceY = y + 1;
+		if (destino.getY() > origem.getY()) {
+			capturedPieceY = origem.getY() + 1;
 		} else {
-			capturedPieceY = y - 1;
+			capturedPieceY = origem.getY() - 1;
 		}
 
-		
-		
-		controller.capturePiece(x, y, destinyX, destinyY, capturedPieceX, capturedPieceY, cor);
-		tabuleiro.capturePiece(x, y, destinyX, destinyY, capturedPieceX, capturedPieceY);
-		
+		controller.capturePiece(origem, destino, new Posicao(capturedPieceX, capturedPieceY, tabuleiro.getTabuleiro()[capturedPieceX][capturedPieceY].getPeca()));
+		tabuleiro.capturePiece(origem, destino, new Posicao(capturedPieceX, capturedPieceY,  tabuleiro.getTabuleiro()[capturedPieceX][capturedPieceY].getPeca()));
+
 		selectedField = null;
-		if(corDaVez == 1) {
+		if (corDaVez == 1) {
 			corDaVez = 0;
-		}else { 
+		} else {
 			corDaVez = 1;
 		}
-		
 	}
 
 	private void verifyPossibleMoviments() {
@@ -149,78 +163,102 @@ public class Partida {
 	private void verifyNormalMovements() {
 
 		// VALIDAÇÃO PARA PEÇAS PRETAS
-		if (selectedField.getPeca().getCor() == 0) {
+		if (selectedField.getPeca().getCor() == 0 && selectedField.getPeca().getDama() == false) {
 			// VERIFICAÇÃO DE MOVIMENTOS PARA AS PEÇA QUE ESTÃO NA ULTIMA CASA DA DIREITA
 			// PARA ESQUERDA
 			if (selectedField.getX() == 0) {
-				if (tabuleiro.getTabuleiro()[selectedField.getX() + 1][selectedField.getY() - 1]
-						.getTemPeca() == false) {
-					possibleNormalMovements.add(new Posicao(selectedField.getX() + 1, selectedField.getY() - 1));
-
-				}
+				verifyNormalMovementRigTop();
 			}
 			// VERIFICAÇÃO DE MOVIMENTOS PARA AS PEÇA QUE ESTÃO NA ULTIMA CASA DA ESQUERDA
 			// PARA DIREITA
 			else if (selectedField.getX() == 7) {
-				if (tabuleiro.getTabuleiro()[selectedField.getX() - 1][selectedField.getY() - 1]
-						.getTemPeca() == false) {
-					possibleNormalMovements.add(new Posicao(selectedField.getX() - 1, selectedField.getY() - 1));
-
-				}
+				verifyNormalMovementLefTop();
 			}
 			// VERIFICAÇÃO PARA AS DEMAIS PEÇAS
 			else {
-				if (tabuleiro.getTabuleiro()[selectedField.getX() + 1][selectedField.getY() - 1]
-						.getTemPeca() == false) {
-					possibleNormalMovements.add(new Posicao(selectedField.getX() + 1, selectedField.getY() - 1));
-
-				}
-				if (tabuleiro.getTabuleiro()[selectedField.getX() - 1][selectedField.getY() - 1]
-						.getTemPeca() == false) {
-					possibleNormalMovements.add(new Posicao(selectedField.getX() - 1, selectedField.getY() - 1));
-
-				}
-
+				verifyNormalMovementLefTop();
+				verifyNormalMovementRigTop();
 			}
 		}
 		// VALIDAÇÃO PARA PEÇAS BRANCAS
-		if (selectedField.getPeca().getCor() == 1) {
+		if (selectedField.getPeca().getCor() == 1 && selectedField.getPeca().getDama() == false) {
 			// VERIFICAÇÃO DE MOVIMENTOS PARA AS PEÇA QUE ESTÃO NA ULTIMA CASA DA DIREITA
 			// PARA ESQUERDA
 			if (selectedField.getX() == 0) {
-				if (tabuleiro.getTabuleiro()[selectedField.getX() + 1][selectedField.getY() + 1]
-						.getTemPeca() == false) {
-					possibleNormalMovements.add(new Posicao(selectedField.getX() + 1, selectedField.getY() + 1));
-
-				}
+				verifyNormalMovementRigBot();
 			}
 			// VERIFICAÇÃO DE MOVIMENTOS PARA AS PEÇA QUE ESTÃO NA ULTIMA CASA DA ESQUERDA
 			// PARA DIREITA
 			else if (selectedField.getX() == 7) {
-				if (tabuleiro.getTabuleiro()[selectedField.getX() - 1][selectedField.getY() + 1]
-						.getTemPeca() == false) {
-					possibleNormalMovements.add(new Posicao(selectedField.getX() - 1, selectedField.getY() + 1));
-
-				}
+				verifyNormalMovementLefBot();
 			}
 			// VERIFICAÇÃO PARA AS DEMAIS PEÇAS
 			else {
-				if (tabuleiro.getTabuleiro()[selectedField.getX() + 1][selectedField.getY() + 1]
-						.getTemPeca() == false) {
-					possibleNormalMovements.add(new Posicao(selectedField.getX() + 1, selectedField.getY() + 1));
-
-				}
-				if (tabuleiro.getTabuleiro()[selectedField.getX() - 1][selectedField.getY() + 1]
-						.getTemPeca() == false) {
-					possibleNormalMovements.add(new Posicao(selectedField.getX() - 1, selectedField.getY() + 1));
-
-				}
-
+				verifyNormalMovementLefBot();
+				verifyNormalMovementRigBot();
 			}
 
 		}
-
+		if (selectedField.getPeca().getDama() == true) {
+			if ( selectedField.getY() == 0 ) {
+				if( selectedField.getX()  == 0 ) {
+					verifyNormalMovementRigBot();
+				} else if (selectedField.getX() == 7) {
+					verifyNormalMovementLefBot();
+				} else {
+					verifyNormalMovementLefBot();
+					verifyNormalMovementRigBot();
+				}
+			} else if ( selectedField.getY() == 7 ) {
+				if ( selectedField.getX() == 0 ) {
+					verifyNormalMovementRigTop();
+				}
+				else if ( selectedField.getX() == 7 ) {
+					verifyNormalMovementLefTop();
+				} else {
+					verifyNormalMovementLefTop();
+					verifyNormalMovementRigTop();
+				}
+			} else {
+				verifyNormalMovementLefTop();
+				verifyNormalMovementRigTop();
+				verifyNormalMovementLefBot();
+				verifyNormalMovementRigBot();
+			}
+		}
 	}
+	
+	private void verifyNormalMovementRigTop() {
+		if (tabuleiro.getTabuleiro()[selectedField.getX() + 1][selectedField.getY() - 1]
+				.getTemPeca() == false) {
+			possibleNormalMovements.add(new Posicao(selectedField.getX() + 1, selectedField.getY() - 1));
+		}
+	}
+
+	private void verifyNormalMovementLefTop() {
+		if (tabuleiro.getTabuleiro()[selectedField.getX() - 1][selectedField.getY() - 1]
+				.getTemPeca() == false) {
+			possibleNormalMovements.add(new Posicao(selectedField.getX() - 1, selectedField.getY() - 1));
+		}
+	}
+
+	private void verifyNormalMovementRigBot() {
+		if (tabuleiro.getTabuleiro()[selectedField.getX() + 1][selectedField.getY() + 1]
+				.getTemPeca() == false) {
+			possibleNormalMovements.add(new Posicao(selectedField.getX() + 1, selectedField.getY() + 1));
+		}
+	}
+
+	private void verifyNormalMovementLefBot() {
+		if (tabuleiro.getTabuleiro()[selectedField.getX() - 1][selectedField.getY() + 1]
+				.getTemPeca() == false) {
+			possibleNormalMovements.add(new Posicao(selectedField.getX() - 1, selectedField.getY() + 1));
+		}
+	}
+
+	
+	
+	
 
 	private Boolean verifyCaptureMovement() {
 
