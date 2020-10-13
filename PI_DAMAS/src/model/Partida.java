@@ -86,7 +86,7 @@ public class Partida {
 		// SE NAO HOUVER MOVIMENTOS POSSIVEIS VALIDA-SE SE O CAMPO SELECIONADO CONTEM
 		// UMA PEÇA
 
-		else if (tabuleiro.getTabuleiro()[x][y].getTemPeca() == true
+		if (tabuleiro.getTabuleiro()[x][y].getTemPeca() == true
 				&& tabuleiro.getTabuleiro()[x][y].getPeca().getCor() == corDaVez) {
 			System.out.println("SELEÇÃO DA PEÇA");
 			// GUARDANDO NA VARIAVEL SELECTEDFIELD A POSIÇÃO SELECIONADA
@@ -98,14 +98,16 @@ public class Partida {
 			//ADICIONANDO A POSIÇAO DA PEÇA SELECIONADA
 			movimentosView.add(tabuleiro.getTabuleiro()[x][y]);
 			//ADICIONANDO AS POSIÇÕES DOS MOVIMENTOS NORMAIS POSSIVEIS
-			for(Posicao movimentos : possibleNormalMovements) {
-				movimentosView.add(movimentos);
+			if (possibleCaptureMovements.size() > 0) {
+				for(Posicao movimentos : possibleCaptureMovements) {
+					movimentosView.add(movimentos);
+				}
 			}
-			for(Posicao movimentos : possibleCaptureMovements) {
-				movimentosView.add(movimentos);
+			else {
+				for(Posicao movimentos : possibleNormalMovements) {
+					movimentosView.add(movimentos);
+				}
 			}
-
-			
 		}
 		System.out.println("------------------------------------------------------");
 		return movimentosView;
@@ -220,10 +222,18 @@ public class Partida {
 					verifyNormalMovementRigTop();
 				}
 			} else {
-				verifyNormalMovementLefTop();
-				verifyNormalMovementRigTop();
-				verifyNormalMovementLefBot();
-				verifyNormalMovementRigBot();
+				if (selectedField.getX() == 0) {
+					verifyNormalMovementRigTop();
+					verifyNormalMovementRigBot();
+				} else if (selectedField.getX() == 7) {
+					verifyNormalMovementLefBot();
+					verifyNormalMovementLefTop();
+				} else {
+					verifyNormalMovementLefTop();
+					verifyNormalMovementRigTop();
+					verifyNormalMovementLefBot();
+					verifyNormalMovementRigBot();
+				}
 			}
 		}
 	}
