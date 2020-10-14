@@ -141,24 +141,24 @@ public class ViewPartida extends JFrame {
 							if (movimentos.get(0).getPeca().getCor() == 0) {
 								if (movimentos.get(0).getPeca().getDama() == true) {
 									viewTabuleiroBts[movimentos.get(0).getX()][movimentos.get(0).getY()]
-											.setIcon(new ImageIcon("src\\img\\black_piece_dama_azul.png"));
+											.setIcon(new ImageIcon("src\\img\\black_piece_dama_selected.png"));
 								} else {
 									viewTabuleiroBts[movimentos.get(0).getX()][movimentos.get(0).getY()]
-											.setIcon(new ImageIcon("src\\img\\black_piece_azul.png"));
+											.setIcon(new ImageIcon("src\\img\\black_piece_selected.png"));
 								}
 
 							} else {
 								if (movimentos.get(0).getPeca().getDama() == true) {
 									viewTabuleiroBts[movimentos.get(0).getX()][movimentos.get(0).getY()]
-											.setIcon(new ImageIcon("src\\img\\white_piece_dama_azul.png"));
+											.setIcon(new ImageIcon("src\\img\\white_piece_dama_selected.png"));
 								} else {
 									viewTabuleiroBts[movimentos.get(0).getX()][movimentos.get(0).getY()]
-											.setIcon(new ImageIcon("src\\img\\white_piece_azul.png"));
+											.setIcon(new ImageIcon("src\\img\\white_piece_selected.png"));
 								}
 							}
 							for (int cont = 1; cont < movimentos.size(); cont++) {
 								viewTabuleiroBts[movimentos.get(cont).getX()][movimentos.get(cont).getY()]
-										.setIcon(new ImageIcon("src\\img\\CasaVerde.png"));
+										.setIcon(new ImageIcon("src\\img\\green_field.png"));
 							}
 						}
 
