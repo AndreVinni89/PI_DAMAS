@@ -34,6 +34,8 @@ public class Partida {
 		this.player2 = p2;
 	}
 
+	
+	
 	// FUNCAO DISPARADA NO MOMENTO QUE O JOGADOR CLICA EM UM CAMPO
 	public List<Posicao> selectField(int x, int y) {
 		/*
@@ -88,6 +90,11 @@ public class Partida {
 
 		if (tabuleiro.getTabuleiro()[x][y].getTemPeca() == true
 				&& tabuleiro.getTabuleiro()[x][y].getPeca().getCor() == corDaVez) {
+			
+			//ZERANDO OS MOVIMENTOS POSSIVEIS
+			possibleNormalMovements.clear();
+			possibleCaptureMovements.clear();
+			
 			System.out.println("SELEÇÃO DA PEÇA");
 			// GUARDANDO NA VARIAVEL SELECTEDFIELD A POSIÇÃO SELECIONADA
 			selectedField = tabuleiro.getTabuleiro()[x][y];
@@ -115,7 +122,6 @@ public class Partida {
 		return movimentosView;
 	}
 
-	
 	//COMANDO DE MOVER PEÇA
 	private void movePiece(Posicao origem, Posicao destino) {
 		// MANDA PARA O CONTROLLER E O CONTROLLER MANDA PARA A VIEW
@@ -130,7 +136,6 @@ public class Partida {
 		}
 
 	}
-	
 	
 	//COMANDO DE CAPTURAR PEÇA
 	private void capturePiece(Posicao origem, Posicao destino) {
@@ -160,13 +165,11 @@ public class Partida {
 		}
 	}
 
-	
-	
 	//FUNÇÃO QUE CHAMA AS VERIFICAÇÕES
 	private void verifyPossibleMoviments() {
 		// REALIZA A VERIFICAÇÃO E SALVA NO ARRAY POSSIBLEMOVEMENTS OS MOVIMENTOS
 		// VALIDOS
-		verifyCaptureMovement();
+		verifyCaptureMovement(selectedField);
 
 		verifyNormalMovements();
 	}
@@ -283,107 +286,123 @@ public class Partida {
 	
 	
 	//VERIFICAÇÃO DE CAPTURA
-	private Boolean verifyCaptureMovement() {
+	private Boolean verifyCaptureMovement(Posicao originPiece) {
 
 		// VERIFICAÇÃO DE MOVIMENTOS PARA AS PEÇA QUE ESTÃO NA ULTIMA CASA DA DIREITA
 		// PARA ESQUERDA
-
-		if (selectedField.getX() <= 1) {
+		if (originPiece.getX() <= 1) {
 			// SE A POSIÇÃO SELECIONADA FOR A DO CANTO INFERIOR ESQUERDO
-			if (selectedField.getY() >= 6) {
-				verifyCaptureMovementRigTop();
+			if (originPiece.getY() >= 6) {
+				verifyCaptureMovementRigTop(originPiece);
 			}
 			// SE A POSIÇÃO SELECIONADA FOR A DO CANTO SUPERIOR ESQUERDO
-			else if (selectedField.getY() <= 1) {
-				verifyCaptureMovementRigBot();
+			else if (originPiece.getY() <= 1) {
+				verifyCaptureMovementRigBot(originPiece);
 			}
 			// SE A POSIÇÃO SELECIONADA ESTIVER NA DIREITA NO MEIO
 			else {
-				verifyCaptureMovementRigTop();
-				verifyCaptureMovementRigBot();
+				verifyCaptureMovementRigTop(originPiece);
+				verifyCaptureMovementRigBot(originPiece);
 			}
-
 		}
-
 		// VERIFICAÇÃO DE MOVIMENTOS PARA AS PEÇA QUE ESTÃO NA ULTIMA CASA DA ESQUERDA
 		// PARA DIREITA
-		else if (selectedField.getX() >= 6) {
+		else if (originPiece.getX() >= 6) {
 			// SE A POSIÇÃO SELECIONADA FOR A DO CANTO INFERIOR DIREITO
-			if (selectedField.getY() >= 6) {
-				verifyCaptureMovementLefTop();
+			if (originPiece.getY() >= 6) {
+				verifyCaptureMovementLefTop(originPiece);
 			}
 			// SE A POSIÇÃO SELECIONADA FOR A DO CANTO SUPERIOR DIREITO
-			else if (selectedField.getY() <= 1) {
-				verifyCaptureMovementLefBot();
+			else if (originPiece.getY() <= 1) {
+				verifyCaptureMovementLefBot(originPiece);
 			}
 			// SE A POSIÇÃO SELECIONADA ESTIVER NA ESQUERDA NO MEIO
 			else {
-				verifyCaptureMovementLefTop();
-				verifyCaptureMovementLefBot();
+				verifyCaptureMovementLefTop(originPiece);
+				verifyCaptureMovementLefBot(originPiece);
 			}
 		}
 		// VERIFICAÇÃO PARA AS DEMAIS PEÇAS
 		else {
 			// SE A POSIÇÃO SELECIONADA ESTIVER NAS LINHA SUPERIOR
-			if (selectedField.getY() >= 6) {
-				verifyCaptureMovementLefTop();
-				verifyCaptureMovementRigTop();
+			if (originPiece.getY() >= 6) {
+				verifyCaptureMovementLefTop(originPiece);
+				verifyCaptureMovementRigTop(originPiece);
 			}
 			// SE A POSIÇÃO SELECIONADA ESTIVER NAS LINHA SUPERIOR
-			else if (selectedField.getY() <= 1) {
-				verifyCaptureMovementLefBot();
-				verifyCaptureMovementRigBot();
+			else if (originPiece.getY() <= 1) {
+				verifyCaptureMovementLefBot(originPiece);
+				verifyCaptureMovementRigBot(originPiece);
 			}
 			// SE A POSIÇÃO SELECIONADA ESTIVER NO MEIO
 			else {
-				verifyCaptureMovementLefTop();
-				verifyCaptureMovementLefBot();
-				verifyCaptureMovementRigBot();
-				verifyCaptureMovementRigTop();
+				verifyCaptureMovementLefTop(originPiece);
+				verifyCaptureMovementLefBot(originPiece);
+				verifyCaptureMovementRigBot(originPiece);
+				verifyCaptureMovementRigTop(originPiece);
 			}
 		}
-		return true;
+		
+		if ( possibleCaptureMovements.size() > 0) {
+			for(Posicao position : possibleCaptureMovements) {
+				
+				Posicao auxPosition = position;
+				
+				
+				possibleCaptureMovements.remove(position);
+				
+				if(verifyCaptureMovement(auxPosition) == false) {
+					possibleCaptureMovements.add(auxPosition);
+				} 
+				return true;
+
+			}
+
+		} 
+		return false;
+		
 	}
 
-	private void verifyCaptureMovementRigTop() {
-		if (tabuleiro.getTabuleiro()[selectedField.getX() + 1][selectedField.getY() - 1].getTemPeca() == true
-				&& tabuleiro.getTabuleiro()[selectedField.getX() + 1][selectedField.getY() - 1].getPeca()
-						.getCor() != selectedField.getPeca().getCor()) {
+	private void verifyCaptureMovementRigTop(Posicao originPiece) {
+
+		if (tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1].getTemPeca() == true
+				&& tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1].getPeca()
+						.getCor() != originPiece.getPeca().getCor()) {
 			// VERIFICANDO SE A POSIÇÃO APÓS A PEÇA ESTA VAZIA
-			if (tabuleiro.getTabuleiro()[selectedField.getX() + 2][selectedField.getY() - 2].getTemPeca() == false) {
-				possibleCaptureMovements.add(new Posicao(selectedField.getX() + 2, selectedField.getY() - 2));
+			if (tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() - 2].getTemPeca() == false) {
+				possibleCaptureMovements.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() - 2]);
 			}
 		}
 	}
 
-	private void verifyCaptureMovementLefTop() {
-		if (tabuleiro.getTabuleiro()[selectedField.getX() - 1][selectedField.getY() - 1].getTemPeca() == true
-				&& tabuleiro.getTabuleiro()[selectedField.getX() - 1][selectedField.getY() - 1].getPeca()
-						.getCor() != selectedField.getPeca().getCor()) {
-			if (tabuleiro.getTabuleiro()[selectedField.getX() - 2][selectedField.getY() - 2].getTemPeca() == false) {
-				possibleCaptureMovements.add(new Posicao(selectedField.getX() - 2, selectedField.getY() - 2));
-			}
-
-		}
-	}
-
-	private void verifyCaptureMovementRigBot() {
-		if (tabuleiro.getTabuleiro()[selectedField.getX() + 1][selectedField.getY() + 1].getTemPeca() == true
-				&& tabuleiro.getTabuleiro()[selectedField.getX() + 1][selectedField.getY() + 1].getPeca()
-						.getCor() != selectedField.getPeca().getCor()) {
-			if (tabuleiro.getTabuleiro()[selectedField.getX() + 2][selectedField.getY() + 2].getTemPeca() == false) {
-				possibleCaptureMovements.add(new Posicao(selectedField.getX() + 2, selectedField.getY() + 2));
+	private void verifyCaptureMovementLefTop(Posicao originPiece) {
+		if (tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1].getTemPeca() == true
+				&& tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1].getPeca()
+						.getCor() != originPiece.getPeca().getCor()) {
+			if (tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() - 2].getTemPeca() == false) {
+				possibleCaptureMovements.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() - 2]);
 			}
 
 		}
 	}
 
-	private void verifyCaptureMovementLefBot() {
-		if (tabuleiro.getTabuleiro()[selectedField.getX() - 1][selectedField.getY() + 1].getTemPeca() == true
-				&& tabuleiro.getTabuleiro()[selectedField.getX() - 1][selectedField.getY() + 1].getPeca()
-						.getCor() != selectedField.getPeca().getCor()) {
-			if (tabuleiro.getTabuleiro()[selectedField.getX() - 2][selectedField.getY() + 2].getTemPeca() == false) {
-				possibleCaptureMovements.add(new Posicao(selectedField.getX() - 2, selectedField.getY() + 2));
+	private void verifyCaptureMovementRigBot(Posicao originPiece) {
+		if (tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1].getTemPeca() == true
+				&& tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1].getPeca()
+						.getCor() != originPiece.getPeca().getCor()) {
+			if (tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() + 2].getTemPeca() == false) {
+				possibleCaptureMovements.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() + 2]);
+			}
+
+		}
+	}
+
+	private void verifyCaptureMovementLefBot(Posicao originPiece) {
+		if (tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1].getTemPeca() == true
+				&& tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1].getPeca()
+						.getCor() != originPiece.getPeca().getCor()) {
+			if (tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2].getTemPeca() == false) {
+				possibleCaptureMovements.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2]);
 			}
 
 		}

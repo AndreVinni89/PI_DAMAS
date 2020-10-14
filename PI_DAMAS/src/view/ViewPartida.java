@@ -30,21 +30,7 @@ public class ViewPartida extends JFrame {
 
 	private List<Posicao> movimentos = new ArrayList<>();
 
-	public void posicionarPecas() {
-		// LOGICA DE POSICIONAR AS PEÇAS
-		for (int contY = 0; contY < 8; contY++) {
-			for (int contX = 0; contX < 8; contX++) {
-				if ((contY % 2 == 0 && contX % 2 != 0) || (contY % 2 != 0 && contX % 2 == 0)) {
-					if (contY >= 0 && contY <= 2) {
-						viewTabuleiroBts[contX][contY].setIcon(new ImageIcon("src\\img\\white_piece.png"));
-					} else if (contY >= 5 && contY <= 7) {
-						viewTabuleiroBts[contX][contY].setIcon(new ImageIcon("src\\img\\black_piece.png"));
-					}
-				}
-			}
-		}
-	}
-
+	
 	public ViewPartida(ControllerPartida ctrl, Player p1, Player p2) {
 
 		this.controller = ctrl;
@@ -172,6 +158,21 @@ public class ViewPartida extends JFrame {
 				if (x >= posIniX + (tamBt * 8)) {
 					x = posIniX;
 					y += tamBt;
+				}
+			}
+		}
+	}
+
+	public void posicionarPecas() {
+		// LOGICA DE POSICIONAR AS PEÇAS
+		for (int contY = 0; contY < 8; contY++) {
+			for (int contX = 0; contX < 8; contX++) {
+				if ((contY % 2 == 0 && contX % 2 != 0) || (contY % 2 != 0 && contX % 2 == 0)) {
+					if (contY >= 0 && contY <= 2) {
+						viewTabuleiroBts[contX][contY].setIcon(new ImageIcon("src\\img\\white_piece.png"));
+					} else if (contY >= 5 && contY <= 7) {
+						viewTabuleiroBts[contX][contY].setIcon(new ImageIcon("src\\img\\black_piece.png"));
+					}
 				}
 			}
 		}
