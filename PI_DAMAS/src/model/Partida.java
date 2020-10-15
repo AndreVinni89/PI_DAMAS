@@ -14,6 +14,7 @@ public class Partida {
 	private List<Posicao> possibleNormalMovements = new ArrayList<>();
 	// ARRAY COM OS MOVIMENTOS DE CAPTURA POSSIVEIS
 	private List<Posicao> possibleCaptureMovements = new ArrayList<>();
+
 	// INSTANCIA DO CONTROLLER
 	private ControllerPartida controller;
 	// VARIAVEL QUE CONTROLA O JOGADOR DA VEZ
@@ -34,8 +35,6 @@ public class Partida {
 		this.player2 = p2;
 	}
 
-	
-	
 	// FUNCAO DISPARADA NO MOMENTO QUE O JOGADOR CLICA EM UM CAMPO
 	public List<Posicao> selectField(int x, int y) {
 		/*
@@ -43,10 +42,9 @@ public class Partida {
 		 * SELECIONADA NENHUMA PECA OU NAO NAO HAVER MOVIMENTOS POSSIVEIS PARA A PECA
 		 * SELECIONADO TORNANDO ASSIM SEM SENTIDO SEGUIR COM AS VALIDAÇÕES DE MOVIMENTO
 		 */
-		
+
 		List<Posicao> movimentosView = new ArrayList<>();
-		
-		
+
 		System.out.println("PEÇA SELECIONADA: " + selectedField);
 		if (possibleCaptureMovements.size() > 0) {
 			System.out.println("VERIFICAÇÃO DE CAPTURA");
@@ -90,39 +88,37 @@ public class Partida {
 
 		if (tabuleiro.getTabuleiro()[x][y].getTemPeca() == true
 				&& tabuleiro.getTabuleiro()[x][y].getPeca().getCor() == corDaVez) {
-			
-			//ZERANDO OS MOVIMENTOS POSSIVEIS
+
+			// ZERANDO OS MOVIMENTOS POSSIVEIS
 			possibleNormalMovements.clear();
 			possibleCaptureMovements.clear();
-			
+
 			System.out.println("SELEÇÃO DA PEÇA");
 			// GUARDANDO NA VARIAVEL SELECTEDFIELD A POSIÇÃO SELECIONADA
 			selectedField = tabuleiro.getTabuleiro()[x][y];
 			System.out.println("PEÇA SELECIONADA ALTERADA PARA" + selectedField);
 			// EXECUTANDO O METODO QUE IDENTIFICA OS MOVIMENTOS VALIDOS
 			verifyPossibleMoviments();
-			
-			//ADICIONANDO A POSIÇAO DA PEÇA SELECIONADA
+
+			// ADICIONANDO A POSIÇAO DA PEÇA SELECIONADA
 			movimentosView.add(tabuleiro.getTabuleiro()[x][y]);
-			//ADICIONANDO AS POSIÇÕES DOS MOVIMENTOS NORMAIS POSSIVEIS
+			// ADICIONANDO AS POSIÇÕES DOS MOVIMENTOS NORMAIS POSSIVEIS
 			if (possibleCaptureMovements.size() > 0) {
-				for(Posicao movimentos : possibleCaptureMovements) {
+				for (Posicao movimentos : possibleCaptureMovements) {
 					movimentosView.add(movimentos);
 				}
-			}
-			else {
-				for(Posicao movimentos : possibleNormalMovements) {
+			} else {
+				for (Posicao movimentos : possibleNormalMovements) {
 					movimentosView.add(movimentos);
 				}
 			}
 
-			
 		}
 		System.out.println("------------------------------------------------------");
 		return movimentosView;
 	}
 
-	//COMANDO DE MOVER PEÇA
+	// COMANDO DE MOVER PEÇA
 	private void movePiece(Posicao origem, Posicao destino) {
 		// MANDA PARA O CONTROLLER E O CONTROLLER MANDA PARA A VIEW
 		controller.movePiece(origem, destino);
@@ -136,8 +132,8 @@ public class Partida {
 		}
 
 	}
-	
-	//COMANDO DE CAPTURAR PEÇA
+
+	// COMANDO DE CAPTURAR PEÇA
 	private void capturePiece(Posicao origem, Posicao destino) {
 		int capturedPieceX;
 		int capturedPieceY;
@@ -154,8 +150,10 @@ public class Partida {
 			capturedPieceY = origem.getY() - 1;
 		}
 
-		controller.capturePiece(origem, destino, new Posicao(capturedPieceX, capturedPieceY, tabuleiro.getTabuleiro()[capturedPieceX][capturedPieceY].getPeca()));
-		tabuleiro.capturePiece(origem, destino, new Posicao(capturedPieceX, capturedPieceY,  tabuleiro.getTabuleiro()[capturedPieceX][capturedPieceY].getPeca()));
+		controller.capturePiece(origem, destino, new Posicao(capturedPieceX, capturedPieceY,
+				tabuleiro.getTabuleiro()[capturedPieceX][capturedPieceY].getPeca()));
+		tabuleiro.capturePiece(origem, destino, new Posicao(capturedPieceX, capturedPieceY,
+				tabuleiro.getTabuleiro()[capturedPieceX][capturedPieceY].getPeca()));
 
 		selectedField = null;
 		if (corDaVez == 1) {
@@ -165,18 +163,91 @@ public class Partida {
 		}
 	}
 
-	//FUNÇÃO QUE CHAMA AS VERIFICAÇÕES
+	// FUNÇÃO QUE CHAMA AS VERIFICAÇÕES
 	private void verifyPossibleMoviments() {
 		// REALIZA A VERIFICAÇÃO E SALVA NO ARRAY POSSIBLEMOVEMENTS OS MOVIMENTOS
 		// VALIDOS
-		verifyCaptureMovement(selectedField);
 
-		verifyNormalMovements();
+		List<Posicao> possibleCaptureMovementsTemp = new ArrayList<>();
+
+		possibleCaptureMovementsTemp = verifyCaptureMovement(selectedField, selectedField.getPeca().getCor(),
+				selectedField);
+
+		if (possibleCaptureMovementsTemp.size() > 0) {
+			System.out.println(possibleCaptureMovementsTemp);
+			verifyMultipleCapture(possibleCaptureMovementsTemp, 0, selectedField, true);
+		} else {
+			verifyNormalMovements();
+		}
+
 	}
 
-	
-	
-	//VERIFICAÇÃO DE MOVIMENTOS NORMAIS
+	private void verifyMultipleCapture(List<Posicao> possibleCaptureMovementsTemp, int contCaptured, Posicao noVerify, Boolean primeira) {
+		int cont = 0;
+		if (primeira ==false) {
+			possibleCaptureMovementsTemp.remove(noVerify);
+		}
+
+		List<List<Posicao>> possibleCaptureMovementsTemp2 = new ArrayList<>();
+		for (Posicao movements : possibleCaptureMovementsTemp) {
+			List<Posicao> listaTemporaria3 = new ArrayList<>();
+			listaTemporaria3 = verifyCaptureMovement(movements, selectedField.getPeca().getCor(), noVerify);
+
+			if (listaTemporaria3.size() > 0) {		
+				possibleCaptureMovementsTemp2.add(listaTemporaria3);
+				possibleCaptureMovementsTemp2.get(cont).add(movements);
+				cont++;
+			}
+		}
+		if (possibleCaptureMovementsTemp2.size() > 0) {
+
+			if (possibleCaptureMovementsTemp2.get(0).size() > 0) {
+				contCaptured++;
+				for (List<Posicao> list : possibleCaptureMovementsTemp2) {
+					for (int contPos = 0; contPos < list.size() - 1; contPos++) {
+						list.get(contPos).setContCaptured(contCaptured);
+
+						if (possibleCaptureMovements.size() == 0
+								&& possibleCaptureMovements.contains(list.get(contPos)) == false) {
+							possibleCaptureMovements.add(list.get(contPos));
+						} else {
+
+							if (possibleCaptureMovements.get(0).getContCaptured() < list.get(contPos).getContCaptured()) {
+								for (Posicao pos : possibleCaptureMovements) {
+									pos.setContCaptured(0);
+								}
+								possibleCaptureMovements.clear();
+								possibleCaptureMovements.add(list.get(contPos));
+
+							} else if (possibleCaptureMovements.get(0).getContCaptured() == list.get(contPos)
+									.getContCaptured()) {
+								possibleCaptureMovements.add(list.get(contPos));
+							} else {
+								list.get(contPos).setContCaptured(0);
+							}
+						}
+
+					}
+
+					System.out.println("Peça que nao deve ser verificada");
+					System.out.println(list.get(list.size() - 1));
+
+					System.out.println("LISTA DE MOVIMENTOS DE CAPTURA POSSIVEIS");
+					System.out.println(possibleCaptureMovements);
+
+					verifyMultipleCapture(list, contCaptured, list.get(list.size() - 1), false);
+
+				}
+			}
+
+		} else {
+			if (possibleCaptureMovements.size() == 0) {
+				possibleCaptureMovements = possibleCaptureMovementsTemp;
+			}
+		}
+	}
+
+	// VERIFICAÇÃO DE MOVIMENTOS NORMAIS
 	private void verifyNormalMovements() {
 
 		// VALIDAÇÃO PARA PEÇAS PRETAS
@@ -216,10 +287,10 @@ public class Partida {
 			}
 
 		}
-		//VERIFICAÇÃO DOS MOVIMENTOS DA DAMA
+		// VERIFICAÇÃO DOS MOVIMENTOS DA DAMA
 		if (selectedField.getPeca().getDama() == true) {
-			if ( selectedField.getY() == 0 ) {
-				if( selectedField.getX()  == 0 ) {
+			if (selectedField.getY() == 0) {
+				if (selectedField.getX() == 0) {
 					verifyNormalMovementRigBot();
 				} else if (selectedField.getX() == 7) {
 					verifyNormalMovementLefBot();
@@ -227,11 +298,10 @@ public class Partida {
 					verifyNormalMovementLefBot();
 					verifyNormalMovementRigBot();
 				}
-			} else if ( selectedField.getY() == 7 ) {
-				if ( selectedField.getX() == 0 ) {
+			} else if (selectedField.getY() == 7) {
+				if (selectedField.getX() == 0) {
 					verifyNormalMovementRigTop();
-				}
-				else if ( selectedField.getX() == 7 ) {
+				} else if (selectedField.getX() == 7) {
 					verifyNormalMovementLefTop();
 				} else {
 					verifyNormalMovementLefTop();
@@ -253,56 +323,52 @@ public class Partida {
 			}
 		}
 	}
-	
+
 	private void verifyNormalMovementRigTop() {
-		if (tabuleiro.getTabuleiro()[selectedField.getX() + 1][selectedField.getY() - 1]
-				.getTemPeca() == false) {
+		if (tabuleiro.getTabuleiro()[selectedField.getX() + 1][selectedField.getY() - 1].getTemPeca() == false) {
 			possibleNormalMovements.add(new Posicao(selectedField.getX() + 1, selectedField.getY() - 1));
 		}
 	}
 
 	private void verifyNormalMovementLefTop() {
-		if (tabuleiro.getTabuleiro()[selectedField.getX() - 1][selectedField.getY() - 1]
-				.getTemPeca() == false) {
+		if (tabuleiro.getTabuleiro()[selectedField.getX() - 1][selectedField.getY() - 1].getTemPeca() == false) {
 			possibleNormalMovements.add(new Posicao(selectedField.getX() - 1, selectedField.getY() - 1));
 		}
 	}
 
 	private void verifyNormalMovementRigBot() {
-		if (tabuleiro.getTabuleiro()[selectedField.getX() + 1][selectedField.getY() + 1]
-				.getTemPeca() == false) {
+		if (tabuleiro.getTabuleiro()[selectedField.getX() + 1][selectedField.getY() + 1].getTemPeca() == false) {
 			possibleNormalMovements.add(new Posicao(selectedField.getX() + 1, selectedField.getY() + 1));
 		}
 	}
 
 	private void verifyNormalMovementLefBot() {
-		if (tabuleiro.getTabuleiro()[selectedField.getX() - 1][selectedField.getY() + 1]
-				.getTemPeca() == false) {
+		if (tabuleiro.getTabuleiro()[selectedField.getX() - 1][selectedField.getY() + 1].getTemPeca() == false) {
 			possibleNormalMovements.add(new Posicao(selectedField.getX() - 1, selectedField.getY() + 1));
 		}
 	}
 
-	
-	
-	
-	//VERIFICAÇÃO DE CAPTURA
-	private Boolean verifyCaptureMovement(Posicao originPiece) {
+	// VERIFICAÇÃO DE CAPTURA
 
+	private List<Posicao> verifyCaptureMovement(Posicao originPiece, int cor, Posicao noVerify) {
+		List<Posicao> possibleCaptureMovementsTemp = new ArrayList<>();
+
+		System.out.println("VERIFICAÇÃO DE CAPTURA CHAMADA");
 		// VERIFICAÇÃO DE MOVIMENTOS PARA AS PEÇA QUE ESTÃO NA ULTIMA CASA DA DIREITA
 		// PARA ESQUERDA
 		if (originPiece.getX() <= 1) {
 			// SE A POSIÇÃO SELECIONADA FOR A DO CANTO INFERIOR ESQUERDO
 			if (originPiece.getY() >= 6) {
-				verifyCaptureMovementRigTop(originPiece);
+				verifyCaptureMovementRigTop(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
 			}
 			// SE A POSIÇÃO SELECIONADA FOR A DO CANTO SUPERIOR ESQUERDO
 			else if (originPiece.getY() <= 1) {
-				verifyCaptureMovementRigBot(originPiece);
+				verifyCaptureMovementRigBot(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
 			}
 			// SE A POSIÇÃO SELECIONADA ESTIVER NA DIREITA NO MEIO
 			else {
-				verifyCaptureMovementRigTop(originPiece);
-				verifyCaptureMovementRigBot(originPiece);
+				verifyCaptureMovementRigTop(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
+				verifyCaptureMovementRigBot(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
 			}
 		}
 		// VERIFICAÇÃO DE MOVIMENTOS PARA AS PEÇA QUE ESTÃO NA ULTIMA CASA DA ESQUERDA
@@ -310,101 +376,115 @@ public class Partida {
 		else if (originPiece.getX() >= 6) {
 			// SE A POSIÇÃO SELECIONADA FOR A DO CANTO INFERIOR DIREITO
 			if (originPiece.getY() >= 6) {
-				verifyCaptureMovementLefTop(originPiece);
+				verifyCaptureMovementLefTop(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
 			}
 			// SE A POSIÇÃO SELECIONADA FOR A DO CANTO SUPERIOR DIREITO
 			else if (originPiece.getY() <= 1) {
-				verifyCaptureMovementLefBot(originPiece);
+				verifyCaptureMovementLefBot(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
 			}
 			// SE A POSIÇÃO SELECIONADA ESTIVER NA ESQUERDA NO MEIO
 			else {
-				verifyCaptureMovementLefTop(originPiece);
-				verifyCaptureMovementLefBot(originPiece);
+				verifyCaptureMovementLefTop(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
+				verifyCaptureMovementLefBot(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
 			}
 		}
 		// VERIFICAÇÃO PARA AS DEMAIS PEÇAS
 		else {
 			// SE A POSIÇÃO SELECIONADA ESTIVER NAS LINHA SUPERIOR
 			if (originPiece.getY() >= 6) {
-				verifyCaptureMovementLefTop(originPiece);
-				verifyCaptureMovementRigTop(originPiece);
+				verifyCaptureMovementLefTop(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
+				verifyCaptureMovementRigTop(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
 			}
 			// SE A POSIÇÃO SELECIONADA ESTIVER NAS LINHA SUPERIOR
 			else if (originPiece.getY() <= 1) {
-				verifyCaptureMovementLefBot(originPiece);
-				verifyCaptureMovementRigBot(originPiece);
+				verifyCaptureMovementLefBot(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
+				verifyCaptureMovementRigBot(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
 			}
 			// SE A POSIÇÃO SELECIONADA ESTIVER NO MEIO
 			else {
-				verifyCaptureMovementLefTop(originPiece);
-				verifyCaptureMovementLefBot(originPiece);
-				verifyCaptureMovementRigBot(originPiece);
-				verifyCaptureMovementRigTop(originPiece);
+				verifyCaptureMovementLefTop(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
+				verifyCaptureMovementLefBot(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
+				verifyCaptureMovementRigBot(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
+				verifyCaptureMovementRigTop(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
 			}
 		}
-		
-		if ( possibleCaptureMovements.size() > 0) {
-			for(Posicao position : possibleCaptureMovements) {
-				
-				Posicao auxPosition = position;
-				
-				
-				possibleCaptureMovements.remove(position);
-				
-				if(verifyCaptureMovement(auxPosition) == false) {
-					possibleCaptureMovements.add(auxPosition);
-				} 
-				return true;
-
-			}
-
-		} 
-		return false;
-		
+		System.out.println("PEÇA DE ORIGEM");
+		System.out.println(originPiece);
+		System.out.println("Posições verificadas::;;;:::;;::::;;");
+		System.out.println(possibleCaptureMovementsTemp);
+		return possibleCaptureMovementsTemp;
 	}
 
-	private void verifyCaptureMovementRigTop(Posicao originPiece) {
+	private void verifyCaptureMovementRigTop(Posicao originPiece, int cor, List<Posicao> possibleCaptureMovementsTemp,
+			Posicao noVerify) {
 
 		if (tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1].getTemPeca() == true
-				&& tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1].getPeca()
-						.getCor() != originPiece.getPeca().getCor()) {
+				&& tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1].getPeca().getCor() != cor) {
+
 			// VERIFICANDO SE A POSIÇÃO APÓS A PEÇA ESTA VAZIA
+
 			if (tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() - 2].getTemPeca() == false) {
-				possibleCaptureMovements.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() - 2]);
+
+				if (noVerify.getX() != originPiece.getX() + 2 || noVerify.getY() != originPiece.getY() - 2) {
+
+					System.out.println("RIGTOP");
+
+					possibleCaptureMovementsTemp
+							.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() - 2]);
+				}
+
 			}
 		}
 	}
 
-	private void verifyCaptureMovementLefTop(Posicao originPiece) {
+	private void verifyCaptureMovementLefTop(Posicao originPiece, int cor, List<Posicao> possibleCaptureMovementsTemp,
+			Posicao noVerify) {
+
 		if (tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1].getTemPeca() == true
-				&& tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1].getPeca()
-						.getCor() != originPiece.getPeca().getCor()) {
+				&& tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1].getPeca().getCor() != cor) {
 			if (tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() - 2].getTemPeca() == false) {
-				possibleCaptureMovements.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() - 2]);
+				if (noVerify.getX() != originPiece.getX() - 2 || noVerify.getY() != originPiece.getY() - 2) {
+					System.out.println("LEFTOP");
+					possibleCaptureMovementsTemp
+							.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() - 2]);
+				}
+
 			}
 
 		}
 	}
 
-	private void verifyCaptureMovementRigBot(Posicao originPiece) {
+	private void verifyCaptureMovementRigBot(Posicao originPiece, int cor, List<Posicao> possibleCaptureMovementsTemp,
+			Posicao noVerify) {
 		if (tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1].getTemPeca() == true
-				&& tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1].getPeca()
-						.getCor() != originPiece.getPeca().getCor()) {
+				&& tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1].getPeca().getCor() != cor) {
 			if (tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() + 2].getTemPeca() == false) {
-				possibleCaptureMovements.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() + 2]);
+				if (noVerify.getX() != originPiece.getX() + 2 || noVerify.getY() != originPiece.getY() + 2) {
+
+					System.out.println("RIGBOT");
+
+					possibleCaptureMovementsTemp
+							.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() + 2]);
+				}
+
 			}
 
 		}
 	}
 
-	private void verifyCaptureMovementLefBot(Posicao originPiece) {
+	private void verifyCaptureMovementLefBot(Posicao originPiece, int cor, List<Posicao> possibleCaptureMovementsTemp,
+			Posicao noVerify) {
 		if (tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1].getTemPeca() == true
-				&& tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1].getPeca()
-						.getCor() != originPiece.getPeca().getCor()) {
+				&& tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1].getPeca().getCor() != cor) {
 			if (tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2].getTemPeca() == false) {
-				possibleCaptureMovements.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2]);
-			}
+				if (noVerify.getX() != originPiece.getX() - 2 || noVerify.getY() != originPiece.getY() + 2) {
 
+					System.out.println("LEFBOT");
+
+					possibleCaptureMovementsTemp
+							.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2]);
+				}
+			}
 		}
 	}
 

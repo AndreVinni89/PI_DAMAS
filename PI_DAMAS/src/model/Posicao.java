@@ -12,6 +12,18 @@ public class Posicao {
 	// BOOLEAN QUE INDICA SE A POSIÇÃO TEM UMA PEÇA
 	private Boolean temPeca;
 
+	
+	private int contCaptured=0;
+	
+	
+	public int getContCaptured() {
+		return contCaptured;
+	}
+
+	public void setContCaptured(int contCaptured) {
+		this.contCaptured = contCaptured;
+	}
+
 	// CONSTRUTOR COM PECA
 	public Posicao(int x, int y, Peca peca) {
 		super();
