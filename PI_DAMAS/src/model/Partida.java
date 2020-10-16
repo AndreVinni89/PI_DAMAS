@@ -17,10 +17,6 @@ public class Partida {
 
 	private List<Posicao> capturedPieces = new ArrayList<>();
 
-	private List<Posicao> possibleCapturedPiecesTemp = new ArrayList<>();
-
-	private List<List<Posicao>> possibleCapturedPieces = new ArrayList<>();
-
 	// INSTANCIA DO CONTROLLER
 	private ControllerPartida controller;
 	// VARIAVEL QUE CONTROLA O JOGADOR DA VEZ
@@ -29,7 +25,7 @@ public class Partida {
 	// JOGADORES DA PARTIDA
 	private Player player1;
 	private Player player2;
-	private boolean temCaptura = false;
+
 
 	// CONSTRUTOR
 	public Partida(ControllerPartida controller, Player p1, Player p2) {
@@ -53,6 +49,7 @@ public class Partida {
 		List<Posicao> movimentosView = new ArrayList<>();
 
 		System.out.println("PEÇA SELECIONADA: " + selectedField);
+
 		if (possibleCaptureMovements.size() > 0) {
 			System.out.println("VERIFICAÇÃO DE CAPTURA");
 			System.out.println(possibleCaptureMovements);
@@ -71,7 +68,7 @@ public class Partida {
 			selectedField = null;
 
 		} else if (possibleNormalMovements.size() > 0) {
-			;
+
 			// ITERANDO PELO ARRAY DE MOVIMENTOS POSSIVEIS
 			for (int cont = 0; cont < possibleNormalMovements.size(); cont++) {
 				// VERIFICANDO SE AS COORDENADAS DO CAMPO SELECIONADO CORRESPONDEM A DE UM
@@ -92,7 +89,7 @@ public class Partida {
 		// UMA PEÇA
 
 		if (tabuleiro.getTabuleiro()[x][y].getTemPeca() == true
-				&& tabuleiro.getTabuleiro()[x][y].getPeca().getCor() == corDaVez && temCaptura == false) {
+				&& tabuleiro.getTabuleiro()[x][y].getPeca().getCor() == corDaVez) {
 
 			// ZERANDO OS MOVIMENTOS POSSIVEIS
 			possibleNormalMovements.clear();
@@ -134,43 +131,6 @@ public class Partida {
 			corDaVez = 0;
 		} else {
 			corDaVez = 1;
-		}
-		
-		temCaptura = false;
-
-		int contCap = 0;
-		Posicao auxSelectedField = null;
-		List<Posicao> possibleCaptureMoves = new ArrayList<>();
-
-		for (Posicao[] lin : tabuleiro.getTabuleiro()) {
-			for (Posicao pos : lin) {
-				if (pos.getTemPeca() == true) {
-					if (pos.getPeca().getCor() == corDaVez) {
-						possibleNormalMovements.clear();
-						possibleCaptureMovements.clear();
-
-						selectedField = pos;
-						verifyPossibleMoviments();
-
-						if (capturedPieces.size() > contCap) {
-							auxSelectedField = selectedField;
-							contCap = capturedPieces.size();
-							possibleCaptureMoves = possibleCaptureMovements;
-						}
-					}
-
-				}
-			}
-		}
-		if (contCap > 0) {
-			temCaptura = true;
-			selectedField = auxSelectedField;
-			possibleCaptureMovements = possibleCaptureMoves;
-			possibleNormalMovements.clear();
-		} else {
-			possibleNormalMovements.clear();
-			possibleCaptureMovements.clear();
-			selectedField = null;
 		}
 
 	}
@@ -219,43 +179,6 @@ public class Partida {
 			corDaVez = 1;
 		}
 
-		temCaptura = false;
-
-		int contCap = 0;
-		Posicao auxSelectedField = null;
-		List<Posicao> possibleCaptureMoves = new ArrayList<>();
-
-		for (Posicao[] lin : tabuleiro.getTabuleiro()) {
-			for (Posicao pos : lin) {
-				if (pos.getTemPeca() == true) {
-					if (pos.getPeca().getCor() == corDaVez) {
-						possibleNormalMovements.clear();
-						possibleCaptureMovements.clear();
-
-						selectedField = pos;
-						verifyPossibleMoviments();
-
-						if (capturedPieces.size() > contCap) {
-							auxSelectedField = selectedField;
-							contCap = capturedPieces.size();
-							possibleCaptureMoves = possibleCaptureMovements;
-						}
-					}
-
-				}
-			}
-		}
-		if (contCap > 0) {
-			temCaptura = true;
-			selectedField = auxSelectedField;
-			possibleCaptureMovements = possibleCaptureMoves;
-			possibleNormalMovements.clear();
-		} else {
-			possibleNormalMovements.clear();
-			possibleCaptureMovements.clear();
-			selectedField = null;
-		}
-
 	}
 
 	// FUNÇÃO QUE CHAMA AS VERIFICAÇÕES
@@ -293,18 +216,13 @@ public class Partida {
 				possibleCaptureMovementsTemp2.add(listaTemporaria3);
 				possibleCaptureMovementsTemp2.get(cont).add(movements);
 				cont++;
-
-			} else {
-				if (possibleCapturedPiecesTemp.size() > capturedPieces.size()) {
-					capturedPieces.clear();
-
-					for (Posicao piece : possibleCapturedPiecesTemp) {
-						capturedPieces.add(piece);
-					}
-					possibleCapturedPiecesTemp.clear();
-
-				}
-			}
+				
+				
+				
+			} 
+			
+			
+			
 		}
 		if (possibleCaptureMovementsTemp2.size() > 0) {
 
@@ -358,10 +276,37 @@ public class Partida {
 		} else {
 			if (possibleCaptureMovements.size() == 0) {
 				possibleCaptureMovements = possibleCaptureMovementsTemp;
+
 			}
 		}
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// VERIFICAÇÃO DE MOVIMENTOS NORMAIS
 	private void verifyNormalMovements() {
 
@@ -542,21 +487,11 @@ public class Partida {
 
 				if (noVerify.getX() != originPiece.getX() + 2 || noVerify.getY() != originPiece.getY() - 2) {
 
-					int aux = 0;
+					System.out.println("RIGTOP");
+					possibleCaptureMovementsTemp
+							.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() - 2]);
 
-					for (Posicao pos : possibleCapturedPiecesTemp) {
-						if (pos.getX() == originPiece.getX() + 1 && pos.getY() == originPiece.getY() - 1) {
-							aux++;
-						}
-					}
-					if (aux == 0) {
-						System.out.println("RIGTOP");
-						possibleCaptureMovementsTemp
-								.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() - 2]);
 
-						possibleCapturedPiecesTemp
-								.add(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1]);
-					}
 				}
 			}
 		}
@@ -570,21 +505,10 @@ public class Partida {
 			if (tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() - 2].getTemPeca() == false) {
 				if (noVerify.getX() != originPiece.getX() - 2 || noVerify.getY() != originPiece.getY() - 2) {
 
-					int aux = 0;
+					System.out.println("LEFTOP");
+					possibleCaptureMovementsTemp
+							.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() - 2]);
 
-					for (Posicao pos : possibleCapturedPiecesTemp) {
-						if (pos.getX() == originPiece.getX() - 1 && pos.getY() == originPiece.getY() - 1) {
-							aux++;
-						}
-					}
-					if (aux == 0) {
-
-						System.out.println("LEFTOP");
-						possibleCaptureMovementsTemp
-								.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() - 2]);
-						possibleCapturedPiecesTemp
-								.add(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1]);
-					}
 
 				}
 
@@ -601,18 +525,10 @@ public class Partida {
 				if (noVerify.getX() != originPiece.getX() + 2 || noVerify.getY() != originPiece.getY() + 2) {
 					int aux = 0;
 
-					for (Posicao pos : possibleCapturedPiecesTemp) {
-						if (pos.getX() == originPiece.getX() + 1 && pos.getY() == originPiece.getY() + 1) {
-							aux++;
-						}
-					}
-					if (aux == 0) {
-						System.out.println("RIGBOT");
-						possibleCaptureMovementsTemp
-								.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() + 2]);
-						possibleCapturedPiecesTemp
-								.add(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1]);
-					}
+					System.out.println("RIGBOT");
+					possibleCaptureMovementsTemp
+							.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() + 2]);
+
 
 				}
 
@@ -628,22 +544,10 @@ public class Partida {
 			if (tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2].getTemPeca() == false) {
 				if (noVerify.getX() != originPiece.getX() - 2 || noVerify.getY() != originPiece.getY() + 2) {
 
-					int aux = 0;
+					possibleCaptureMovementsTemp
+							.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2]);
 
-					for (Posicao pos : possibleCapturedPiecesTemp) {
-						if (pos.getX() == originPiece.getX() - 1 && pos.getY() == originPiece.getY() + 1) {
-							aux++;
-						}
-					}
-					if (aux == 0) {
-						System.out.println("LEFBOT");
 
-						possibleCaptureMovementsTemp
-								.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2]);
-						possibleCapturedPiecesTemp
-								.add(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1]);
-
-					}
 				}
 			}
 		}
