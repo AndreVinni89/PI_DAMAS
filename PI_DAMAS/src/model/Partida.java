@@ -52,10 +52,9 @@ public class Partida {
 			for (int cont = 0; cont < possibleCaptureMovements.size(); cont++) {
 				// VERIFICANDO SE AS COORDENADAS DO CAMPO SELECIONADO CORRESPONDEM A DE UM
 				// MOVIMENTO DE CAPTURA POSSIVEL
-				System.out.println("Posição clicada como destino: X: " + x + " Y: " + y);
 				if (possibleCaptureMovements.get(cont).getX() == x && possibleCaptureMovements.get(cont).getY() == y) {
 					// EXECUTANDO O METODO DE REALIZAR MOVIMENTO
-					capturePiece(selectedField, new Posicao(x, y));
+					capturePiece(selectedField, possibleCaptureMovements.get(cont));
 					break;
 				}
 			}
@@ -64,9 +63,7 @@ public class Partida {
 			possibleNormalMovements.clear();
 			selectedField = null;
 
-		} else if (possibleNormalMovements.size() > 0) {
-			System.out.println("VERIFICAÇÃO DE MOVIMENTOS NORMAIS");
-			System.out.println(possibleNormalMovements);
+		} else if (possibleNormalMovements.size() > 0) {;
 			// ITERANDO PELO ARRAY DE MOVIMENTOS POSSIVEIS
 			for (int cont = 0; cont < possibleNormalMovements.size(); cont++) {
 				// VERIFICANDO SE AS COORDENADAS DO CAMPO SELECIONADO CORRESPONDEM A DE UM
@@ -135,6 +132,13 @@ public class Partida {
 
 	// COMANDO DE CAPTURAR PEÇA
 	private void capturePiece(Posicao origem, Posicao destino) {
+		
+		
+		for (Posicao e : possibleCaptureMovements) {
+			e.setContCaptured(0);
+		}
+		
+		
 		int capturedPieceX;
 		int capturedPieceY;
 
@@ -182,9 +186,10 @@ public class Partida {
 
 	}
 
-	private void verifyMultipleCapture(List<Posicao> possibleCaptureMovementsTemp, int contCaptured, Posicao noVerify, Boolean primeira) {
+	private void verifyMultipleCapture(List<Posicao> possibleCaptureMovementsTemp, int contCaptured, Posicao noVerify,
+			Boolean primeira) {
 		int cont = 0;
-		if (primeira ==false) {
+		if (primeira == false) {
 			possibleCaptureMovementsTemp.remove(noVerify);
 		}
 
@@ -193,7 +198,7 @@ public class Partida {
 			List<Posicao> listaTemporaria3 = new ArrayList<>();
 			listaTemporaria3 = verifyCaptureMovement(movements, selectedField.getPeca().getCor(), noVerify);
 
-			if (listaTemporaria3.size() > 0) {		
+			if (listaTemporaria3.size() > 0) {
 				possibleCaptureMovementsTemp2.add(listaTemporaria3);
 				possibleCaptureMovementsTemp2.get(cont).add(movements);
 				cont++;
@@ -205,14 +210,17 @@ public class Partida {
 				contCaptured++;
 				for (List<Posicao> list : possibleCaptureMovementsTemp2) {
 					for (int contPos = 0; contPos < list.size() - 1; contPos++) {
-						list.get(contPos).setContCaptured(contCaptured);
+						if(list.get(contPos).getContCaptured() < contCaptured) {
+							list.get(contPos).setContCaptured(contCaptured);
+						}
+						
 
-						if (possibleCaptureMovements.size() == 0
-								&& possibleCaptureMovements.contains(list.get(contPos)) == false) {
+						if (possibleCaptureMovements.size() == 0) {
 							possibleCaptureMovements.add(list.get(contPos));
 						} else {
 
-							if (possibleCaptureMovements.get(0).getContCaptured() < list.get(contPos).getContCaptured()) {
+							if (possibleCaptureMovements.get(0).getContCaptured() < list.get(contPos)
+									.getContCaptured()) {
 								for (Posicao pos : possibleCaptureMovements) {
 									pos.setContCaptured(0);
 								}
@@ -220,20 +228,27 @@ public class Partida {
 								possibleCaptureMovements.add(list.get(contPos));
 
 							} else if (possibleCaptureMovements.get(0).getContCaptured() == list.get(contPos)
-									.getContCaptured()) {
+									.getContCaptured() && possibleCaptureMovements.contains(list.get(contPos)) == false) {
 								possibleCaptureMovements.add(list.get(contPos));
 							} else {
-								list.get(contPos).setContCaptured(0);
+								if(list.get(contPos).getContCaptured() == contCaptured) {
+									list.get(contPos).setContCaptured(0);	
+								}
+								
 							}
 						}
 
 					}
 
+					System.out.println("LISTA DE MOVIMENTOS DE CAPTURA POSSIVEIS");
+					System.out.println(possibleCaptureMovements);
+					System.out.println("Peças capuradas nesse contexto");
+					System.out.println(possibleCaptureMovements.get(0).getContCaptured());
+					
 					System.out.println("Peça que nao deve ser verificada");
 					System.out.println(list.get(list.size() - 1));
 
-					System.out.println("LISTA DE MOVIMENTOS DE CAPTURA POSSIVEIS");
-					System.out.println(possibleCaptureMovements);
+
 
 					verifyMultipleCapture(list, contCaptured, list.get(list.size() - 1), false);
 
@@ -408,8 +423,8 @@ public class Partida {
 				verifyCaptureMovementRigTop(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
 			}
 		}
-		System.out.println("PEÇA DE ORIGEM");
-		System.out.println(originPiece);
+		
+		
 		System.out.println("Posições verificadas::;;;:::;;::::;;");
 		System.out.println(possibleCaptureMovementsTemp);
 		return possibleCaptureMovementsTemp;
