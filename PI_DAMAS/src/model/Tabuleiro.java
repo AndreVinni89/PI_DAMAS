@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public class Tabuleiro {
 
 	// ATRIBUTO DO TABULEIRO QUE CONTEM A MATRIZ DE POSIÇÕES
@@ -66,7 +68,7 @@ public class Tabuleiro {
 
 	}
 
-	public void capturePiece(Posicao origem, Posicao destino, Posicao capturedPiece) {
+	public void capturePiece(Posicao origem, Posicao destino, List<Posicao> capturedPieces) {
 		// MOVENDO A PEÇA DA POSIÇÃO INICIAL PARA A POSIÇÃO DESTINO
 		tabuleiro[destino.getX()][destino.getY()].setTemPeca(true);
 		tabuleiro[destino.getX()][destino.getY()].setPeca(tabuleiro[origem.getX()][origem.getY()].getPeca());
@@ -76,8 +78,11 @@ public class Tabuleiro {
 		tabuleiro[origem.getX()][origem.getY()].setTemPeca(false);
 
 		// EXCLUINDO A PEÇA CAPTURADA
-		tabuleiro[capturedPiece.getX()][capturedPiece.getY()].setPeca(null);
-		tabuleiro[capturedPiece.getX()][capturedPiece.getY()].setTemPeca(false);
+		for(Posicao capturedPiece : capturedPieces) {
+			tabuleiro[capturedPiece.getX()][capturedPiece.getY()].setPeca(null);
+			tabuleiro[capturedPiece.getX()][capturedPiece.getY()].setTemPeca(false);
+		}
+
 
 		if ((destino.getY() == 0 && tabuleiro[destino.getX()][destino.getY()].getPeca().getCor() == 0)
 				|| (destino.getY() == 7 && tabuleiro[destino.getX()][destino.getY()].getPeca().getCor() == 1)) {

@@ -30,7 +30,6 @@ public class ViewPartida extends JFrame {
 
 	private List<Posicao> movimentos = new ArrayList<>();
 
-	
 	public ViewPartida(ControllerPartida ctrl, Player p1, Player p2) {
 
 		this.controller = ctrl;
@@ -94,7 +93,8 @@ public class ViewPartida extends JFrame {
 				viewTabuleiroBts[contX][contY].addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
-						//SE JA HAVIAM MOVIMENTOS COM AS POSIÇÕES VISUALMENTE ALTERADAS ZERAM-SE ESSA ALTERAÇÕES
+						// SE JA HAVIAM MOVIMENTOS COM AS POSIÇÕES VISUALMENTE ALTERADAS ZERAM-SE ESSA
+						// ALTERAÇÕES
 						if (movimentos.size() > 0) {
 							if (movimentos.get(0).getPeca().getCor() == 0) {
 								if (movimentos.get(0).getPeca().getDama() == true) {
@@ -119,9 +119,9 @@ public class ViewPartida extends JFrame {
 							}
 						}
 
-						//CHAMA O METODO NO CONTROLLER
+						// CHAMA O METODO NO CONTROLLER
 						movimentos = controller.selectPiece(posX, posY);
-						
+
 						// COM AS ALTERAÇÕES RECEBIDAS ALTERA-SE AS PEÇA VISUALMENTE
 						if (movimentos.size() > 0) {
 							if (movimentos.get(0).getPeca().getCor() == 0) {
@@ -213,11 +213,14 @@ public class ViewPartida extends JFrame {
 		}
 	}
 
-	public void capturePiece(Posicao origem, Posicao destino, Posicao capturedPiece) {
-		viewTabuleiroBts[capturedPiece.getX()][capturedPiece.getY()]
-				.setIcon(new ImageIcon("src\\img\\black_field.png"));
-		viewTabuleiroBts[origem.getX()][origem.getY()].setIcon(new ImageIcon("src\\img\\black_field.png"));
-
+	public void capturePiece(Posicao origem, Posicao destino, List<Posicao> capturedPieces) {
+		for (Posicao capturedPiece : capturedPieces) {
+			viewTabuleiroBts[capturedPiece.getX()][capturedPiece.getY()]
+					.setIcon(new ImageIcon("src\\img\\black_field.png"));
+			viewTabuleiroBts[origem.getX()][origem.getY()].setIcon(new ImageIcon("src\\img\\black_field.png"));
+		}
+		
+		
 		if (origem.getPeca().getCor() == 0) {
 			if (destino.getY() == 0) {
 				viewTabuleiroBts[destino.getX()][destino.getY()]
@@ -247,5 +250,7 @@ public class ViewPartida extends JFrame {
 			}
 			indicadorCorAtual.setText("VEZ DAS PEÇAS PRETAS");
 		}
+
 	}
+
 }

@@ -60,7 +60,7 @@ public class ControllerPartida {
 		//MANDA PARA A VIEW
 		view.movePiece(origem, destino);
 	}
-	public void capturePiece(Posicao origem, Posicao destino, Posicao capturedPiece) {
+	public void capturePiece(Posicao origem, Posicao destino, List<Posicao> capturedPiece) {
 		
 		view.capturePiece(origem, destino, capturedPiece);
 		
