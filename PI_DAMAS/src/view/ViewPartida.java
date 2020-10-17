@@ -214,12 +214,15 @@ public class ViewPartida extends JFrame {
 	}
 
 	public void capturePiece(Posicao origem, Posicao destino, List<Posicao> capturedPieces) {
+		
+		//ITERA-SE SOBRE AS PEÇAS CAPTURADAS
 		for (Posicao capturedPiece : capturedPieces) {
 			viewTabuleiroBts[capturedPiece.getX()][capturedPiece.getY()]
 					.setIcon(new ImageIcon("src\\img\\black_field.png"));
-			viewTabuleiroBts[origem.getX()][origem.getY()].setIcon(new ImageIcon("src\\img\\black_field.png"));
 		}
 		
+		
+		viewTabuleiroBts[origem.getX()][origem.getY()].setIcon(new ImageIcon("src\\img\\black_field.png"));
 		
 		if (origem.getPeca().getCor() == 0) {
 			if (destino.getY() == 0) {

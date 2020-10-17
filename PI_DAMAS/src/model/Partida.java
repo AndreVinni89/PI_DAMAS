@@ -26,7 +26,6 @@ public class Partida {
 	private Player player1;
 	private Player player2;
 
-
 	// CONSTRUTOR
 	public Partida(ControllerPartida controller, Player p1, Player p2) {
 		// RECEBE A INSTANCIA DO CONTROLLER
@@ -140,7 +139,8 @@ public class Partida {
 		int capturedPieceX;
 		int capturedPieceY;
 
-		// LOGICA PARA IDENTIFICAR A POSIÇÃO DA PEÇA CAPTURADA
+		// LOGICA PARA IDENTIFICAR A POSIÇÃO DA PEÇA CAPTURADA CASO SO SEJA CAPTURADA
+		// UMA UNICA PEÇA
 		if (destino.getContCaptured() == 0) {
 			if (destino.getX() > origem.getX()) {
 				capturedPieceX = origem.getX() + 1;
@@ -152,27 +152,37 @@ public class Partida {
 			} else {
 				capturedPieceY = origem.getY() - 1;
 			}
-
+			// CRIA-SE UMA LISTA PARA PASSAR GUARDAR A PEÇA CAPTURADA
 			List<Posicao> capturedPiece = new ArrayList<>();
+			// ADICIONA-SE ESSA LISTA UM OBJETO DA CLASSE POSICAO BASEADO NAS INFORMAÇÕES
+			// PASSADAS
 			capturedPiece.add(new Posicao(capturedPieceX, capturedPieceY,
 					tabuleiro.getTabuleiro()[capturedPieceX][capturedPieceY].getPeca()));
 
+			// MANDA A INFORMAÇÃO PARA O CONTROLLER E O TABULEIRO
 			controller.capturePiece(origem, destino, capturedPiece);
 			tabuleiro.capturePiece(origem, destino, capturedPiece);
 
-		} else {
+		}
+
+		// LOGICA PARA A CAPTURA DE MAIS DE UMA PEÇA
+		else {
+
 			controller.capturePiece(origem, destino, capturedPieces);
 			tabuleiro.capturePiece(origem, destino, capturedPieces);
 
+			// LIMPA A LISTA DE PEÇAS CAPTURADAS
 			capturedPieces.clear();
 		}
 
+		// ZERA O CAMPO SELECIONADO
 		selectedField = null;
-
+		// ZERA AS O CONTCAPTURED DA LSTA DE CAPTURA
 		for (Posicao e : possibleCaptureMovements) {
 			e.setContCaptured(0);
 		}
 
+		// ALTERA A COR DA VEZ
 		if (corDaVez == 1) {
 			corDaVez = 0;
 		} else {
@@ -192,7 +202,6 @@ public class Partida {
 				selectedField);
 
 		if (possibleCaptureMovementsTemp.size() > 0) {
-			System.out.println(possibleCaptureMovementsTemp);
 			verifyMultipleCapture(possibleCaptureMovementsTemp, 0, selectedField, true);
 		} else {
 			verifyNormalMovements();
@@ -202,78 +211,121 @@ public class Partida {
 
 	private void verifyMultipleCapture(List<Posicao> possibleCaptureMovementsTemp, int contCaptured, Posicao noVerify,
 			Boolean primeira) {
+		// CONT QUE É USADO PARA IDENTIFICAR A POSSIÇÃO DA LISTA QUE ESTA SENDO GUARDADO
+		// OS DADOS NESSA ITERAÇÃO
 		int cont = 0;
+
+		// REMOVENDO A POSIÇÃO QUE É USADA COMO REFERENCIA PARA NAO VERIFICAR DO ARRAY
 		if (primeira == false) {
 			possibleCaptureMovementsTemp.remove(noVerify);
 		}
 
 		List<List<Posicao>> possibleCaptureMovementsTemp2 = new ArrayList<>();
-		for (Posicao movements : possibleCaptureMovementsTemp) {
+
+		
+		
+		// ITERANDO SOBRE O MOVIMENTOS POSSIVEIS QUE FORAM RECEBIDOS COMO PARAMETRO
+		for (int contMove=0 ; contMove < possibleCaptureMovementsTemp.size(); contMove++) {
 			List<Posicao> listaTemporaria3 = new ArrayList<>();
-			listaTemporaria3 = verifyCaptureMovement(movements, selectedField.getPeca().getCor(), noVerify);
+			listaTemporaria3 = verifyCaptureMovement(possibleCaptureMovementsTemp.get(contMove), selectedField.getPeca().getCor(), noVerify);
 
+
+			
 			if (listaTemporaria3.size() > 0) {
-				possibleCaptureMovementsTemp2.add(listaTemporaria3);
-				possibleCaptureMovementsTemp2.get(cont).add(movements);
-				cont++;
 				
-				
-				
-			} 
-			
-			
-			
-		}
-		if (possibleCaptureMovementsTemp2.size() > 0) {
 
-			if (possibleCaptureMovementsTemp2.get(0).size() > 0) {
-				contCaptured++;
-				for (List<Posicao> list : possibleCaptureMovementsTemp2) {
-					for (int contPos = 0; contPos < list.size() - 1; contPos++) {
-						if (list.get(contPos).getContCaptured() < contCaptured) {
-							list.get(contPos).setContCaptured(contCaptured);
+				
+				// CASO TENHA SIDO ENCONTRADO MOVIMENTOS POSSIVEIS ADICIONA-OS NA LISTA
+				possibleCaptureMovementsTemp2.add(listaTemporaria3);
+				// ADICIONANDO A POSIÇÃO QUE NAO DEVE SER VERIFICADA NO PROXIMA CHAMADA
+				possibleCaptureMovementsTemp2.get(cont).add(possibleCaptureMovementsTemp.get(contMove));
+				// AUMENTANDO O CONT POSI FORAM GRAVADOS DADOS NA LISTA
+				cont++;
+			}
+
+		}
+		// SE FORAM IDENTIFICADOS MOVIMENTOS POSSIVEIS
+		if (possibleCaptureMovementsTemp2.size() > 0) {
+			// AUMENTANDO A CONTAGEM DE PEÇAS CAPTURADAS
+			contCaptured++;
+
+			// FAZ-SE UMA ITERAÇÃO DUPLA POIS A LISTA DE LISTAS FUNCIONA COMO SE FOSSE UMA
+			// MATRIZ
+			for (List<Posicao> list : possibleCaptureMovementsTemp2) {
+				// ITERA-SE ATÉ A PENULTIMA POSIÇÃO DE CADA LISTA POIS O ULTIMO ELEMENTO É
+				// UTILIZADO PARA LIMITAR VERIFICAÇÕES POSTERIORES
+				for (int contPos = 0; contPos < list.size() - 1; contPos++) {
+
+					// SE O ATRIBUTOS QUE CONTROLA QUANTAS PEÇAS SERÃO CAPTURADOS DENTRO DA ITERAÇÃO
+					// DESSA POSSIÇÃO FOR MENOR QUE O Q ESTA SENDO VERIFICADO AGORA SUBSTITUI-SE
+					// ESSE VALOR
+					if (list.get(contPos).getContCaptured() < contCaptured) {
+						list.get(contPos).setContCaptured(contCaptured);
+					}
+
+					// SE NÃO EXISTEM DADOS NA LISTA DE MOVIMENTOS POSSIVEIS SALVA-SE AS POSIÇÕES
+					// DESSA ITERAÇÃO
+					if (possibleCaptureMovements.size() == 0) {
+						possibleCaptureMovements.add(list.get(contPos));
+					}
+					// SE NAO
+
+					else {
+
+						// VERIFICANDO SE AS POSIÇÃO DE LISTA DE MOVIMENTOS DE CAPTURA POSSIVEIS
+						// CAPTURAM UM MENOR NUMERO DE PEÇAS DO QUE AS QUE ESTAO SEND VERIFICADAS AGORA
+						if (possibleCaptureMovements.get(0).getContCaptured() < list.get(contPos).getContCaptured()) {
+
+							// ZERA OS DADOS QUE PEÇAS CAPTURADAS DAS POSIÇÕES DE MOVIMENTOS DE CAPTURA
+							// POSSIVEIS
+							for (Posicao pos : possibleCaptureMovements) {
+								pos.setContCaptured(0);
+							}
+
+							// APAGANDO OS DADOS
+							possibleCaptureMovements.clear();
+
+							// ADICIONANDO A POSIÇÃO DA ITERAÇÃO
+							possibleCaptureMovements.add(list.get(contPos));
+
 						}
 
-						if (possibleCaptureMovements.size() == 0) {
+						// SE AS POSIÇÕES DA LISTA DE CAPTURA POSSIVELS TIVEREM O MESMO NUMERO DE
+						// CAPTURA ADICIONA -SE AS DA ITERAÇÃO ATUAL NELA
+						else if (possibleCaptureMovements.get(0).getContCaptured() == list.get(contPos)
+								.getContCaptured() && possibleCaptureMovements.contains(list.get(contPos)) == false) {
+
 							possibleCaptureMovements.add(list.get(contPos));
-						} else {
+						}
 
-							if (possibleCaptureMovements.get(0).getContCaptured() < list.get(contPos)
-									.getContCaptured()) {
-								for (Posicao pos : possibleCaptureMovements) {
-									pos.setContCaptured(0);
-								}
-								possibleCaptureMovements.clear();
-								possibleCaptureMovements.add(list.get(contPos));
-
-							} else if (possibleCaptureMovements.get(0).getContCaptured() == list.get(contPos)
-									.getContCaptured()
-									&& possibleCaptureMovements.contains(list.get(contPos)) == false) {
-								possibleCaptureMovements.add(list.get(contPos));
-							} else {
-								if (list.get(contPos).getContCaptured() == contCaptured) {
-									list.get(contPos).setContCaptured(0);
-								}
-
+						else {
+							// SE OS VALORES DE PEÇA CAPTURADA DESSA POSIÇÃO CORRESPONDEM AO NY=UMERO DE
+							// PEÇAS CAOTURADAS ZERA O SEU VALOR
+							if (list.get(contPos).getContCaptured() == contCaptured) {
+								list.get(contPos).setContCaptured(0);
 							}
 						}
 
 					}
 
-					System.out.println("LISTA DE MOVIMENTOS DE CAPTURA POSSIVEIS");
-					System.out.println(possibleCaptureMovements);
-					System.out.println("Peças capuradas nesse contexto");
-					System.out.println(possibleCaptureMovements.get(0).getContCaptured() + 1);
-
-					System.out.println("Peça que nao deve ser verificada");
-					System.out.println(list.get(list.size() - 1));
-
-					verifyMultipleCapture(list, contCaptured, list.get(list.size() - 1), false);
-
 				}
+
+				System.out.println("LISTA DE MOVIMENTOS DE CAPTURA POSSIVEIS");
+				System.out.println(possibleCaptureMovements);
+				System.out.println("Peças capuradas nesse contexto");
+				System.out.println(possibleCaptureMovements.get(0).getContCaptured() + 1);
+
+				System.out.println("Peça que nao deve ser verificada");
+				System.out.println(list.get(list.size() - 1));
+
+				verifyMultipleCapture(list, contCaptured, list.get(list.size() - 1), false);
+
 			}
 
 		} else {
+			// SE NAO FORAM IDENTIFICADOS MAIS CAPTURAS E NÃO EXISTEM DADOS NOS ATRIBUTOS DE
+			// MOVIMENTOS DE CAPTURA POSSIVEIS ADICIONA-SE AS POSIÇÕES QUE FORAM RECEBIDAS
+			// COMO PARAMETRO
 			if (possibleCaptureMovements.size() == 0) {
 				possibleCaptureMovements = possibleCaptureMovementsTemp;
 
@@ -281,32 +333,6 @@ public class Partida {
 		}
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	// VERIFICAÇÃO DE MOVIMENTOS NORMAIS
 	private void verifyNormalMovements() {
 
@@ -411,7 +437,8 @@ public class Partida {
 	// VERIFICAÇÃO DE CAPTURA
 
 	private List<Posicao> verifyCaptureMovement(Posicao originPiece, int cor, Posicao noVerify) {
-		List<Posicao> possibleCaptureMovementsTemp = new ArrayList<>();
+		List<Posicao> captureInfo = new ArrayList<>();
+
 
 		System.out.println("VERIFICAÇÃO DE CAPTURA CHAMADA");
 		// VERIFICAÇÃO DE MOVIMENTOS PARA AS PEÇA QUE ESTÃO NA ULTIMA CASA DA DIREITA
@@ -419,16 +446,16 @@ public class Partida {
 		if (originPiece.getX() <= 1) {
 			// SE A POSIÇÃO SELECIONADA FOR A DO CANTO INFERIOR ESQUERDO
 			if (originPiece.getY() >= 6) {
-				verifyCaptureMovementRigTop(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
+				verifyCaptureMovementRigTop(originPiece, cor, captureInfo, noVerify);
 			}
 			// SE A POSIÇÃO SELECIONADA FOR A DO CANTO SUPERIOR ESQUERDO
 			else if (originPiece.getY() <= 1) {
-				verifyCaptureMovementRigBot(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
+				verifyCaptureMovementRigBot(originPiece, cor, captureInfo, noVerify);
 			}
 			// SE A POSIÇÃO SELECIONADA ESTIVER NA DIREITA NO MEIO
 			else {
-				verifyCaptureMovementRigTop(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
-				verifyCaptureMovementRigBot(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
+				verifyCaptureMovementRigTop(originPiece, cor, captureInfo, noVerify);
+				verifyCaptureMovementRigBot(originPiece, cor, captureInfo, noVerify);
 			}
 		}
 		// VERIFICAÇÃO DE MOVIMENTOS PARA AS PEÇA QUE ESTÃO NA ULTIMA CASA DA ESQUERDA
@@ -436,46 +463,46 @@ public class Partida {
 		else if (originPiece.getX() >= 6) {
 			// SE A POSIÇÃO SELECIONADA FOR A DO CANTO INFERIOR DIREITO
 			if (originPiece.getY() >= 6) {
-				verifyCaptureMovementLefTop(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
+				verifyCaptureMovementLefTop(originPiece, cor, captureInfo, noVerify);
 			}
 			// SE A POSIÇÃO SELECIONADA FOR A DO CANTO SUPERIOR DIREITO
 			else if (originPiece.getY() <= 1) {
-				verifyCaptureMovementLefBot(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
+				verifyCaptureMovementLefBot(originPiece, cor, captureInfo, noVerify);
 			}
 			// SE A POSIÇÃO SELECIONADA ESTIVER NA ESQUERDA NO MEIO
 			else {
-				verifyCaptureMovementLefTop(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
-				verifyCaptureMovementLefBot(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
+				verifyCaptureMovementLefTop(originPiece, cor, captureInfo, noVerify);
+				verifyCaptureMovementLefBot(originPiece, cor, captureInfo, noVerify);
 			}
 		}
 		// VERIFICAÇÃO PARA AS DEMAIS PEÇAS
 		else {
 			// SE A POSIÇÃO SELECIONADA ESTIVER NAS LINHA SUPERIOR
 			if (originPiece.getY() >= 6) {
-				verifyCaptureMovementLefTop(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
-				verifyCaptureMovementRigTop(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
+				verifyCaptureMovementLefTop(originPiece, cor, captureInfo, noVerify);
+				verifyCaptureMovementRigTop(originPiece, cor, captureInfo, noVerify);
 			}
 			// SE A POSIÇÃO SELECIONADA ESTIVER NAS LINHA SUPERIOR
 			else if (originPiece.getY() <= 1) {
-				verifyCaptureMovementLefBot(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
-				verifyCaptureMovementRigBot(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
+				verifyCaptureMovementLefBot(originPiece, cor, captureInfo, noVerify);
+				verifyCaptureMovementRigBot(originPiece, cor, captureInfo, noVerify);
 			}
 			// SE A POSIÇÃO SELECIONADA ESTIVER NO MEIO
 			else {
-				verifyCaptureMovementLefTop(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
-				verifyCaptureMovementLefBot(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
-				verifyCaptureMovementRigBot(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
-				verifyCaptureMovementRigTop(originPiece, cor, possibleCaptureMovementsTemp, noVerify);
+				verifyCaptureMovementLefTop(originPiece, cor, captureInfo, noVerify);
+				verifyCaptureMovementLefBot(originPiece, cor, captureInfo, noVerify);
+				verifyCaptureMovementRigBot(originPiece, cor, captureInfo, noVerify);
+				verifyCaptureMovementRigTop(originPiece, cor, captureInfo, noVerify);
 			}
 		}
 
 		System.out.println("Posições verificadas::;;;:::;;::::;;");
-		System.out.println(possibleCaptureMovementsTemp);
+		System.out.println(captureInfo);
 
-		return possibleCaptureMovementsTemp;
+		return captureInfo;
 	}
 
-	private void verifyCaptureMovementRigTop(Posicao originPiece, int cor, List<Posicao> possibleCaptureMovementsTemp,
+	private void verifyCaptureMovementRigTop(Posicao originPiece, int cor, List<Posicao> captureInfo,
 			Posicao noVerify) {
 
 		if (tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1].getTemPeca() == true
@@ -488,8 +515,9 @@ public class Partida {
 				if (noVerify.getX() != originPiece.getX() + 2 || noVerify.getY() != originPiece.getY() - 2) {
 
 					System.out.println("RIGTOP");
-					possibleCaptureMovementsTemp
-							.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() - 2]);
+
+					captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() - 2]);
+
 
 
 				}
@@ -497,7 +525,7 @@ public class Partida {
 		}
 	}
 
-	private void verifyCaptureMovementLefTop(Posicao originPiece, int cor, List<Posicao> possibleCaptureMovementsTemp,
+	private void verifyCaptureMovementLefTop(Posicao originPiece, int cor, List<Posicao> captureInfo,
 			Posicao noVerify) {
 
 		if (tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1].getTemPeca() == true
@@ -506,8 +534,7 @@ public class Partida {
 				if (noVerify.getX() != originPiece.getX() - 2 || noVerify.getY() != originPiece.getY() - 2) {
 
 					System.out.println("LEFTOP");
-					possibleCaptureMovementsTemp
-							.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() - 2]);
+					captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() - 2]);
 
 
 				}
@@ -517,7 +544,7 @@ public class Partida {
 		}
 	}
 
-	private void verifyCaptureMovementRigBot(Posicao originPiece, int cor, List<Posicao> possibleCaptureMovementsTemp,
+	private void verifyCaptureMovementRigBot(Posicao originPiece, int cor, List<Posicao> captureInfo,
 			Posicao noVerify) {
 		if (tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1].getTemPeca() == true
 				&& tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1].getPeca().getCor() != cor) {
@@ -526,8 +553,7 @@ public class Partida {
 					int aux = 0;
 
 					System.out.println("RIGBOT");
-					possibleCaptureMovementsTemp
-							.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() + 2]);
+					captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() + 2]);
 
 
 				}
@@ -537,15 +563,14 @@ public class Partida {
 		}
 	}
 
-	private void verifyCaptureMovementLefBot(Posicao originPiece, int cor, List<Posicao> possibleCaptureMovementsTemp,
+	private void verifyCaptureMovementLefBot(Posicao originPiece, int cor, List<Posicao> captureInfo,
 			Posicao noVerify) {
 		if (tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1].getTemPeca() == true
 				&& tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1].getPeca().getCor() != cor) {
 			if (tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2].getTemPeca() == false) {
 				if (noVerify.getX() != originPiece.getX() - 2 || noVerify.getY() != originPiece.getY() + 2) {
 
-					possibleCaptureMovementsTemp
-							.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2]);
+					captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2]);
 
 
 				}
