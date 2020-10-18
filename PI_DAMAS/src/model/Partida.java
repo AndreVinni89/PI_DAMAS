@@ -48,6 +48,10 @@ public class Partida {
 		 * SELECIONADO TORNANDO ASSIM SEM SENTIDO SEGUIR COM AS VALIDAÇÕES DE MOVIMENTO
 		 */
 		
+
+		
+		
+		
 		
 		List<Posicao> movimentosView = new ArrayList<>();
 
@@ -314,18 +318,23 @@ public class Partida {
 
 					
 					
+					List<Posicao> temp = new ArrayList<>();
+					temp.add(list.get(contPos));
+					
+					
+					System.out.println("LISTA DE MOVIMENTOS DE CAPTURA POSSIVEIS");
+					System.out.println(possibleCaptureMovements);
+					System.out.println("Peças capuradas nesse contexto");
+					System.out.println(possibleCaptureMovements.get(0).getContCaptured() + 1);
+
+					System.out.println("Peça que nao deve ser verificada");
+					System.out.println(list.get(list.size() - 1));
+
+					verifyMultipleCapture(temp, contCaptured, list.get(list.size() - 1), false);
 					
 				}
 
-				System.out.println("LISTA DE MOVIMENTOS DE CAPTURA POSSIVEIS");
-				System.out.println(possibleCaptureMovements);
-				System.out.println("Peças capuradas nesse contexto");
-				System.out.println(possibleCaptureMovements.get(0).getContCaptured() + 1);
 
-				System.out.println("Peça que nao deve ser verificada");
-				System.out.println(list.get(list.size() - 1));
-
-				verifyMultipleCapture(list, contCaptured, list.get(list.size() - 1), false);
 
 			}
 
