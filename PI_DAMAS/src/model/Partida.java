@@ -17,11 +17,14 @@ public class Partida {
 
 	private List<Posicao> capturedPieces = new ArrayList<>();
 
+	
 	// INSTANCIA DO CONTROLLER
 	private ControllerPartida controller;
 	// VARIAVEL QUE CONTROLA O JOGADOR DA VEZ
 	private int corDaVez = 1;
 
+
+	
 	// JOGADORES DA PARTIDA
 	private Player player1;
 	private Player player2;
@@ -44,7 +47,8 @@ public class Partida {
 		 * SELECIONADA NENHUMA PECA OU NAO NAO HAVER MOVIMENTOS POSSIVEIS PARA A PECA
 		 * SELECIONADO TORNANDO ASSIM SEM SENTIDO SEGUIR COM AS VALIDAÇÕES DE MOVIMENTO
 		 */
-
+		
+		
 		List<Posicao> movimentosView = new ArrayList<>();
 
 		System.out.println("PEÇA SELECIONADA: " + selectedField);
@@ -308,6 +312,9 @@ public class Partida {
 
 					}
 
+					
+					
+					
 				}
 
 				System.out.println("LISTA DE MOVIMENTOS DE CAPTURA POSSIVEIS");
