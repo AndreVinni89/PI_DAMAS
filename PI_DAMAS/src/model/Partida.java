@@ -15,8 +15,10 @@ public class Partida {
 	// ARRAY COM OS MOVIMENTOS DE CAPTURA POSSIVEIS
 	private List<Posicao> possibleCaptureMovements = new ArrayList<>();
 
-	private List<Posicao> capturedPieces = new ArrayList<>();
+	private List<List<Posicao>> capturedPieces = new ArrayList<>();
 
+	private List<Posicao> capturedPiecesTemp = new ArrayList<>();
+	
 	
 	// INSTANCIA DO CONTROLLER
 	private ControllerPartida controller;
@@ -175,9 +177,31 @@ public class Partida {
 
 		// LOGICA PARA A CAPTURA DE MAIS DE UMA PEÇA
 		else {
-
-			controller.capturePiece(origem, destino, capturedPieces);
-			tabuleiro.capturePiece(origem, destino, capturedPieces);
+			int i;
+			i = possibleCaptureMovements.indexOf(destino);
+			
+			System.out.println("=============================================================================");
+			System.out.println("Index usado como captura");
+			System.out.println(i);
+			
+			System.out.println("Peça do destino");
+			System.out.println(destino);
+			
+			
+			System.out.println("Peças que podem ser capturadas");
+			System.out.println(capturedPieces);
+			
+			
+			System.out.println("Peça que vai ser capturada:");
+			System.out.println(capturedPieces.get(i));
+			
+			
+			
+			
+			
+			System.out.println("=============================================================================");
+			controller.capturePiece(origem, destino, capturedPieces.get(i));
+			tabuleiro.capturePiece(origem, destino, capturedPieces.get(i));
 
 			// LIMPA A LISTA DE PEÇAS CAPTURADAS
 			capturedPieces.clear();
@@ -210,7 +234,24 @@ public class Partida {
 				selectedField);
 
 		if (possibleCaptureMovementsTemp.size() > 0) {
-			verifyMultipleCapture(possibleCaptureMovementsTemp, 0, selectedField, true);
+			List<Posicao> capturedPiecesTemp2 = new ArrayList<>();
+			for(Posicao e : capturedPiecesTemp) {
+				capturedPiecesTemp2.add(e);
+			}
+			capturedPiecesTemp.clear();
+			
+			for(int cont = 0; cont< possibleCaptureMovementsTemp.size() ; cont++) {
+				List<Posicao> tempMove = new ArrayList<>();
+				List<Posicao> tempCap = new ArrayList<>();
+				tempCap.add(capturedPiecesTemp2.get(cont));
+				tempMove.add(possibleCaptureMovementsTemp.get(cont));
+				
+				verifyMultipleCapture(tempMove, 0, selectedField, true, tempCap);
+				
+			}
+			
+			
+
 		} else {
 			verifyNormalMovements();
 		}
@@ -218,7 +259,19 @@ public class Partida {
 	}
 
 	private void verifyMultipleCapture(List<Posicao> possibleCaptureMovementsTemp, int contCaptured, Posicao noVerify,
-			Boolean primeira) {
+			Boolean primeira, List<Posicao> capturedPiecesTemporario) {
+
+		List<Posicao> capPiece = new ArrayList<>();
+		List<Posicao> capPieceTemp = new ArrayList<>();
+		
+		
+		
+		for(Posicao e: capturedPiecesTemporario) {
+			capPiece.add(e);
+		}
+		
+		
+		
 		// CONT QUE É USADO PARA IDENTIFICAR A POSSIÇÃO DA LISTA QUE ESTA SENDO GUARDADO
 		// OS DADOS NESSA ITERAÇÃO
 		int cont = 0;
@@ -248,6 +301,13 @@ public class Partida {
 				// ADICIONANDO A POSIÇÃO QUE NAO DEVE SER VERIFICADA NO PROXIMA CHAMADA
 				possibleCaptureMovementsTemp2.get(cont).add(possibleCaptureMovementsTemp.get(contMove));
 				// AUMENTANDO O CONT POSI FORAM GRAVADOS DADOS NA LISTA
+				
+				for(Posicao e : capturedPiecesTemp) {
+					capPieceTemp.add(e);
+				}
+				capturedPiecesTemp.clear();
+				
+				
 				cont++;
 			}
 
@@ -262,8 +322,13 @@ public class Partida {
 			for (List<Posicao> list : possibleCaptureMovementsTemp2) {
 				// ITERA-SE ATÉ A PENULTIMA POSIÇÃO DE CADA LISTA POIS O ULTIMO ELEMENTO É
 				// UTILIZADO PARA LIMITAR VERIFICAÇÕES POSTERIORES
+				
 				for (int contPos = 0; contPos < list.size() - 1; contPos++) {
-
+					
+					
+					capPiece.add(capPieceTemp.get(contPos));
+					
+					
 					// SE O ATRIBUTOS QUE CONTROLA QUANTAS PEÇAS SERÃO CAPTURADOS DENTRO DA ITERAÇÃO
 					// DESSA POSSIÇÃO FOR MENOR QUE O Q ESTA SENDO VERIFICADO AGORA SUBSTITUI-SE
 					// ESSE VALOR
@@ -275,6 +340,12 @@ public class Partida {
 					// DESSA ITERAÇÃO
 					if (possibleCaptureMovements.size() == 0) {
 						possibleCaptureMovements.add(list.get(contPos));
+						
+						List<Posicao> temp = new ArrayList<>();
+						for(Posicao e: capPiece) {
+							temp.add(e);
+						}
+						capturedPieces.add(temp);
 					}
 					// SE NAO
 
@@ -296,6 +367,14 @@ public class Partida {
 							// ADICIONANDO A POSIÇÃO DA ITERAÇÃO
 							possibleCaptureMovements.add(list.get(contPos));
 
+							capturedPieces.clear();
+							List<Posicao> temp = new ArrayList<>();
+							for(Posicao e: capPiece) {
+								temp.add(e);
+							}
+							capturedPieces.add(temp);
+							
+
 						}
 
 						// SE AS POSIÇÕES DA LISTA DE CAPTURA POSSIVELS TIVEREM O MESMO NUMERO DE
@@ -304,6 +383,16 @@ public class Partida {
 								.getContCaptured() && possibleCaptureMovements.contains(list.get(contPos)) == false) {
 
 							possibleCaptureMovements.add(list.get(contPos));
+							
+							
+							
+							List<Posicao> temp = new ArrayList<>();
+							for(Posicao e: capPiece) {
+								temp.add(e);
+							}
+							capturedPieces.add(temp);
+							
+							
 						}
 
 						else {
@@ -315,6 +404,8 @@ public class Partida {
 						}
 
 					}
+					System.out.println("PECAS CAPTURADAS");
+					System.out.println(capturedPieces);
 
 					
 					
@@ -330,7 +421,8 @@ public class Partida {
 					System.out.println("Peça que nao deve ser verificada");
 					System.out.println(list.get(list.size() - 1));
 
-					verifyMultipleCapture(temp, contCaptured, list.get(list.size() - 1), false);
+					verifyMultipleCapture(temp, contCaptured, list.get(list.size() - 1), false, capPiece);
+					capPiece.remove(capPiece.get(contPos));
 					
 				}
 
@@ -344,7 +436,8 @@ public class Partida {
 			// COMO PARAMETRO
 			if (possibleCaptureMovements.size() == 0) {
 				possibleCaptureMovements = possibleCaptureMovementsTemp;
-
+			}else {
+				possibleCaptureMovements.add(possibleCaptureMovementsTemp.get(0));
 			}
 		}
 	}
@@ -532,6 +625,8 @@ public class Partida {
 
 					System.out.println("RIGTOP");
 
+					
+					capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1]);
 					captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() - 2]);
 
 
@@ -550,6 +645,8 @@ public class Partida {
 				if (noVerify.getX() != originPiece.getX() - 2 || noVerify.getY() != originPiece.getY() - 2) {
 
 					System.out.println("LEFTOP");
+					capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1]);
+					
 					captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() - 2]);
 
 
@@ -566,8 +663,10 @@ public class Partida {
 				&& tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1].getPeca().getCor() != cor) {
 			if (tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() + 2].getTemPeca() == false) {
 				if (noVerify.getX() != originPiece.getX() + 2 || noVerify.getY() != originPiece.getY() + 2) {
-					int aux = 0;
 
+
+					capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1]);
+					
 					System.out.println("RIGBOT");
 					captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() + 2]);
 
@@ -585,7 +684,9 @@ public class Partida {
 				&& tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1].getPeca().getCor() != cor) {
 			if (tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2].getTemPeca() == false) {
 				if (noVerify.getX() != originPiece.getX() - 2 || noVerify.getY() != originPiece.getY() + 2) {
-
+					
+					
+					capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1]);
 					captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2]);
 
 
