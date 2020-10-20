@@ -106,6 +106,7 @@ public class Partida {
 			// ZERANDO OS MOVIMENTOS POSSIVEIS
 			possibleNormalMovements.clear();
 			possibleCaptureMovements.clear();
+			capturedPieces.clear();
 
 			System.out.println("SELEÇÃO DA PEÇA");
 			// GUARDANDO NA VARIAVEL SELECTEDFIELD A POSIÇÃO SELECIONADA
