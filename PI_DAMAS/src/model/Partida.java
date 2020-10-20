@@ -367,11 +367,12 @@ public class Partida {
 
 							// APAGANDO OS DADOS
 							possibleCaptureMovements.clear();
-
+							capturedPieces.clear();
+							
 							// ADICIONANDO A POSIÇÃO DA ITERAÇÃO
 							possibleCaptureMovements.add(list.get(contPos));
 
-							capturedPieces.clear();
+
 							List<Posicao> temp = new ArrayList<>();
 							for(Posicao e: capPiece) {
 								temp.add(e);
