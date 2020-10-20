@@ -60,6 +60,9 @@ public class Partida {
 		System.out.println("PEÇA SELECIONADA: " + selectedField);
 
 		if (possibleCaptureMovements.size() > 0) {
+			System.out.println("Peças que vão ser capturadas");
+			System.out.println(capturedPieces);
+			
 			System.out.println("VERIFICAÇÃO DE CAPTURA");
 			System.out.println(possibleCaptureMovements);
 			for (int cont = 0; cont < possibleCaptureMovements.size(); cont++) {

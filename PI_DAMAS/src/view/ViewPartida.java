@@ -15,6 +15,8 @@ import javax.swing.border.EmptyBorder;
 import controller.ControllerPartida;
 import model.Player;
 import model.Posicao;
+import java.awt.Color;
+import java.awt.Font;
 
 public class ViewPartida extends JFrame {
 
@@ -24,11 +26,16 @@ public class ViewPartida extends JFrame {
 	private JPanel contentPane;
 
 	private JLabel indicadorCorAtual;
+	
+	private JLabel player1;
 
+	private JLabel player2;
+	
 	// INSTANCIA DO CONTROLLER
 	private ControllerPartida controller;
 
 	private List<Posicao> movimentos = new ArrayList<>();
+	private JLabel moldura_vertical2;
 
 	public ViewPartida(ControllerPartida ctrl, Player p1, Player p2) {
 
@@ -44,21 +51,48 @@ public class ViewPartida extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel player1 = new JLabel(p1.toString());
-		player1.setBounds(800, 380, 200, 42);
+		player1 = new JLabel(p1.toString());
+		player1.setFont(new Font("Impact", Font.PLAIN, 18));
+		player1.setForeground(Color.WHITE);
+		player1.setBounds(750, 380, 200, 42);
 		contentPane.add(player1);
 
-		JLabel player2 = new JLabel(p2.toString());
+		player2 = new JLabel(p2.toString());
+		player2.setForeground(Color.GREEN);
+		player2.setFont(new Font("Impact", Font.PLAIN, 18));
 		player2.setBounds(65, 40, 200, 42);
 		contentPane.add(player2);
 
 		indicadorCorAtual = new JLabel("VEZ DAS PEÇAS BRANCAS");
-		indicadorCorAtual.setBounds(378, 11, 300, 14);
+		indicadorCorAtual.setFont(new Font("Impact", Font.PLAIN, 18));
+		indicadorCorAtual.setForeground(Color.WHITE);
+		indicadorCorAtual.setBounds(420, -3, 300, 50);
 		contentPane.add(indicadorCorAtual);
+		
+		moldura_vertical2 = new JLabel("");
+		moldura_vertical2.setBounds(700, 65, 34, 400);
+		moldura_vertical2.setIcon(new ImageIcon("src\\img\\vertical_moldura.png"));
+		contentPane.add(moldura_vertical2);
+		
+		JLabel moldura_vertical1 = new JLabel("");
+		moldura_vertical1.setBounds(266, 65, 34, 400);
+		moldura_vertical1.setIcon(new ImageIcon("src\\img\\vertical_moldura.png"));
+		contentPane.add(moldura_vertical1);
+		
+		JLabel moldura_horizontal1 = new JLabel("");
+		moldura_horizontal1.setBounds(266, 34, 468, 31);
+		moldura_horizontal1.setIcon(new ImageIcon("src\\img\\horizontal_moldura.png"));
+		contentPane.add(moldura_horizontal1);
+		
+		JLabel moldura_horizontal2 = new JLabel("");
+		moldura_horizontal2.setBounds(266, 465, 468, 31);
+		moldura_horizontal2.setIcon(new ImageIcon("src\\img\\horizontal_moldura.png"));
+		contentPane.add(moldura_horizontal2);
 
 		for (int contY = 0; contY < 8; contY++) {
 			for (int contX = 0; contX < 8; contX++) {
@@ -195,6 +229,8 @@ public class ViewPartida extends JFrame {
 
 			}
 			indicadorCorAtual.setText("VEZ DAS PEÇAS BRANCAS");
+			player2.setForeground(Color.GREEN);
+			player1.setForeground(Color.WHITE);
 		} else if (origem.getPeca().getCor() == 1) {
 			if (destino.getY() == 7) {
 				viewTabuleiroBts[destino.getX()][destino.getY()]
@@ -210,6 +246,8 @@ public class ViewPartida extends JFrame {
 				}
 			}
 			indicadorCorAtual.setText("VEZ DAS PEÇAS PRETAS");
+			player1.setForeground(Color.GREEN);
+			player2.setForeground(Color.WHITE);
 		}
 	}
 
@@ -238,6 +276,9 @@ public class ViewPartida extends JFrame {
 				}
 			}
 			indicadorCorAtual.setText("VEZ DAS PEÇAS BRANCAS");
+			player2.setForeground(Color.GREEN);
+			player1.setForeground(Color.WHITE);
+			
 		} else if (origem.getPeca().getCor() == 1) {
 			if (destino.getY() == 7) {
 				viewTabuleiroBts[destino.getX()][destino.getY()]
@@ -252,8 +293,9 @@ public class ViewPartida extends JFrame {
 				}
 			}
 			indicadorCorAtual.setText("VEZ DAS PEÇAS PRETAS");
+			player1.setForeground(Color.GREEN);
+			player2.setForeground(Color.WHITE);
 		}
 
 	}
-
 }
