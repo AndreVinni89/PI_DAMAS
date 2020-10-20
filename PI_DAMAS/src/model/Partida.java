@@ -199,20 +199,18 @@ public class Partida {
 			System.out.println("Peça que vai ser capturada:");
 			System.out.println(capturedPieces.get(i));
 			
-			
-			
-			
-			
 			System.out.println("=============================================================================");
 			controller.capturePiece(origem, destino, capturedPieces.get(i));
 			tabuleiro.capturePiece(origem, destino, capturedPieces.get(i));
 
-			// LIMPA A LISTA DE PEÇAS CAPTURADAS
-			capturedPieces.clear();
+			
 		}
 
 		// ZERA O CAMPO SELECIONADO
 		selectedField = null;
+		
+		// LIMPA A LISTA DE PEÇAS CAPTURADAS
+		capturedPieces.clear();
 		// ZERA AS O CONTCAPTURED DA LSTA DE CAPTURA
 		for (Posicao e : possibleCaptureMovements) {
 			e.setContCaptured(0);
@@ -251,7 +249,6 @@ public class Partida {
 				tempMove.add(possibleCaptureMovementsTemp.get(cont));
 				
 				verifyMultipleCapture(tempMove, 0, selectedField, true, tempCap);
-				
 			}
 			
 			
@@ -342,7 +339,7 @@ public class Partida {
 
 					// SE NÃO EXISTEM DADOS NA LISTA DE MOVIMENTOS POSSIVEIS SALVA-SE AS POSIÇÕES
 					// DESSA ITERAÇÃO
-					if (possibleCaptureMovements.size() == 0) {
+					if (possibleCaptureMovements.size() == 0 ) {
 						possibleCaptureMovements.add(list.get(contPos));
 						
 						List<Posicao> temp = new ArrayList<>();
@@ -384,9 +381,11 @@ public class Partida {
 
 						// SE AS POSIÇÕES DA LISTA DE CAPTURA POSSIVELS TIVEREM O MESMO NUMERO DE
 						// CAPTURA ADICIONA -SE AS DA ITERAÇÃO ATUAL NELA
-						else if (possibleCaptureMovements.get(0).getContCaptured() == list.get(contPos)
-								.getContCaptured() && possibleCaptureMovements.contains(list.get(contPos)) == false) {
-
+						else if (possibleCaptureMovements.get(0).getContCaptured() == list.get(contPos )
+								.getContCaptured() && !possibleCaptureMovements.contains(list.get(contPos))) {
+							
+							
+							System.out.println("CAI DENTRO DESSA PORRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 							possibleCaptureMovements.add(list.get(contPos));
 							
 							
@@ -441,8 +440,6 @@ public class Partida {
 			// COMO PARAMETRO
 			if (possibleCaptureMovements.size() == 0) {
 				possibleCaptureMovements = possibleCaptureMovementsTemp;
-			}else {
-				possibleCaptureMovements.add(possibleCaptureMovementsTemp.get(0));
 			}
 		}
 	}
