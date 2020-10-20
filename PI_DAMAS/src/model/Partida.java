@@ -624,10 +624,25 @@ public class Partida {
 				if (noVerify.getX() != originPiece.getX() + 2 || noVerify.getY() != originPiece.getY() - 2) {
 
 					System.out.println("RIGTOP");
+					Boolean aux= false;
 
-					
-					capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1]);
-					captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() - 2]);
+					if(capturedPieces.size() > 0) {
+						for(List<Posicao> e : capturedPieces) {
+							if(e.contains(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1])) {
+								aux = true;
+							}
+						}
+						if(!aux) {
+							capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1]);
+							captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() - 2]);
+						}
+						
+						
+					} else {
+						capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1]);
+						captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() - 2]);
+					}
+
 
 
 
@@ -644,11 +659,33 @@ public class Partida {
 			if (tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() - 2].getTemPeca() == false) {
 				if (noVerify.getX() != originPiece.getX() - 2 || noVerify.getY() != originPiece.getY() - 2) {
 
-					System.out.println("LEFTOP");
-					capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1]);
-					
-					captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() - 2]);
+					Boolean aux= false;
 
+					if(capturedPieces.size() > 0) {
+						for(List<Posicao> e : capturedPieces) {
+							if(e.contains(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1])) {
+								aux = true;
+							}
+						}
+						if(!aux) {
+							capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1]);
+							
+							captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() - 2]);
+
+						}
+						
+						
+					} else {
+						capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1]);
+						
+						captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() - 2]);
+
+					}
+
+					
+					
+					System.out.println("LEFTOP");
+	
 
 				}
 
@@ -664,11 +701,32 @@ public class Partida {
 			if (tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() + 2].getTemPeca() == false) {
 				if (noVerify.getX() != originPiece.getX() + 2 || noVerify.getY() != originPiece.getY() + 2) {
 
+					Boolean aux= false;
 
-					capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1]);
+					if(capturedPieces.size() > 0) {
+						for(List<Posicao> e : capturedPieces) {
+							if(e.contains(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1])) {
+								aux = true;
+							}
+						}
+						if(!aux) {
+							capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1]);
+							
+							System.out.println("RIGBOT");
+							captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() + 2]);
+						}
+						
+						
+					} else {
+						capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1]);
+						
+						System.out.println("RIGBOT");
+						captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() + 2]);
+
+					}
+
 					
-					System.out.println("RIGBOT");
-					captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() + 2]);
+
 
 
 				}
@@ -685,6 +743,26 @@ public class Partida {
 			if (tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2].getTemPeca() == false) {
 				if (noVerify.getX() != originPiece.getX() - 2 || noVerify.getY() != originPiece.getY() + 2) {
 					
+					Boolean aux= false;
+
+					if(capturedPieces.size() > 0) {
+						for(List<Posicao> e : capturedPieces) {
+							if(e.contains(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1])) {
+								aux = true;
+							}
+						}
+						if(!aux) {
+							capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1]);
+							captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2]);
+						}
+						
+						
+					} else {
+						capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1]);
+						captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2]);
+
+					}
+
 					
 					capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1]);
 					captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2]);
