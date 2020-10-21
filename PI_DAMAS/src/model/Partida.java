@@ -426,7 +426,7 @@ public class Partida {
 					System.out.println(list.get(list.size() - 1));
 
 					verifyMultipleCapture(temp, contCaptured, list.get(list.size() - 1), false, capPiece);
-					capPiece.remove(capPiece.get(contPos));
+					capPiece.remove(capPieceTemp.get(contPos));
 					
 				}
 
