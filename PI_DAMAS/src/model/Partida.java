@@ -49,7 +49,20 @@ public class Partida {
 		 * SELECIONADA NENHUMA PECA OU NAO NAO HAVER MOVIMENTOS POSSIVEIS PARA A PECA
 		 * SELECIONADO TORNANDO ASSIM SEM SENTIDO SEGUIR COM AS VALIDAÇÕES DE MOVIMENTO
 		 */
-		
+		System.out.println("INICIOOOOOOOOOOOO");
+		for(Posicao[] lin: tabuleiro.getTabuleiro()) {
+			for(Posicao pos : lin) {
+				
+					System.out.print(pos.getContCaptured() + "  - ");
+				
+				
+			}
+			System.out.print("\n");
+		}
+		System.out.println("POSSIBLE CAPTURED MOVEMENTS");
+		for(Posicao e : possibleCaptureMovements) {
+			System.out.println(e.getContCaptured() + "  -  ");
+		}
 
 		
 		
@@ -103,6 +116,12 @@ public class Partida {
 		if (tabuleiro.getTabuleiro()[x][y].getTemPeca() == true
 				&& tabuleiro.getTabuleiro()[x][y].getPeca().getCor() == corDaVez) {
 
+			for(Posicao[] lin: tabuleiro.getTabuleiro()) {
+				for(Posicao pos : lin) {	
+					pos.setContCaptured(0);
+				}
+			}	
+			
 			// ZERANDO OS MOVIMENTOS POSSIVEIS
 			possibleNormalMovements.clear();
 			possibleCaptureMovements.clear();
@@ -128,8 +147,35 @@ public class Partida {
 				}
 			}
 
+		} else {
+			
+			for(Posicao[] lin: tabuleiro.getTabuleiro()) {
+				for(Posicao pos : lin) {	
+					pos.setContCaptured(0);
+				}
+			}	
 		}
+		
+		System.out.println("FIMMMMMMMMMMMMMMMMMMMM");
+		for(Posicao[] lin: tabuleiro.getTabuleiro()) {
+			for(Posicao pos : lin) {
+				
+					System.out.print(pos.getContCaptured() + "  - ");
+				
+				
+			}
+			System.out.print("\n");
+		}
+		System.out.println("POSSIBLE CAPTURED MOVEMENTS");
+		for(Posicao e : possibleCaptureMovements) {
+			System.out.println(e.getContCaptured() + "  -  ");
+		}
+		
+		
+		
 		System.out.println("------------------------------------------------------");
+		
+		
 		return movimentosView;
 	}
 
