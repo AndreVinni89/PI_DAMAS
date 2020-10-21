@@ -440,7 +440,12 @@ public class Partida {
 			// COMO PARAMETRO
 			if (possibleCaptureMovements.size() == 0) {
 				possibleCaptureMovements = possibleCaptureMovementsTemp;
+			} else if(possibleCaptureMovements.get(0).getContCaptured() == 0){
+				for(Posicao e: possibleCaptureMovementsTemp) {
+					possibleCaptureMovements.add(e);
+				}	
 			}
+				
 		}
 	}
 
