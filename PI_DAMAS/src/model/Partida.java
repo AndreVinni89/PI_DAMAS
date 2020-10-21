@@ -764,12 +764,6 @@ public class Partida {
 						captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2]);
 
 					}
-
-					
-					capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1]);
-					captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2]);
-
-
 				}
 			}
 		}
