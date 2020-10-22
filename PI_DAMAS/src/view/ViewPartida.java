@@ -31,6 +31,8 @@ public class ViewPartida extends JFrame {
 
 	private JLabel player2;
 	
+	private List<Posicao> SelectedFields = new ArrayList<>();
+	
 	// INSTANCIA DO CONTROLLER
 	private ControllerPartida controller;
 
@@ -260,6 +262,21 @@ public class ViewPartida extends JFrame {
 		}
 		
 		
+		if(SelectedFields.size() > 0) {
+			for(Posicao pos: SelectedFields) {
+				if(origem.getPeca().getCor() == 1) {
+					viewTabuleiroBts[pos.getX()][pos.getY()]
+							.setIcon(new ImageIcon("src\\img\\white_piece.png"));
+				} else {
+					viewTabuleiroBts[pos.getX()][pos.getY()]
+							.setIcon(new ImageIcon("src\\img\\black_piece.png"));
+				}
+			}
+			SelectedFields.clear();
+		}
+		
+		
+		
 		viewTabuleiroBts[origem.getX()][origem.getY()].setIcon(new ImageIcon("src\\img\\black_field.png"));
 		
 		if (origem.getPeca().getCor() == 0) {
@@ -297,5 +314,19 @@ public class ViewPartida extends JFrame {
 			player2.setForeground(Color.WHITE);
 		}
 
+	}
+
+	
+	
+	public void sendObrigatedCaptureInfo(List<Posicao> possibleSelectedFields) {
+		System.out.println("CAI NESSA PORRA -------------------------------------------------------------------------------------------sas");
+		
+		SelectedFields.clear();
+		for(Posicao pos: possibleSelectedFields) {
+			SelectedFields.add(pos);
+			viewTabuleiroBts[pos.getX()][pos.getY()]
+					.setIcon(new ImageIcon("src\\img\\background.png"));
+		}
+		
 	}
 }

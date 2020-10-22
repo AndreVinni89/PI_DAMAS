@@ -18,15 +18,14 @@ public class Partida {
 	private List<List<Posicao>> capturedPieces = new ArrayList<>();
 
 	private List<Posicao> capturedPiecesTemp = new ArrayList<>();
-	
-	
+
+	private List<Posicao> possibleSelectedFields = new ArrayList<>();
+
 	// INSTANCIA DO CONTROLLER
 	private ControllerPartida controller;
 	// VARIAVEL QUE CONTROLA O JOGADOR DA VEZ
 	private int corDaVez = 1;
 
-
-	
 	// JOGADORES DA PARTIDA
 	private Player player1;
 	private Player player2;
@@ -49,25 +48,7 @@ public class Partida {
 		 * SELECIONADA NENHUMA PECA OU NAO NAO HAVER MOVIMENTOS POSSIVEIS PARA A PECA
 		 * SELECIONADO TORNANDO ASSIM SEM SENTIDO SEGUIR COM AS VALIDAÇÕES DE MOVIMENTO
 		 */
-		System.out.println("INICIOOOOOOOOOOOO");
-		for(Posicao[] lin: tabuleiro.getTabuleiro()) {
-			for(Posicao pos : lin) {
-				
-					System.out.print(pos.getContCaptured() + "  - ");
-				
-				
-			}
-			System.out.print("\n");
-		}
-		System.out.println("POSSIBLE CAPTURED MOVEMENTS");
-		for(Posicao e : possibleCaptureMovements) {
-			System.out.println(e.getContCaptured() + "  -  ");
-		}
 
-		
-		
-		
-		
 		List<Posicao> movimentosView = new ArrayList<>();
 
 		System.out.println("PEÇA SELECIONADA: " + selectedField);
@@ -75,7 +56,7 @@ public class Partida {
 		if (possibleCaptureMovements.size() > 0) {
 			System.out.println("Peças que vão ser capturadas");
 			System.out.println(capturedPieces);
-			
+
 			System.out.println("VERIFICAÇÃO DE CAPTURA");
 			System.out.println(possibleCaptureMovements);
 			for (int cont = 0; cont < possibleCaptureMovements.size(); cont++) {
@@ -116,66 +97,73 @@ public class Partida {
 		if (tabuleiro.getTabuleiro()[x][y].getTemPeca() == true
 				&& tabuleiro.getTabuleiro()[x][y].getPeca().getCor() == corDaVez) {
 
-			for(Posicao[] lin: tabuleiro.getTabuleiro()) {
-				for(Posicao pos : lin) {	
-					pos.setContCaptured(0);
-				}
-			}	
-			
-			// ZERANDO OS MOVIMENTOS POSSIVEIS
-			possibleNormalMovements.clear();
-			possibleCaptureMovements.clear();
-			capturedPieces.clear();
+			if (possibleSelectedFields.size() > 0) {
+				if (possibleSelectedFields.contains(tabuleiro.getTabuleiro()[x][y])) {
 
-			System.out.println("SELEÇÃO DA PEÇA");
-			// GUARDANDO NA VARIAVEL SELECTEDFIELD A POSIÇÃO SELECIONADA
-			selectedField = tabuleiro.getTabuleiro()[x][y];
-			System.out.println("PEÇA SELECIONADA ALTERADA PARA" + selectedField);
-			// EXECUTANDO O METODO QUE IDENTIFICA OS MOVIMENTOS VALIDOS
-			verifyPossibleMoviments();
+					// ZERANDO OS MOVIMENTOS POSSIVEIS
+					possibleNormalMovements.clear();
+					possibleCaptureMovements.clear();
+					capturedPieces.clear();
 
-			// ADICIONANDO A POSIÇAO DA PEÇA SELECIONADA
-			movimentosView.add(tabuleiro.getTabuleiro()[x][y]);
-			// ADICIONANDO AS POSIÇÕES DOS MOVIMENTOS NORMAIS POSSIVEIS
-			if (possibleCaptureMovements.size() > 0) {
-				for (Posicao movimentos : possibleCaptureMovements) {
-					movimentosView.add(movimentos);
+					System.out.println("SELEÇÃO DA PEÇA");
+					// GUARDANDO NA VARIAVEL SELECTEDFIELD A POSIÇÃO SELECIONADA
+					selectedField = tabuleiro.getTabuleiro()[x][y];
+					System.out.println("PEÇA SELECIONADA ALTERADA PARA" + selectedField);
+					// EXECUTANDO O METODO QUE IDENTIFICA OS MOVIMENTOS VALIDOS
+					verifyPossibleMoviments();
+
+					// ADICIONANDO A POSIÇAO DA PEÇA SELECIONADA
+					movimentosView.add(tabuleiro.getTabuleiro()[x][y]);
+					// ADICIONANDO AS POSIÇÕES DOS MOVIMENTOS NORMAIS POSSIVEIS
+					if (possibleCaptureMovements.size() > 0) {
+						for (Posicao movimentos : possibleCaptureMovements) {
+							movimentosView.add(movimentos);
+						}
+					} else {
+						for (Posicao movimentos : possibleNormalMovements) {
+							movimentosView.add(movimentos);
+						}
+					}
+					
+					
+					
 				}
+
 			} else {
-				for (Posicao movimentos : possibleNormalMovements) {
-					movimentosView.add(movimentos);
-				}
-			}
 
-		} else {
-			
-			for(Posicao[] lin: tabuleiro.getTabuleiro()) {
-				for(Posicao pos : lin) {	
-					pos.setContCaptured(0);
+				// ZERANDO OS MOVIMENTOS POSSIVEIS
+				possibleNormalMovements.clear();
+				possibleCaptureMovements.clear();
+				capturedPieces.clear();
+
+				System.out.println("SELEÇÃO DA PEÇA");
+				// GUARDANDO NA VARIAVEL SELECTEDFIELD A POSIÇÃO SELECIONADA
+				selectedField = tabuleiro.getTabuleiro()[x][y];
+				System.out.println("PEÇA SELECIONADA ALTERADA PARA" + selectedField);
+				// EXECUTANDO O METODO QUE IDENTIFICA OS MOVIMENTOS VALIDOS
+				verifyPossibleMoviments();
+
+				// ADICIONANDO A POSIÇAO DA PEÇA SELECIONADA
+				movimentosView.add(tabuleiro.getTabuleiro()[x][y]);
+				// ADICIONANDO AS POSIÇÕES DOS MOVIMENTOS NORMAIS POSSIVEIS
+				if (possibleCaptureMovements.size() > 0) {
+					for (Posicao movimentos : possibleCaptureMovements) {
+						movimentosView.add(movimentos);
+					}
+				} else {
+					for (Posicao movimentos : possibleNormalMovements) {
+						movimentosView.add(movimentos);
+					}
 				}
-			}	
-		}
-		
-		System.out.println("FIMMMMMMMMMMMMMMMMMMMM");
-		for(Posicao[] lin: tabuleiro.getTabuleiro()) {
-			for(Posicao pos : lin) {
-				
-					System.out.print(pos.getContCaptured() + "  - ");
-				
-				
+
 			}
-			System.out.print("\n");
+			
+
+
 		}
-		System.out.println("POSSIBLE CAPTURED MOVEMENTS");
-		for(Posicao e : possibleCaptureMovements) {
-			System.out.println(e.getContCaptured() + "  -  ");
-		}
-		
-		
-		
+
 		System.out.println("------------------------------------------------------");
-		
-		
+
 		return movimentosView;
 	}
 
@@ -192,16 +180,56 @@ public class Partida {
 			corDaVez = 1;
 		}
 
+		int maxCapture = 0;
+
+		for (Posicao[] lin : tabuleiro.getTabuleiro()) {
+			for (Posicao pos : lin) {
+				if (pos.getTemPeca()) {
+					if (pos.getPeca().getCor() == corDaVez) {
+						selectedField = pos;
+						verifyPossibleMoviments();
+						if (possibleCaptureMovements.size() > 0) {
+
+							if (possibleSelectedFields.size() > 0) {
+								if (possibleCaptureMovements.get(0).getContCaptured() > maxCapture) {
+									possibleSelectedFields.clear();
+									possibleSelectedFields.add(selectedField);
+									maxCapture = possibleCaptureMovements.get(0).getContCaptured();
+								} else if (possibleCaptureMovements.get(0).getContCaptured() == maxCapture) {
+									possibleSelectedFields.add(selectedField);
+								}
+							} else {
+								possibleSelectedFields.add(selectedField);
+								maxCapture = possibleCaptureMovements.get(0).getContCaptured();
+							}
+						}
+					}
+				}
+				possibleCaptureMovements.clear();
+				possibleNormalMovements.clear();
+				capturedPieces.clear();
+				selectedField = null;
+				pos.setContCaptured(0);
+
+			}
+		}
+		if(possibleSelectedFields.size()> 0 ) {
+			sendObrigatedCaptureInfo();
+		}
+		
+
 	}
 
 	// COMANDO DE CAPTURAR PEÇA
 	private void capturePiece(Posicao origem, Posicao destino) {
 		int capturedPieceX;
 		int capturedPieceY;
+		possibleSelectedFields.clear();
 
 		// LOGICA PARA IDENTIFICAR A POSIÇÃO DA PEÇA CAPTURADA CASO SO SEJA CAPTURADA
 		// UMA UNICA PEÇA
 		if (destino.getContCaptured() == 0) {
+			System.out.println("Captura Simples");
 			if (destino.getX() > origem.getX()) {
 				capturedPieceX = origem.getX() + 1;
 			} else {
@@ -227,39 +255,24 @@ public class Partida {
 
 		// LOGICA PARA A CAPTURA DE MAIS DE UMA PEÇA
 		else {
+			System.out.println("Captura Composta");
 			int i;
 			i = possibleCaptureMovements.indexOf(destino);
-			
-			System.out.println("=============================================================================");
-			System.out.println("Index usado como captura");
-			System.out.println(i);
-			
-			System.out.println("Peça do destino");
-			System.out.println(destino);
-			
-			
-			System.out.println("Peças que podem ser capturadas");
-			System.out.println(capturedPieces);
-			
-			
-			System.out.println("Peça que vai ser capturada:");
-			System.out.println(capturedPieces.get(i));
-			
-			System.out.println("=============================================================================");
 			controller.capturePiece(origem, destino, capturedPieces.get(i));
 			tabuleiro.capturePiece(origem, destino, capturedPieces.get(i));
 
-			
 		}
 
 		// ZERA O CAMPO SELECIONADO
 		selectedField = null;
-		
+
 		// LIMPA A LISTA DE PEÇAS CAPTURADAS
 		capturedPieces.clear();
 		// ZERA AS O CONTCAPTURED DA LSTA DE CAPTURA
-		for (Posicao e : possibleCaptureMovements) {
-			e.setContCaptured(0);
+		for (Posicao[] lin : tabuleiro.getTabuleiro()) {
+			for (Posicao pos : lin) {
+				pos.setContCaptured(0);
+			}
 		}
 
 		// ALTERA A COR DA VEZ
@@ -268,7 +281,54 @@ public class Partida {
 		} else {
 			corDaVez = 1;
 		}
+		int maxCapture = 0;
 
+		for (Posicao[] lin : tabuleiro.getTabuleiro()) {
+			for (Posicao pos : lin) {
+				if (pos.getTemPeca()) {
+					if (pos.getPeca().getCor() == corDaVez) {
+						selectedField = pos;
+
+						verifyPossibleMoviments();
+						if (possibleCaptureMovements.size() > 0) {
+
+							if (possibleSelectedFields.size() > 0) {
+								if (possibleCaptureMovements.get(0).getContCaptured() > maxCapture) {
+									possibleSelectedFields.clear();
+									possibleSelectedFields.add(selectedField);
+									maxCapture = possibleCaptureMovements.get(0).getContCaptured();
+								} else if (possibleCaptureMovements.get(0).getContCaptured() == maxCapture) {
+									possibleSelectedFields.add(selectedField);
+								}
+							} else {
+								possibleSelectedFields.add(selectedField);
+								maxCapture = possibleCaptureMovements.get(0).getContCaptured();
+							}
+						}
+
+					}
+				}
+				possibleCaptureMovements.clear();
+				possibleNormalMovements.clear();
+				selectedField = null;
+				capturedPieces.clear();
+				pos.setContCaptured(0);
+
+			}
+		}
+		
+		
+		if(possibleSelectedFields.size()> 0 ) {
+			sendObrigatedCaptureInfo();
+		}
+		
+		
+
+	}
+
+	private void sendObrigatedCaptureInfo() {
+		controller.sendObrigatedCaptureInfo(possibleSelectedFields);
+		
 	}
 
 	// FUNÇÃO QUE CHAMA AS VERIFICAÇÕES
@@ -283,21 +343,19 @@ public class Partida {
 
 		if (possibleCaptureMovementsTemp.size() > 0) {
 			List<Posicao> capturedPiecesTemp2 = new ArrayList<>();
-			for(Posicao e : capturedPiecesTemp) {
+			for (Posicao e : capturedPiecesTemp) {
 				capturedPiecesTemp2.add(e);
 			}
 			capturedPiecesTemp.clear();
-			
-			for(int cont = 0; cont< possibleCaptureMovementsTemp.size() ; cont++) {
+
+			for (int cont = 0; cont < possibleCaptureMovementsTemp.size(); cont++) {
 				List<Posicao> tempMove = new ArrayList<>();
 				List<Posicao> tempCap = new ArrayList<>();
 				tempCap.add(capturedPiecesTemp2.get(cont));
 				tempMove.add(possibleCaptureMovementsTemp.get(cont));
-				
+
 				verifyMultipleCapture(tempMove, 0, selectedField, true, tempCap);
 			}
-			
-			
 
 		} else {
 			verifyNormalMovements();
@@ -310,15 +368,11 @@ public class Partida {
 
 		List<Posicao> capPiece = new ArrayList<>();
 		List<Posicao> capPieceTemp = new ArrayList<>();
-		
-		
-		
-		for(Posicao e: capturedPiecesTemporario) {
+
+		for (Posicao e : capturedPiecesTemporario) {
 			capPiece.add(e);
 		}
-		
-		
-		
+
 		// CONT QUE É USADO PARA IDENTIFICAR A POSSIÇÃO DA LISTA QUE ESTA SENDO GUARDADO
 		// OS DADOS NESSA ITERAÇÃO
 		int cont = 0;
@@ -330,31 +384,25 @@ public class Partida {
 
 		List<List<Posicao>> possibleCaptureMovementsTemp2 = new ArrayList<>();
 
-		
-		
 		// ITERANDO SOBRE O MOVIMENTOS POSSIVEIS QUE FORAM RECEBIDOS COMO PARAMETRO
-		for (int contMove=0 ; contMove < possibleCaptureMovementsTemp.size(); contMove++) {
+		for (int contMove = 0; contMove < possibleCaptureMovementsTemp.size(); contMove++) {
 			List<Posicao> listaTemporaria3 = new ArrayList<>();
-			listaTemporaria3 = verifyCaptureMovement(possibleCaptureMovementsTemp.get(contMove), selectedField.getPeca().getCor(), noVerify);
+			listaTemporaria3 = verifyCaptureMovement(possibleCaptureMovementsTemp.get(contMove),
+					selectedField.getPeca().getCor(), noVerify);
 
-
-			
 			if (listaTemporaria3.size() > 0) {
-				
 
-				
 				// CASO TENHA SIDO ENCONTRADO MOVIMENTOS POSSIVEIS ADICIONA-OS NA LISTA
 				possibleCaptureMovementsTemp2.add(listaTemporaria3);
 				// ADICIONANDO A POSIÇÃO QUE NAO DEVE SER VERIFICADA NO PROXIMA CHAMADA
 				possibleCaptureMovementsTemp2.get(cont).add(possibleCaptureMovementsTemp.get(contMove));
 				// AUMENTANDO O CONT POSI FORAM GRAVADOS DADOS NA LISTA
-				
-				for(Posicao e : capturedPiecesTemp) {
+
+				for (Posicao e : capturedPiecesTemp) {
 					capPieceTemp.add(e);
 				}
 				capturedPiecesTemp.clear();
-				
-				
+
 				cont++;
 			}
 
@@ -369,13 +417,11 @@ public class Partida {
 			for (List<Posicao> list : possibleCaptureMovementsTemp2) {
 				// ITERA-SE ATÉ A PENULTIMA POSIÇÃO DE CADA LISTA POIS O ULTIMO ELEMENTO É
 				// UTILIZADO PARA LIMITAR VERIFICAÇÕES POSTERIORES
-				
+
 				for (int contPos = 0; contPos < list.size() - 1; contPos++) {
-					
-					
+
 					capPiece.add(capPieceTemp.get(contPos));
-					
-					
+
 					// SE O ATRIBUTOS QUE CONTROLA QUANTAS PEÇAS SERÃO CAPTURADOS DENTRO DA ITERAÇÃO
 					// DESSA POSSIÇÃO FOR MENOR QUE O Q ESTA SENDO VERIFICADO AGORA SUBSTITUI-SE
 					// ESSE VALOR
@@ -385,11 +431,11 @@ public class Partida {
 
 					// SE NÃO EXISTEM DADOS NA LISTA DE MOVIMENTOS POSSIVEIS SALVA-SE AS POSIÇÕES
 					// DESSA ITERAÇÃO
-					if (possibleCaptureMovements.size() == 0 ) {
+					if (possibleCaptureMovements.size() == 0) {
 						possibleCaptureMovements.add(list.get(contPos));
-						
+
 						List<Posicao> temp = new ArrayList<>();
-						for(Posicao e: capPiece) {
+						for (Posicao e : capPiece) {
 							temp.add(e);
 						}
 						capturedPieces.add(temp);
@@ -411,38 +457,33 @@ public class Partida {
 							// APAGANDO OS DADOS
 							possibleCaptureMovements.clear();
 							capturedPieces.clear();
-							
+
 							// ADICIONANDO A POSIÇÃO DA ITERAÇÃO
 							possibleCaptureMovements.add(list.get(contPos));
 
-
 							List<Posicao> temp = new ArrayList<>();
-							for(Posicao e: capPiece) {
+							for (Posicao e : capPiece) {
 								temp.add(e);
 							}
 							capturedPieces.add(temp);
-							
 
 						}
 
 						// SE AS POSIÇÕES DA LISTA DE CAPTURA POSSIVELS TIVEREM O MESMO NUMERO DE
 						// CAPTURA ADICIONA -SE AS DA ITERAÇÃO ATUAL NELA
-						else if (possibleCaptureMovements.get(0).getContCaptured() == list.get(contPos )
+						else if (possibleCaptureMovements.get(0).getContCaptured() == list.get(contPos)
 								.getContCaptured() && !possibleCaptureMovements.contains(list.get(contPos))) {
-							
-							
-							System.out.println("CAI DENTRO DESSA PORRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
+							System.out.println(
+									"CAI DENTRO DESSA PORRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 							possibleCaptureMovements.add(list.get(contPos));
-							
-							
-							
+
 							List<Posicao> temp = new ArrayList<>();
-							for(Posicao e: capPiece) {
+							for (Posicao e : capPiece) {
 								temp.add(e);
 							}
 							capturedPieces.add(temp);
-							
-							
+
 						}
 
 						else {
@@ -457,12 +498,9 @@ public class Partida {
 					System.out.println("PECAS CAPTURADAS");
 					System.out.println(capturedPieces);
 
-					
-					
 					List<Posicao> temp = new ArrayList<>();
 					temp.add(list.get(contPos));
-					
-					
+
 					System.out.println("LISTA DE MOVIMENTOS DE CAPTURA POSSIVEIS");
 					System.out.println(possibleCaptureMovements);
 					System.out.println("Peças capuradas nesse contexto");
@@ -473,10 +511,8 @@ public class Partida {
 
 					verifyMultipleCapture(temp, contCaptured, list.get(list.size() - 1), false, capPiece);
 					capPiece.remove(capPieceTemp.get(contPos));
-					
+
 				}
-
-
 
 			}
 
@@ -486,12 +522,12 @@ public class Partida {
 			// COMO PARAMETRO
 			if (possibleCaptureMovements.size() == 0) {
 				possibleCaptureMovements = possibleCaptureMovementsTemp;
-			} else if(possibleCaptureMovements.get(0).getContCaptured() == 0){
-				for(Posicao e: possibleCaptureMovementsTemp) {
+			} else if (possibleCaptureMovements.get(0).getContCaptured() == 0) {
+				for (Posicao e : possibleCaptureMovementsTemp) {
 					possibleCaptureMovements.add(e);
-				}	
+				}
 			}
-				
+
 		}
 	}
 
@@ -601,7 +637,6 @@ public class Partida {
 	private List<Posicao> verifyCaptureMovement(Posicao originPiece, int cor, Posicao noVerify) {
 		List<Posicao> captureInfo = new ArrayList<>();
 
-
 		System.out.println("VERIFICAÇÃO DE CAPTURA CHAMADA");
 		// VERIFICAÇÃO DE MOVIMENTOS PARA AS PEÇA QUE ESTÃO NA ULTIMA CASA DA DIREITA
 		// PARA ESQUERDA
@@ -677,27 +712,25 @@ public class Partida {
 				if (noVerify.getX() != originPiece.getX() + 2 || noVerify.getY() != originPiece.getY() - 2) {
 
 					System.out.println("RIGTOP");
-					Boolean aux= false;
+					Boolean aux = false;
 
-					if(capturedPieces.size() > 0) {
-						for(List<Posicao> e : capturedPieces) {
-							if(e.contains(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1])) {
+					if (capturedPieces.size() > 0) {
+						for (List<Posicao> e : capturedPieces) {
+							if (e.contains(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1])) {
 								aux = true;
 							}
 						}
-						if(!aux) {
-							capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1]);
+						if (!aux) {
+							capturedPiecesTemp
+									.add(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1]);
 							captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() - 2]);
 						}
-						
-						
+
 					} else {
-						capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1]);
+						capturedPiecesTemp
+								.add(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1]);
 						captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() - 2]);
 					}
-
-
-
 
 				}
 			}
@@ -712,33 +745,31 @@ public class Partida {
 			if (tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() - 2].getTemPeca() == false) {
 				if (noVerify.getX() != originPiece.getX() - 2 || noVerify.getY() != originPiece.getY() - 2) {
 
-					Boolean aux= false;
+					Boolean aux = false;
 
-					if(capturedPieces.size() > 0) {
-						for(List<Posicao> e : capturedPieces) {
-							if(e.contains(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1])) {
+					if (capturedPieces.size() > 0) {
+						for (List<Posicao> e : capturedPieces) {
+							if (e.contains(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1])) {
 								aux = true;
 							}
 						}
-						if(!aux) {
-							capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1]);
-							
+						if (!aux) {
+							capturedPiecesTemp
+									.add(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1]);
+
 							captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() - 2]);
 
 						}
-						
-						
+
 					} else {
-						capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1]);
-						
+						capturedPiecesTemp
+								.add(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1]);
+
 						captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() - 2]);
 
 					}
 
-					
-					
 					System.out.println("LEFTOP");
-	
 
 				}
 
@@ -754,33 +785,30 @@ public class Partida {
 			if (tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() + 2].getTemPeca() == false) {
 				if (noVerify.getX() != originPiece.getX() + 2 || noVerify.getY() != originPiece.getY() + 2) {
 
-					Boolean aux= false;
+					Boolean aux = false;
 
-					if(capturedPieces.size() > 0) {
-						for(List<Posicao> e : capturedPieces) {
-							if(e.contains(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1])) {
+					if (capturedPieces.size() > 0) {
+						for (List<Posicao> e : capturedPieces) {
+							if (e.contains(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1])) {
 								aux = true;
 							}
 						}
-						if(!aux) {
-							capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1]);
-							
+						if (!aux) {
+							capturedPiecesTemp
+									.add(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1]);
+
 							System.out.println("RIGBOT");
 							captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() + 2]);
 						}
-						
-						
+
 					} else {
-						capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1]);
-						
+						capturedPiecesTemp
+								.add(tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1]);
+
 						System.out.println("RIGBOT");
 						captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() + 2]);
 
 					}
-
-					
-
-
 
 				}
 
@@ -795,23 +823,24 @@ public class Partida {
 				&& tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1].getPeca().getCor() != cor) {
 			if (tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2].getTemPeca() == false) {
 				if (noVerify.getX() != originPiece.getX() - 2 || noVerify.getY() != originPiece.getY() + 2) {
-					
-					Boolean aux= false;
 
-					if(capturedPieces.size() > 0) {
-						for(List<Posicao> e : capturedPieces) {
-							if(e.contains(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1])) {
+					Boolean aux = false;
+
+					if (capturedPieces.size() > 0) {
+						for (List<Posicao> e : capturedPieces) {
+							if (e.contains(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1])) {
 								aux = true;
 							}
 						}
-						if(!aux) {
-							capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1]);
+						if (!aux) {
+							capturedPiecesTemp
+									.add(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1]);
 							captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2]);
 						}
-						
-						
+
 					} else {
-						capturedPiecesTemp.add(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1]);
+						capturedPiecesTemp
+								.add(tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1]);
 						captureInfo.add(tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2]);
 
 					}

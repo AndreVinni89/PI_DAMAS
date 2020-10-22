@@ -65,6 +65,13 @@ public class ControllerPartida {
 		view.capturePiece(origem, destino, capturedPiece);
 		
 	}
+
+
+
+	public void sendObrigatedCaptureInfo(List<Posicao> possibleSelectedFields) {
+		view.sendObrigatedCaptureInfo(possibleSelectedFields);
+		
+	}
 	
 
 }
