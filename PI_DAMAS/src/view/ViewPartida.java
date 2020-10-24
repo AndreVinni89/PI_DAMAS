@@ -17,8 +17,14 @@ import model.Player;
 import model.Posicao;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 public class ViewPartida extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	// MATRIZ COM OS BOTÕES DO TABULEIRO
 	private JButton[][] viewTabuleiroBts;
@@ -40,6 +46,10 @@ public class ViewPartida extends JFrame {
 	private JLabel moldura_vertical2;
 
 	public ViewPartida(ControllerPartida ctrl, Player p1, Player p2) {
+		setTitle("DAMAS");
+		setResizable(false);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ViewPartida.class.getResource("/img/black_piece_dama.png")));
+		setBackground(Color.GRAY);
 
 		this.controller = ctrl;
 		viewTabuleiroBts = new JButton[8][8];
@@ -51,7 +61,7 @@ public class ViewPartida extends JFrame {
 		int tamBt = 50;
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 477, 300);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -131,11 +141,6 @@ public class ViewPartida extends JFrame {
 					public void mouseClicked(MouseEvent arg0) {
 						// SE JA HAVIAM MOVIMENTOS COM AS POSIÇÕES VISUALMENTE ALTERADAS ZERAM-SE ESSA
 						// ALTERAÇÕES
-						
-	
-
-						
-						
 						if (movimentos.size() > 0) {
 							if (movimentos.get(0).getPeca().getCor() == 0) {
 								if (movimentos.get(0).getPeca().getDama() == true) {

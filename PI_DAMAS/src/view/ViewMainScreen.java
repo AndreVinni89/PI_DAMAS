@@ -15,9 +15,14 @@ import javax.swing.border.EmptyBorder;
 
 import controller.ControllerMainScreen;
 import java.awt.Color;
+import java.awt.Toolkit;
 
 public class ViewMainScreen extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	//REFERENCIA DO CONTROLLER DA MAIN SCREEN
 	private ControllerMainScreen controller;
@@ -25,9 +30,12 @@ public class ViewMainScreen extends JFrame {
 
 	
 	public ViewMainScreen() {
+		setTitle("DAMAS");
+		setResizable(false);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ViewMainScreen.class.getResource("/img/black_piece_dama.png")));
 		// INSTANCIANDO-SE O CONTROLLER DA MAIN SCREEN
 		this.controller = new ControllerMainScreen();
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 601, 623);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(105, 105, 105));
 		contentPane.setForeground(new Color(0, 0, 0));
@@ -84,6 +92,11 @@ public class ViewMainScreen extends JFrame {
 		});
 		btnCadastrar.setBounds(418, 240, 188, 41);
 		contentPane.add(btnCadastrar);
+		
+		JLabel background = new JLabel("");
+		background.setIcon(new ImageIcon(ViewMainScreen.class.getResource("/img/background.png")));
+		background.setBounds(0, 0, 1024, 576);
+		contentPane.add(background);
 		
 	
 	}
