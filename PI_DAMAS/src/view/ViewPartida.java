@@ -131,6 +131,11 @@ public class ViewPartida extends JFrame {
 					public void mouseClicked(MouseEvent arg0) {
 						// SE JA HAVIAM MOVIMENTOS COM AS POSIÇÕES VISUALMENTE ALTERADAS ZERAM-SE ESSA
 						// ALTERAÇÕES
+						
+	
+
+						
+						
 						if (movimentos.size() > 0) {
 							if (movimentos.get(0).getPeca().getCor() == 0) {
 								if (movimentos.get(0).getPeca().getDama() == true) {
@@ -155,6 +160,27 @@ public class ViewPartida extends JFrame {
 							}
 						}
 
+						
+						
+						
+						for(Posicao pos: SelectedFields) {
+							if(pos.getPeca().getCor() == 0) {
+								viewTabuleiroBts[pos.getX()][pos.getY()]
+										.setIcon(new ImageIcon("src\\img\\background.png"));
+								
+							}else {
+								viewTabuleiroBts[pos.getX()][pos.getY()]
+										.setIcon(new ImageIcon("src\\img\\background.png"));
+							}
+								
+	
+						}
+					
+						
+						
+						
+						
+						
 						// CHAMA O METODO NO CONTROLLER
 						movimentos = controller.selectPiece(posX, posY);
 
@@ -319,13 +345,19 @@ public class ViewPartida extends JFrame {
 	
 	
 	public void sendObrigatedCaptureInfo(List<Posicao> possibleSelectedFields) {
-		System.out.println("CAI NESSA PORRA -------------------------------------------------------------------------------------------sas");
-		
 		SelectedFields.clear();
 		for(Posicao pos: possibleSelectedFields) {
 			SelectedFields.add(pos);
-			viewTabuleiroBts[pos.getX()][pos.getY()]
-					.setIcon(new ImageIcon("src\\img\\background.png"));
+			if(pos.getPeca().getCor() == 0) {
+				viewTabuleiroBts[pos.getX()][pos.getY()]
+						.setIcon(new ImageIcon("src\\img\\background.png"));
+				
+			}else {
+				viewTabuleiroBts[pos.getX()][pos.getY()]
+						.setIcon(new ImageIcon("src\\img\\background.png"));
+			}
+				
+
 		}
 		
 	}
