@@ -20,6 +20,11 @@ public class Partida {
 	private List<Posicao> capturedPiecesTemp = new ArrayList<>();
 
 	private List<Posicao> possibleSelectedFields = new ArrayList<>();
+	
+	private int contWhitePieces;
+	
+	private int contBlackPieces;
+	
 
 	// INSTANCIA DO CONTROLLER
 	private ControllerPartida controller;
@@ -185,6 +190,12 @@ public class Partida {
 		for (Posicao[] lin : tabuleiro.getTabuleiro()) {
 			for (Posicao pos : lin) {
 				if (pos.getTemPeca()) {
+					
+
+					
+					
+					
+					
 					if (pos.getPeca().getCor() == corDaVez) {
 						selectedField = pos;
 						verifyPossibleMoviments();
@@ -281,11 +292,24 @@ public class Partida {
 		} else {
 			corDaVez = 1;
 		}
+		
 		int maxCapture = 0;
+		
+		contBlackPieces=0;
+		contWhitePieces=0;
 
 		for (Posicao[] lin : tabuleiro.getTabuleiro()) {
 			for (Posicao pos : lin) {
 				if (pos.getTemPeca()) {
+					
+					if(pos.getPeca().getCor() == 0) {
+						contBlackPieces++;
+					}else {
+						contWhitePieces++;
+					}
+					
+					
+					
 					if (pos.getPeca().getCor() == corDaVez) {
 						selectedField = pos;
 
@@ -323,7 +347,41 @@ public class Partida {
 		}
 		
 		
+		if(contBlackPieces == 0) {
+			endGame(0);
+		} else if(contWhitePieces == 0){
+			endGame(1);
+		}
+		
+		
+		
+		
 
+	}
+	
+	
+	
+	
+
+	private void endGame(int corVitoria) {
+		System.out.println("O jogador da cor " + corVitoria + " Venceu");
+		
+		if(player1.getCorPeca() == corVitoria) {
+			player1.setNumVitorias(1);
+			player1.setPontuation(3);
+					
+		} else {
+			player1.setNumVitorias(1);
+			player1.setPontuation(3);
+			
+		}
+		
+		
+		
+		controller.endGame(corVitoria);
+		
+		
+		
 	}
 
 	private void sendObrigatedCaptureInfo() {
@@ -608,25 +666,25 @@ public class Partida {
 		}
 	}
 
-	private void verifyNormalMovementRigTop() {
+	void verifyNormalMovementRigTop() {
 		if (tabuleiro.getTabuleiro()[selectedField.getX() + 1][selectedField.getY() - 1].getTemPeca() == false) {
 			possibleNormalMovements.add(new Posicao(selectedField.getX() + 1, selectedField.getY() - 1));
 		}
 	}
 
-	private void verifyNormalMovementLefTop() {
+	void verifyNormalMovementLefTop() {
 		if (tabuleiro.getTabuleiro()[selectedField.getX() - 1][selectedField.getY() - 1].getTemPeca() == false) {
 			possibleNormalMovements.add(new Posicao(selectedField.getX() - 1, selectedField.getY() - 1));
 		}
 	}
 
-	private void verifyNormalMovementRigBot() {
+	void verifyNormalMovementRigBot() {
 		if (tabuleiro.getTabuleiro()[selectedField.getX() + 1][selectedField.getY() + 1].getTemPeca() == false) {
 			possibleNormalMovements.add(new Posicao(selectedField.getX() + 1, selectedField.getY() + 1));
 		}
 	}
 
-	private void verifyNormalMovementLefBot() {
+	void verifyNormalMovementLefBot() {
 		if (tabuleiro.getTabuleiro()[selectedField.getX() - 1][selectedField.getY() + 1].getTemPeca() == false) {
 			possibleNormalMovements.add(new Posicao(selectedField.getX() - 1, selectedField.getY() + 1));
 		}
@@ -699,7 +757,7 @@ public class Partida {
 		return captureInfo;
 	}
 
-	private void verifyCaptureMovementRigTop(Posicao originPiece, int cor, List<Posicao> captureInfo,
+	void verifyCaptureMovementRigTop(Posicao originPiece, int cor, List<Posicao> captureInfo,
 			Posicao noVerify) {
 
 		if (tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1].getTemPeca() == true
@@ -737,7 +795,7 @@ public class Partida {
 		}
 	}
 
-	private void verifyCaptureMovementLefTop(Posicao originPiece, int cor, List<Posicao> captureInfo,
+	void verifyCaptureMovementLefTop(Posicao originPiece, int cor, List<Posicao> captureInfo,
 			Posicao noVerify) {
 
 		if (tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1].getTemPeca() == true
@@ -778,7 +836,7 @@ public class Partida {
 		}
 	}
 
-	private void verifyCaptureMovementRigBot(Posicao originPiece, int cor, List<Posicao> captureInfo,
+	void verifyCaptureMovementRigBot(Posicao originPiece, int cor, List<Posicao> captureInfo,
 			Posicao noVerify) {
 		if (tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1].getTemPeca() == true
 				&& tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1].getPeca().getCor() != cor) {
@@ -817,7 +875,7 @@ public class Partida {
 		}
 	}
 
-	private void verifyCaptureMovementLefBot(Posicao originPiece, int cor, List<Posicao> captureInfo,
+	void verifyCaptureMovementLefBot(Posicao originPiece, int cor, List<Posicao> captureInfo,
 			Posicao noVerify) {
 		if (tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1].getTemPeca() == true
 				&& tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1].getPeca().getCor() != cor) {

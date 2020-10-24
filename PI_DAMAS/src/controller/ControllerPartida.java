@@ -72,6 +72,13 @@ public class ControllerPartida {
 		view.sendObrigatedCaptureInfo(possibleSelectedFields);
 		
 	}
+
+
+
+	public void endGame(int corVitoria) {
+		view.endGame(corVitoria);
+		
+	}
 	
 
 }

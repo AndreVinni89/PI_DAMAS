@@ -1,5 +1,10 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -9,15 +14,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.ControllerPartida;
 import model.Player;
 import model.Posicao;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Toolkit;
 
 public class ViewPartida extends JFrame {
 
@@ -37,6 +40,9 @@ public class ViewPartida extends JFrame {
 
 	private JLabel player2;
 	
+	private Player p1;
+	private Player p2;
+	
 	private List<Posicao> SelectedFields = new ArrayList<>();
 	
 	// INSTANCIA DO CONTROLLER
@@ -51,6 +57,10 @@ public class ViewPartida extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ViewPartida.class.getResource("/img/black_piece_dama.png")));
 		setBackground(Color.GRAY);
 
+		this.p1 = p1;
+		this.p2 = p2;
+		
+		
 		this.controller = ctrl;
 		viewTabuleiroBts = new JButton[8][8];
 		int posIniX = 300;
@@ -105,6 +115,20 @@ public class ViewPartida extends JFrame {
 		moldura_horizontal2.setBounds(266, 465, 468, 31);
 		moldura_horizontal2.setIcon(new ImageIcon("src\\img\\horizontal_moldura.png"));
 		contentPane.add(moldura_horizontal2);
+		
+		//TESTE TODO 
+		//-------------------------------------------------------------------------------
+		JButton btnNewButton = new JButton("fim de jogo");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				endGame(1);
+			}
+		});
+
+		
+		btnNewButton.setBounds(54, 15, 89, 23);
+		contentPane.add(btnNewButton);
+		//-------------------------------------------------------------------------------;
 
 		for (int contY = 0; contY < 8; contY++) {
 			for (int contX = 0; contX < 8; contX++) {
@@ -364,6 +388,16 @@ public class ViewPartida extends JFrame {
 				
 
 		}
+		
+	}
+
+	public void endGame(int corVitoria) {
+		JOptionPane.showMessageDialog(null, p1.getNickname() +" Venceu!!!");
+		dispose();
+		
+		
+		
+		
 		
 	}
 }

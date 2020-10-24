@@ -33,7 +33,7 @@ public class Player {
 	}
 
 	public void setNumVitorias(int numVitorias) {
-		this.numVitorias = numVitorias;
+		this.numVitorias += numVitorias;
 	}
 
 	public int getNumDerrotas() {
@@ -41,7 +41,7 @@ public class Player {
 	}
 
 	public void setNumDerrotas(int numDerrotas) {
-		this.numDerrotas = numDerrotas;
+		this.numDerrotas += numDerrotas;
 	}
 
 	public int getNumEmpates() {
@@ -49,7 +49,7 @@ public class Player {
 	}
 
 	public void setNumEmpates(int numEmpates) {
-		this.numEmpates = numEmpates;
+		this.numEmpates += numEmpates;
 	}
 
 	public int getPontuation() {
@@ -57,7 +57,7 @@ public class Player {
 	}
 
 	public void setPontuation(int pontuation) {
-		this.pontuation = pontuation;
+		this.pontuation += pontuation;
 	}
 
 	public int getCorPeca() {
