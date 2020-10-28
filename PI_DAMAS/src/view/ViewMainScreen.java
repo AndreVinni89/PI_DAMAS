@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.ControllerMainScreen;
+import controller.ControllerRegistro;
+
 import java.awt.Color;
 import java.awt.Toolkit;
 
@@ -84,6 +86,8 @@ public class ViewMainScreen extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				//TODO NAVAGAÇÃO PARA A TELA DE CADASTRO
+				ControllerRegistro controller = new ControllerRegistro ();
+				controller.init(controller);
 				
 				
 				
