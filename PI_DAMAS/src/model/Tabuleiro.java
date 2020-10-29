@@ -24,7 +24,7 @@ public class Tabuleiro {
 						 * GUARDA NA POSIÇÃO DA MATRIZ UM OBJETO POSIÇÃO QUE CONTEM AS COORDENADAS E UM
 						 * OBJETO PECA IDENTIFICANDO-SE SUA COR SENDO 1 PARA BRANCO E 0 PARA PRETO
 						 */
-						tabuleiro[contX][contY] = new Posicao(contX, contY, new Peca(1));
+						tabuleiro[contX][contY] = new Posicao(contX, contY, new Peca(CorPeca.BRANCO));
 					}
 
 					else if (contY >= 5 && contY <= 7) {
@@ -32,7 +32,7 @@ public class Tabuleiro {
 						 * GUARDA NA POSIÇÃO DA MATRIZ UM OBJETO POSIÇÃO QUE CONTEM AS COORDENADAS E UM
 						 * OBJETO PECA IDENTIFICANDO-SE SUA COR SENDO 1 PARA BRANCO E 0 PARA PRETO
 						 */
-						tabuleiro[contX][contY] = new Posicao(contX, contY, new Peca(0));
+						tabuleiro[contX][contY] = new Posicao(contX, contY, new Peca(CorPeca.PRETO));
 
 					} else {
 						// CASO SEJA UMA POSIÇÃO QUE NAO CONTENHA UMA PEÇA É INSTANCIADO UMA POSIÇÃO SEM
@@ -61,8 +61,8 @@ public class Tabuleiro {
 		tabuleiro[origem.getX()][origem.getY()].setPeca(null);
 		tabuleiro[origem.getX()][origem.getY()].setTemPeca(false);
 
-		if ((destino.getY() == 0 && tabuleiro[destino.getX()][destino.getY()].getPeca().getCor() == 0)
-				|| (destino.getY() == 7 && tabuleiro[destino.getX()][destino.getY()].getPeca().getCor() == 1)) {
+		if ((destino.getY() == 0 && tabuleiro[destino.getX()][destino.getY()].getPeca().getCor() == CorPeca.PRETO)
+				|| (destino.getY() == 7 && tabuleiro[destino.getX()][destino.getY()].getPeca().getCor() == CorPeca.BRANCO)) {
 			tabuleiro[destino.getX()][destino.getY()].getPeca().setDama(true);
 		}
 
@@ -84,8 +84,8 @@ public class Tabuleiro {
 		}
 
 
-		if ((destino.getY() == 0 && tabuleiro[destino.getX()][destino.getY()].getPeca().getCor() == 0)
-				|| (destino.getY() == 7 && tabuleiro[destino.getX()][destino.getY()].getPeca().getCor() == 1)) {
+		if ((destino.getY() == 0 && tabuleiro[destino.getX()][destino.getY()].getPeca().getCor() == CorPeca.PRETO)
+				|| (destino.getY() == 7 && tabuleiro[destino.getX()][destino.getY()].getPeca().getCor() == CorPeca.BRANCO)) {
 			tabuleiro[destino.getX()][destino.getY()].getPeca().setDama(true);
 			System.out.println("VIROU DAMA");
 		}

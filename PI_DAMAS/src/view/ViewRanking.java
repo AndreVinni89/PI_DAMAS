@@ -1,23 +1,23 @@
 package view;
 
-import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JPasswordField;
-import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 public class ViewRanking extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;

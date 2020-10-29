@@ -7,9 +7,9 @@ public class Player {
 	private int numDerrotas;
 	private int numEmpates;
 	private int pontuation;
-	private int corPeca;
+	private CorPeca corPeca;
 	
-	public Player(String nickname, String password, int numVitorias, int numDerrotas, int numEmpates, int pontuation, int corPeca) {
+	public Player(String nickname, String password, int numVitorias, int numDerrotas, int numEmpates, int pontuation, CorPeca corPeca) {
 		super();
 		this.nickname = nickname;
 		this.setPassword(password);
@@ -60,11 +60,11 @@ public class Player {
 		this.pontuation += pontuation;
 	}
 
-	public int getCorPeca() {
+	public CorPeca getCorPeca() {
 		return corPeca;
 	}
 
-	public void setCorPeca(int corPeca) {
+	public void setCorPeca(CorPeca corPeca) {
 		this.corPeca = corPeca;
 	}
 

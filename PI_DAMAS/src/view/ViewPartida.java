@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.ControllerPartida;
+import model.CorPeca;
 import model.Player;
 import model.Posicao;
 
@@ -121,7 +122,7 @@ public class ViewPartida extends JFrame {
 		JButton btnNewButton = new JButton("fim de jogo");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				endGame(1);
+				endGame(CorPeca.BRANCO);
 			}
 		});
 
@@ -166,7 +167,7 @@ public class ViewPartida extends JFrame {
 						// SE JA HAVIAM MOVIMENTOS COM AS POSIÇÕES VISUALMENTE ALTERADAS ZERAM-SE ESSA
 						// ALTERAÇÕES
 						if (movimentos.size() > 0) {
-							if (movimentos.get(0).getPeca().getCor() == 0) {
+							if (movimentos.get(0).getPeca().getCor() == CorPeca.PRETO) {
 								if (movimentos.get(0).getPeca().getDama() == true) {
 									viewTabuleiroBts[movimentos.get(0).getX()][movimentos.get(0).getY()]
 											.setIcon(new ImageIcon("src\\img\\black_piece_dama.png"));
@@ -193,7 +194,7 @@ public class ViewPartida extends JFrame {
 						
 						
 						for(Posicao pos: SelectedFields) {
-							if(pos.getPeca().getCor() == 0) {
+							if(pos.getPeca().getCor() == CorPeca.PRETO) {
 								viewTabuleiroBts[pos.getX()][pos.getY()]
 										.setIcon(new ImageIcon("src\\img\\background.png"));
 								
@@ -215,7 +216,7 @@ public class ViewPartida extends JFrame {
 
 						// COM AS ALTERAÇÕES RECEBIDAS ALTERA-SE AS PEÇA VISUALMENTE
 						if (movimentos.size() > 0) {
-							if (movimentos.get(0).getPeca().getCor() == 0) {
+							if (movimentos.get(0).getPeca().getCor() == CorPeca.PRETO) {
 								if (movimentos.get(0).getPeca().getDama() == true) {
 									viewTabuleiroBts[movimentos.get(0).getX()][movimentos.get(0).getY()]
 											.setIcon(new ImageIcon("src\\img\\black_piece_dama_selected.png"));
@@ -271,7 +272,7 @@ public class ViewPartida extends JFrame {
 
 	public void movePiece(Posicao origem, Posicao destino) {
 		viewTabuleiroBts[origem.getX()][origem.getY()].setIcon(new ImageIcon("src\\img\\black_field.png"));
-		if (origem.getPeca().getCor() == 0) {
+		if (origem.getPeca().getCor() == CorPeca.PRETO) {
 			if (destino.getY() == 0) {
 				viewTabuleiroBts[destino.getX()][destino.getY()]
 						.setIcon(new ImageIcon("src\\img\\black_piece_dama.png"));
@@ -288,7 +289,7 @@ public class ViewPartida extends JFrame {
 			indicadorCorAtual.setText("VEZ DAS PEÇAS BRANCAS");
 			player2.setForeground(Color.GREEN);
 			player1.setForeground(Color.WHITE);
-		} else if (origem.getPeca().getCor() == 1) {
+		} else if (origem.getPeca().getCor() == CorPeca.BRANCO) {
 			if (destino.getY() == 7) {
 				viewTabuleiroBts[destino.getX()][destino.getY()]
 						.setIcon(new ImageIcon("src\\img\\white_piece_dama.png"));
@@ -319,7 +320,7 @@ public class ViewPartida extends JFrame {
 		
 		if(SelectedFields.size() > 0) {
 			for(Posicao pos: SelectedFields) {
-				if(origem.getPeca().getCor() == 1) {
+				if(origem.getPeca().getCor() == CorPeca.BRANCO) {
 					viewTabuleiroBts[pos.getX()][pos.getY()]
 							.setIcon(new ImageIcon("src\\img\\white_piece.png"));
 				} else {
@@ -334,7 +335,7 @@ public class ViewPartida extends JFrame {
 		
 		viewTabuleiroBts[origem.getX()][origem.getY()].setIcon(new ImageIcon("src\\img\\black_field.png"));
 		
-		if (origem.getPeca().getCor() == 0) {
+		if (origem.getPeca().getCor() == CorPeca.PRETO) {
 			if (destino.getY() == 0) {
 				viewTabuleiroBts[destino.getX()][destino.getY()]
 						.setIcon(new ImageIcon("src\\img\\black_piece_dama.png"));
@@ -351,7 +352,7 @@ public class ViewPartida extends JFrame {
 			player2.setForeground(Color.GREEN);
 			player1.setForeground(Color.WHITE);
 			
-		} else if (origem.getPeca().getCor() == 1) {
+		} else if (origem.getPeca().getCor() == CorPeca.BRANCO) {
 			if (destino.getY() == 7) {
 				viewTabuleiroBts[destino.getX()][destino.getY()]
 						.setIcon(new ImageIcon("src\\img\\white_piece_dama.png"));
@@ -377,7 +378,7 @@ public class ViewPartida extends JFrame {
 		SelectedFields.clear();
 		for(Posicao pos: possibleSelectedFields) {
 			SelectedFields.add(pos);
-			if(pos.getPeca().getCor() == 0) {
+			if(pos.getPeca().getCor() == CorPeca.PRETO) {
 				viewTabuleiroBts[pos.getX()][pos.getY()]
 						.setIcon(new ImageIcon("src\\img\\background.png"));
 				
@@ -391,7 +392,7 @@ public class ViewPartida extends JFrame {
 		
 	}
 
-	public void endGame(int corVitoria) {
+	public void endGame(CorPeca corVitoria) {
 		JOptionPane.showMessageDialog(null, p1.getNickname() +" Venceu!!!");
 		dispose();
 		

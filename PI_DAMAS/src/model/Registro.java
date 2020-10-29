@@ -20,7 +20,7 @@ public class Registro {
 	public void registrar(String nickname, String senha, String senhaconfirm) {
 		// TODO Auto-generated method stub
 		String[] lines = new String[] {nickname, ";", senha, "\n"}; 
-		boolean successo = new File("C:\\" + "PI_Damas").mkdir();
+		new File("C:\\" + "PI_Damas").mkdir();
 		String path = "C:\\PI_Damas\\users";
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(path,true))) {
 

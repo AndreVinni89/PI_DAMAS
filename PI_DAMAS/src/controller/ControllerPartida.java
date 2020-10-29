@@ -3,6 +3,7 @@ package controller;
 import java.awt.EventQueue;
 import java.util.List;
 
+import model.CorPeca;
 import model.Partida;
 import model.Player;
 import model.Posicao;
@@ -14,8 +15,8 @@ public class ControllerPartida {
 	//INSTANCIA DA VIEW
 	private ViewPartida view;
 	
-	private Player player1 = new Player("Andre", "123", 5, 3, 2, 500, 0);
-	private Player player2 = new Player("Adailson", "123", 3, 2, 0, 1000, 1);
+	private Player player1 = new Player("Andre", "123", 5, 3, 2, 500, CorPeca.PRETO);
+	private Player player2 = new Player("Adailson", "123", 3, 2, 0, 1000, CorPeca.BRANCO);
 
 	public void init(ControllerPartida ctrl) {
 		//CRIANDO A TELA DO JOGO
@@ -75,7 +76,7 @@ public class ControllerPartida {
 
 
 
-	public void endGame(int corVitoria) {
+	public void endGame(CorPeca corVitoria) {
 		view.endGame(corVitoria);
 		
 	}
