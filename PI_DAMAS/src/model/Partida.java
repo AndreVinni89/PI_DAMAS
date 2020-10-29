@@ -197,16 +197,15 @@ public class Partida {
 		}
 
 		int maxCapture = 0;
-
+		Boolean noMoves = true;
+		
+		
+		possibleCaptureMovements.clear();
+		possibleNormalMovements.clear();
+		
 		for (Posicao[] lin : tabuleiro.getTabuleiro()) {
 			for (Posicao pos : lin) {
 				if (pos.getTemPeca()) {
-					
-
-					
-					
-					
-					
 					if (pos.getPeca().getCor() == corDaVez) {
 						selectedField = pos;
 						verifyPossibleMoviments();
@@ -227,6 +226,14 @@ public class Partida {
 						}
 					}
 				}
+
+				if(possibleCaptureMovements.size() > 0 || possibleNormalMovements.size() > 0) {
+
+					noMoves = false;
+				}
+
+				
+				
 				possibleCaptureMovements.clear();
 				possibleNormalMovements.clear();
 				capturedPieces.clear();
@@ -242,6 +249,13 @@ public class Partida {
 
 		if(contEmpateMoves == 20) {
 			endGame(null, true);
+		}
+		if(noMoves == true) {
+			if(corDaVez == CorPeca.PRETO) {
+				endGame(CorPeca.BRANCO , false);
+			} else {
+				endGame(CorPeca.PRETO, false);
+			}	
 		}
 		
 		
@@ -296,6 +310,8 @@ public class Partida {
 
 		// LIMPA A LISTA DE PEÇAS CAPTURADAS
 		capturedPieces.clear();
+		possibleCaptureMovements.clear();
+		possibleNormalMovements.clear();
 		// ZERA AS O CONTCAPTURED DA LSTA DE CAPTURA
 		for (Posicao[] lin : tabuleiro.getTabuleiro()) {
 			for (Posicao pos : lin) {
@@ -310,6 +326,7 @@ public class Partida {
 			corDaVez = CorPeca.BRANCO;
 		}
 		
+		Boolean noMoves = true;
 		int maxCapture = 0;
 		
 		contBlackPieces=0;
@@ -349,6 +366,14 @@ public class Partida {
 
 					}
 				}
+
+				if(possibleCaptureMovements.size() > 0 || possibleNormalMovements.size() > 0) {
+					System.out.println("Caiu dentro");
+					noMoves = false;
+				}
+
+				
+				
 				possibleCaptureMovements.clear();
 				possibleNormalMovements.clear();
 				selectedField = null;
@@ -370,6 +395,13 @@ public class Partida {
 			endGame(CorPeca.BRANCO, false);
 		}
 		
+		if(noMoves == true) {
+			if(corDaVez == CorPeca.PRETO) {
+				endGame(CorPeca.BRANCO , false);
+			} else {
+				endGame(CorPeca.PRETO, false);
+			}	
+		}
 		
 		
 		
