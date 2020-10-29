@@ -24,7 +24,6 @@ public class Partida {
 	private int contWhitePieces;
 	
 	private int contBlackPieces;
-	
 
 	// INSTANCIA DO CONTROLLER
 	private ControllerPartida controller;
@@ -35,6 +34,16 @@ public class Partida {
 	private Player player1;
 	private Player player2;
 
+	private int contEmpateMoves = 0;
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// CONSTRUTOR
 	public Partida(ControllerPartida controller, Player p1, Player p2) {
 		// RECEBE A INSTANCIA DO CONTROLLER
@@ -174,6 +183,8 @@ public class Partida {
 
 	// COMANDO DE MOVER PEÇA
 	private void movePiece(Posicao origem, Posicao destino) {
+		contEmpateMoves++;
+		System.out.println("Contagens de movimentos sem captura: " + contEmpateMoves);
 		// MANDA PARA O CONTROLLER E O CONTROLLER MANDA PARA A VIEW
 		controller.movePiece(origem, destino);
 		tabuleiro.movePiece(origem, destino);
@@ -229,10 +240,16 @@ public class Partida {
 		}
 		
 
+		if(contEmpateMoves == 20) {
+			endGame(null, true);
+		}
+		
+		
 	}
 
 	// COMANDO DE CAPTURAR PEÇA
 	private void capturePiece(Posicao origem, Posicao destino) {
+		contEmpateMoves = 0;
 		int capturedPieceX;
 		int capturedPieceY;
 		possibleSelectedFields.clear();
@@ -348,9 +365,9 @@ public class Partida {
 		
 		
 		if(contBlackPieces == 0) {
-			endGame(CorPeca.PRETO);
+			endGame(CorPeca.PRETO, false);
 		} else if(contWhitePieces == 0){
-			endGame(CorPeca.BRANCO);
+			endGame(CorPeca.BRANCO, false);
 		}
 		
 		
@@ -363,22 +380,34 @@ public class Partida {
 	
 	
 
-	private void endGame(CorPeca corVitoria) {
-		System.out.println("O jogador da cor " + corVitoria + " Venceu");
+	private void endGame(CorPeca corVitoria, Boolean empate) {
 		
-		if(player1.getCorPeca() == corVitoria) {
-			player1.setNumVitorias(1);
-			player1.setPontuation(3);
-					
-		} else {
-			player1.setNumVitorias(1);
-			player1.setPontuation(3);
+		if(empate) {
+			System.out.println("Partida empatada");
+			player1.setNumEmpates(1);
+			player2.setNumEmpates(1);
+			player1.setPontuation(1);
+			player2.setPontuation(1);
 			
+			controller.endGame(corVitoria, empate);
+			
+		} else {
+			System.out.println("O jogador da cor " + corVitoria + " Venceu");
+			
+			if(player1.getCorPeca() == corVitoria) {
+				player1.setNumVitorias(1);
+				player1.setPontuation(3);
+						
+			} else {
+				player1.setNumVitorias(1);
+				player1.setPontuation(3);
+				
+			}
+			controller.endGame(corVitoria, empate);
 		}
 		
-		
-		
-		controller.endGame(corVitoria);
+
+
 		
 		
 		

@@ -76,8 +76,8 @@ public class ControllerPartida {
 
 
 
-	public void endGame(CorPeca corVitoria) {
-		view.endGame(corVitoria);
+	public void endGame(CorPeca corVitoria, Boolean empate) {
+		view.endGame(corVitoria, empate);
 		
 	}
 	

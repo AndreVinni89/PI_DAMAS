@@ -122,7 +122,7 @@ public class ViewPartida extends JFrame {
 		JButton btnNewButton = new JButton("fim de jogo");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				endGame(CorPeca.BRANCO);
+				endGame(CorPeca.BRANCO, true);
 			}
 		});
 
@@ -392,8 +392,14 @@ public class ViewPartida extends JFrame {
 		
 	}
 
-	public void endGame(CorPeca corVitoria) {
-		JOptionPane.showMessageDialog(null, p1.getNickname() +" Venceu!!!");
+	public void endGame(CorPeca corVitoria, Boolean empate) {
+		if(empate) {
+			JOptionPane.showMessageDialog(null, "PARTIDA EMPATADA!!!");
+		}else {
+			JOptionPane.showMessageDialog(null, p1.getNickname() +" VENCEU!!!");
+		}
+		
+
 		dispose();
 		
 		
