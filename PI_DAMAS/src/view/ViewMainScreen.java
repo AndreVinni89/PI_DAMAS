@@ -32,6 +32,7 @@ public class ViewMainScreen extends JFrame {
 
 	
 	public ViewMainScreen() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("DAMAS");
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ViewMainScreen.class.getResource("/img/black_piece_dama.png")));

@@ -194,15 +194,27 @@ public class ViewPartida extends JFrame {
 						
 						
 						for(Posicao pos: SelectedFields) {
-							if(pos.getPeca().getCor() == CorPeca.PRETO) {
-								viewTabuleiroBts[pos.getX()][pos.getY()]
-										.setIcon(new ImageIcon("src\\img\\background.png"));
-								
-							}else {
-								viewTabuleiroBts[pos.getX()][pos.getY()]
-										.setIcon(new ImageIcon("src\\img\\background.png"));
+							if(!pos.getPeca().getDama()) {
+								if(pos.getPeca().getCor() == CorPeca.PRETO) {
+									viewTabuleiroBts[pos.getX()][pos.getY()]
+											.setIcon(new ImageIcon("src\\img\\black_piece_capture.png"));
+									
+								}else {
+									viewTabuleiroBts[pos.getX()][pos.getY()]
+											.setIcon(new ImageIcon("src\\img\\white_piece_capture.png"));
+								}
 							}
-								
+							
+							else {
+								if(pos.getPeca().getCor() == CorPeca.PRETO) {
+									viewTabuleiroBts[pos.getX()][pos.getY()]
+											.setIcon(new ImageIcon("src\\img\\black_piece_dama_capture.png"));
+									
+								}else {
+									viewTabuleiroBts[pos.getX()][pos.getY()]
+											.setIcon(new ImageIcon("src\\img\\white_piece_dama_capture.png"));
+								}
+							}
 	
 						}
 					
@@ -378,13 +390,26 @@ public class ViewPartida extends JFrame {
 		SelectedFields.clear();
 		for(Posicao pos: possibleSelectedFields) {
 			SelectedFields.add(pos);
-			if(pos.getPeca().getCor() == CorPeca.PRETO) {
-				viewTabuleiroBts[pos.getX()][pos.getY()]
-						.setIcon(new ImageIcon("src\\img\\background.png"));
-				
-			}else {
-				viewTabuleiroBts[pos.getX()][pos.getY()]
-						.setIcon(new ImageIcon("src\\img\\background.png"));
+			if (!pos.getPeca().getDama()) {
+				if(pos.getPeca().getCor() == CorPeca.PRETO) {
+					viewTabuleiroBts[pos.getX()][pos.getY()]
+							.setIcon(new ImageIcon("src\\img\\black_piece_capture.png"));
+					
+				}else {
+					viewTabuleiroBts[pos.getX()][pos.getY()]
+							.setIcon(new ImageIcon("src\\img\\white_piece_capture.png"));
+				}
+			}
+			
+			else {
+				if(pos.getPeca().getCor() == CorPeca.PRETO) {
+					viewTabuleiroBts[pos.getX()][pos.getY()]
+							.setIcon(new ImageIcon("src\\img\\black_piece_dama_capture.png"));
+					
+				}else {
+					viewTabuleiroBts[pos.getX()][pos.getY()]
+							.setIcon(new ImageIcon("src\\img\\white_piece_dama_capture.png"));
+				}
 			}
 				
 

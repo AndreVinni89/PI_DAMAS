@@ -9,7 +9,7 @@ public class Player {
 	private int pontuation;
 	private CorPeca corPeca;
 	
-	public Player(String nickname, String password, int numVitorias, int numDerrotas, int numEmpates, int pontuation, CorPeca corPeca) {
+	public Player(String nickname, String password, int numVitorias, int numDerrotas, int numEmpates, int pontuation) {
 		super();
 		this.nickname = nickname;
 		this.setPassword(password);
@@ -17,7 +17,6 @@ public class Player {
 		this.numDerrotas = numDerrotas;
 		this.numEmpates = numEmpates;
 		this.pontuation = pontuation;
-		this.corPeca = corPeca;
 	}
 
 	public String getNickname() {

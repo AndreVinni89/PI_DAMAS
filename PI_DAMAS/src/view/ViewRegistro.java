@@ -78,14 +78,19 @@ public class ViewRegistro extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				if (nickname.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "PREENCHA O CAMPO NICKNAME");
+					nickname.requestFocus();
 				} else if (senha.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "PREENCHA O CAMPO DE SENHA");
+					senha.requestFocus();
 				} else if (senhaconfirm.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "PREENCHA O CAMPO DE CONFIRMAÇÃO DE SENHA");
+					senhaconfirm.requestFocus();
 				}
 
 				else if (!senhaconfirm.getText().equals(senha.getText())) {
 					JOptionPane.showMessageDialog(null, "AS SENHAS NAO SÃO IGUAIS!");
+					senhaconfirm.setText("");
+					senhaconfirm.requestFocus();
 				}
 				else {
 					Boolean result = controller.registro(nickname.getText(), senha.getText());
