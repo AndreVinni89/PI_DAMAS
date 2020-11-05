@@ -19,9 +19,6 @@ public class ViewRanking extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
 	private JTable table;
 
 	/**
@@ -33,6 +30,7 @@ public class ViewRanking extends JFrame {
 				try {
 					ViewRanking frame = new ViewRanking();
 					frame.setVisible(true);
+					frame.setSize(1024, 576);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -52,10 +50,12 @@ public class ViewRanking extends JFrame {
 		contentPane.setLayout(null);
 		
 		table = new JTable();
+		String list[] = {"1", "2", "3", "4", "5"};
+		
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null},
-				{"DFSD", "FDSFDS", "SDFFSD", "FSDFSD", null},
+				{"NICK", "VITORIAS", "DERROTAS", "EMPATES", "PONTUCOES"},
+				{list},
 				{null, null, null, null, null},
 				{null, null, null, null, null},
 				{null, null, null, null, null},
@@ -65,11 +65,11 @@ public class ViewRanking extends JFrame {
 				{null, null, null, null, null},
 			},
 			new String[] {
-				"NICK", "VITORIAS", "DERROTAS", "EMPATES", "PONTUA\u00C7\u00C3O"
+				"NICK", "VITORIAS", "DERROTAS", "EMPATES", "PONTUCOES"
 			}
 		));
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
-		table.setBounds(71, 42, 306, 177);
+		table.setBounds(70, 40, 884, 456);
 		contentPane.add(table);
 		
 

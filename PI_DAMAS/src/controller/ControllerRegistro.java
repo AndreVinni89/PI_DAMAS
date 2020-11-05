@@ -25,8 +25,8 @@ public class ControllerRegistro {
 		});
 	}
 
-	public void registro(String nickname, String senha, String senhaconfirm) {
+	public Boolean registro(String nickname, String senha) {
 		// TODO Auto-generated method stub
-		registro.registrar(nickname, senha, senhaconfirm);
+		return registro.registrar(nickname, senha);
 	}
 }
