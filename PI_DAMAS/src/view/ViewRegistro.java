@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -32,6 +34,8 @@ public class ViewRegistro extends JFrame {
 	 * Launch the application.
 	 */
 	private ControllerRegistro controller;
+
+	private boolean nickExist = false;
 
 	/**
 	 * Create the frame.
@@ -76,7 +80,15 @@ public class ViewRegistro extends JFrame {
 		cadastro.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if (nickname.getText().equals("")) {
+				if (nickname.getText().contains(";")) {
+					JOptionPane.showMessageDialog(null, "O NOME NÃO PODE CONTER O CARACTERE ; ");
+					nickname.setText("");
+					nickname.requestFocus();
+				} else if (senha.getText().contains(";")) {
+					JOptionPane.showMessageDialog(null, "A SENHA NÃO PODE CONTER O CARACTERE ; ");
+					senha.setText("");
+					senha.requestFocus();
+				} else if (nickname.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "PREENCHA O CAMPO NICKNAME");
 					nickname.requestFocus();
 				} else if (senha.getText().equals("")) {
@@ -85,21 +97,28 @@ public class ViewRegistro extends JFrame {
 				} else if (senhaconfirm.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "PREENCHA O CAMPO DE CONFIRMAÇÃO DE SENHA");
 					senhaconfirm.requestFocus();
-				}
-
-				else if (!senhaconfirm.getText().equals(senha.getText())) {
+				} else if(nickname.getText().contains(" ")){
+					JOptionPane.showMessageDialog(null, "O NOME NÃO PODE CONTER ESPAÇOES EM BRANCO ");
+					nickname.setText(nickname.getText().replaceAll(" ", ""));
+					nickname.requestFocus();
+				} else if(senha.getText().contains(" ")){
+					JOptionPane.showMessageDialog(null, "A SENHA NÃO PODE CONTER ESPAÇOES EM BRANCO ");
+					senha.setText(senha.getText().replaceAll(" ", ""));
+					senha.requestFocus();
+				} else if (!senhaconfirm.getText().equals(senha.getText())) {
 					JOptionPane.showMessageDialog(null, "AS SENHAS NAO SÃO IGUAIS!");
 					senhaconfirm.setText("");
 					senhaconfirm.requestFocus();
-				}
-				else {
-					Boolean result = controller.registro(nickname.getText(), senha.getText());
+				} else {
+					Boolean result = controller.registro(nickname.getText().trim(), senha.getText().trim());
 					if (result) {
 						JOptionPane.showMessageDialog(null, "REGISTRO REALIZADO COM SUCESSO!!!");
-					} else {
+						dispose();
+					} else if(!nickExist){
 						JOptionPane.showMessageDialog(null, "FALHA NO REGISTRO TENTE NOVAMENTE");
 					}
-					dispose();
+					nickExist = true;
+					
 				}
 
 			}
@@ -109,4 +128,10 @@ public class ViewRegistro extends JFrame {
 
 	}
 
+	public void nickExist() {
+		nickExist  = true;
+		JOptionPane.showMessageDialog(null, "O NICK JÁ EXISTE TENTE NOVAMENTE");
+		nickname.setText("");
+		nickname.requestFocus();
+	}
 }

@@ -29,4 +29,9 @@ public class ControllerRegistro {
 		// TODO Auto-generated method stub
 		return registro.registrar(nickname, senha);
 	}
+
+	public void nickExist() {
+		frame.nickExist();
+		
+	}
 }

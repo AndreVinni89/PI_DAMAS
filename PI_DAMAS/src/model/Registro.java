@@ -1,10 +1,7 @@
 package model;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
+import java.util.List;
 import controller.ControllerRegistro;
 
 public class Registro {
@@ -17,24 +14,19 @@ public class Registro {
 	}
 
 	public Boolean registrar(String nickname, String senha) {
-		try {
-			String[] lines = new String[] { nickname, ";", senha, ";", "0", ";", "0", ";", "0", ";", "0", "\n" };
-			new File("C:\\" + "PI_Damas").mkdir();
-			String path = "C:\\PI_Damas\\users";
-			try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
-				for (String line : lines) {
-					bw.write(line);
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-
+		List<Player> playersRegistrados = ConnectionUsersData.readUserData();
+		
+		
+		//VERIFICANDO SE O NICKNAME JA ESTA REGISTRADO
+		for (Player p : playersRegistrados) {
+			if (p.getNickname().equals(nickname)) {
+				controller.nickExist();
+				return false;
 			}
-
-		} catch (Exception e) {
-			return false;
 		}
-		System.out.println("Conteudo inserido no arquivo");
-		return true;
+
+		return ConnectionUsersData.registerUser(playersRegistrados, nickname, senha);
+		
 	}
 
 }

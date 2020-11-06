@@ -37,13 +37,6 @@ public class Partida {
 	private int contEmpateMoves = 0;
 	
 	
-	
-	
-	
-	
-	
-	
-	
 	// CONSTRUTOR
 	public Partida(ControllerPartida controller, Player p1, Player p2) {
 		// RECEBE A INSTANCIA DO CONTROLLER
@@ -415,7 +408,7 @@ public class Partida {
 	private void endGame(CorPeca corVitoria, Boolean empate) {
 		
 		if(empate) {
-			System.out.println("Partida empatada");
+			System.out.println("PARTIDA EMPATADA");
 			player1.setNumEmpates(1);
 			player2.setNumEmpates(1);
 			player1.setPontuation(1);
@@ -429,17 +422,29 @@ public class Partida {
 			if(player1.getCorPeca() == corVitoria) {
 				player1.setNumVitorias(1);
 				player1.setPontuation(3);
+				
+				
+				player2.setNumDerrotas(1);
+				
 						
 			} else {
-				player1.setNumVitorias(1);
-				player1.setPontuation(3);
+				player2.setNumVitorias(1);
+				player2.setPontuation(3);
+				player1.setNumDerrotas(1);
 				
 			}
 			controller.endGame(corVitoria, empate);
 		}
 		
-
-
+		
+		
+		ConnectionUsersData.attUserData(player2);
+		
+		
+		ConnectionUsersData.attUserData(player1);
+		
+		
+	
 		
 		
 		
@@ -966,6 +971,13 @@ public class Partida {
 				}
 			}
 		}
+	}
+
+	
+	
+	public void fim(CorPeca branco, boolean b) {
+		endGame(branco, b);
+		
 	}
 
 }

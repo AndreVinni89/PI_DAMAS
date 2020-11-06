@@ -1,8 +1,6 @@
 package main;
 
 import java.awt.EventQueue;
-
-
 import view.ViewMainScreen;
 
 public class Main {

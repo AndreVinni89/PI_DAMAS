@@ -81,5 +81,13 @@ public class Player {
 	}
 	
 	
+	public void attData(int numVitoria, int numEmpate, int numDerrota, int pontuation) {
+		this.numVitorias = numVitoria;
+		this.numDerrotas = numDerrota;
+		this.numEmpates = numEmpate;
+		this.pontuation = pontuation;
+		
+	}
+	
 	
 }

@@ -52,7 +52,6 @@ public class ControllerLogin {
 
 	public void cancelarPartida() {
 		ctrlpartida.cancelarPartida();
-		System.out.println("8===D");
 	}
 
 	public void fecharjanela() {

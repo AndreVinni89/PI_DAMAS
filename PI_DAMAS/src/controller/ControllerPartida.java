@@ -101,4 +101,9 @@ public class ControllerPartida {
 		ctrlogin2.fecharjanela();
 	}
 
+	public void fim(CorPeca branco, boolean b) {
+		game.fim(branco, b);
+		
+	}
+
 }

@@ -120,14 +120,17 @@ public class ViewPartida extends JFrame {
 		//TESTE TODO 
 		//-------------------------------------------------------------------------------
 		JButton btnNewButton = new JButton("fim de jogo");
+
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				endGame(CorPeca.BRANCO, true);
+				
+				controller.fim(CorPeca.BRANCO, true);
+
 			}
 		});
 
 		
-		btnNewButton.setBounds(54, 15, 89, 23);
+		btnNewButton.setBounds(50, 15, 89, 23);
 		contentPane.add(btnNewButton);
 		//-------------------------------------------------------------------------------;
 
@@ -421,7 +424,16 @@ public class ViewPartida extends JFrame {
 		if(empate) {
 			JOptionPane.showMessageDialog(null, "PARTIDA EMPATADA!!!");
 		}else {
-			JOptionPane.showMessageDialog(null, p1.getNickname() +" VENCEU!!!");
+			
+			if(corVitoria == p1.getCorPeca()) {
+				JOptionPane.showMessageDialog(null, p1.getNickname() +" VENCEU!!!");
+			} else {
+				JOptionPane.showMessageDialog(null, p2.getNickname() +" VENCEU!!!");
+			}
+			
+			
+			
+			
 		}
 		
 
