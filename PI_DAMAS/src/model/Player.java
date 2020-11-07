@@ -9,7 +9,7 @@ public class Player {
 	private int pontuation;
 	private CorPeca corPeca;
 	
-	public Player(String nickname, String password, int numVitorias, int numDerrotas, int numEmpates, int pontuation) {
+	public Player(String nickname, String password, int numVitorias,  int numEmpates, int numDerrotas, int pontuation) {
 		super();
 		this.nickname = nickname;
 		this.setPassword(password);
@@ -78,6 +78,11 @@ public class Player {
 	@Override
 	public String toString() {
 		return nickname + " PONTUAÇÃO: " + pontuation;
+	}
+	
+
+	public String toString2() {
+		return nickname + " PONTUAÇÃO: " + pontuation + "Vitorias " + numVitorias+ "empates " + numEmpates + "derrotas " + numDerrotas;
 	}
 	
 	

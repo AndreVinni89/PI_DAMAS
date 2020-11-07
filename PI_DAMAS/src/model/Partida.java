@@ -438,10 +438,10 @@ public class Partida {
 		
 		
 		
-		ConnectionUsersData.attUserData(player2);
+		ConnectionUsersData.attUserData(player1, player2);
+
 		
 		
-		ConnectionUsersData.attUserData(player1);
 		
 		
 	
