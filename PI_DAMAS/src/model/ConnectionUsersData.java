@@ -84,7 +84,7 @@ public abstract class ConnectionUsersData {
 		System.out.println("Depois da modificação:");
 		for(Player p: playersRegistrados) {	
 			
-			System.out.println(p.toString2());
+
 			
 			String[] lines = new String[] { p.getNickname(), ";", p.getPassword(), ";",
 					Integer.toString(p.getNumVitorias()), ";", Integer.toString(p.getNumEmpates()), ";",

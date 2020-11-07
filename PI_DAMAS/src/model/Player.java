@@ -1,6 +1,6 @@
 package model;
 
-public class Player {
+public class Player implements Comparable<Player>{
 	private String nickname;
 	private String password;
 	private int numVitorias;
@@ -8,6 +8,10 @@ public class Player {
 	private int numEmpates;
 	private int pontuation;
 	private CorPeca corPeca;
+	
+	
+
+	
 	
 	public Player(String nickname, String password, int numVitorias,  int numEmpates, int numDerrotas, int pontuation) {
 		super();
@@ -80,10 +84,6 @@ public class Player {
 		return nickname + " PONTUAÇÃO: " + pontuation;
 	}
 	
-
-	public String toString2() {
-		return nickname + " PONTUAÇÃO: " + pontuation + "Vitorias " + numVitorias+ "empates " + numEmpates + "derrotas " + numDerrotas;
-	}
 	
 	
 	public void attData(int numVitoria, int numEmpate, int numDerrota, int pontuation) {
@@ -93,6 +93,20 @@ public class Player {
 		this.pontuation = pontuation;
 		
 	}
+	
+    public int compareTo(Player outra) {
+        if (this.pontuation < outra.pontuation) {
+          return 1;
+        }
+
+        if (this.pontuation> outra.pontuation) {
+          return -1;
+        }
+
+        return 0;
+      }
+	
+	
 	
 	
 }

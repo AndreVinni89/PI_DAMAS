@@ -15,5 +15,19 @@ public class ControllerMainScreen {
 		ctrlGame.init(ctrlGame);
 		
 	}
+
+	public void register() {
+		ControllerRegistro controller = new ControllerRegistro();
+		controller.init(controller);
+	
+		
+	}
+
+	public void ranking() {
+		ControllerRanking controller = new ControllerRanking();
+		controller.init(controller);
+		
+		
+	}
 	
 }

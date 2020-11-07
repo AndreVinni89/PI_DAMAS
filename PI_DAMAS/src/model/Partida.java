@@ -436,18 +436,7 @@ public class Partida {
 			controller.endGame(corVitoria, empate);
 		}
 		
-		
-		
 		ConnectionUsersData.attUserData(player1, player2);
-
-		
-		
-		
-		
-	
-		
-		
-		
 	}
 
 	private void sendObrigatedCaptureInfo() {

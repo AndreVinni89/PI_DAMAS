@@ -67,7 +67,7 @@ public class ViewMainScreen extends JFrame {
 		btnRanking.setBackground(Color.DARK_GRAY);
 		btnRanking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//TODO NAVEGAÇÃO PARA A TELA DE RANKING
+				controller.ranking();
 			}
 		});
 		btnRanking.setBounds(418, 330, 188, 41);
@@ -87,12 +87,7 @@ public class ViewMainScreen extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				//TODO NAVAGAÇÃO PARA A TELA DE CADASTRO
-				ControllerRegistro controller = new ControllerRegistro ();
-				controller.init(controller);
-				
-				
-				
-				
+				controller.register();
 			}
 		});
 		btnCadastrar.setBounds(418, 240, 188, 41);
