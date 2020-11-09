@@ -94,7 +94,12 @@ public class ViewLogin extends JFrame {
 		cancelar.setBounds(156, 237, 126, 23);
 		contentPane.add(cancelar);
 	}
-	public void windowClosing(WindowEvent e) {
-		ctrlogin.cancelarPartida();
+
+	public void usuarioJaLogado(String nickname2) {
+		JOptionPane.showMessageDialog(null, "O USUÁRIO JA LOGOU NESSA PARTIDA");
+		
 	}
+
+	
+	
 }

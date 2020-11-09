@@ -56,6 +56,18 @@ public class ControllerLogin {
 
 	public void fecharjanela() {
 		frame.dispose();
+	}
+
+	public Player getLogedPlayer() {
+		return ctrlpartida.getPlayer1();
 		
 	}
+
+	public void usuarioJaLogado(String nickname) {
+		frame.usuarioJaLogado(nickname);
+		
+	}
+	
+	
+	
 }

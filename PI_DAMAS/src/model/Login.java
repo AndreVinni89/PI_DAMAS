@@ -18,6 +18,16 @@ public class Login {
 		List<Player> playersRegistrados = ConnectionUsersData.readUserData();
 		
 		
+		Player pLoged = controller.getLogedPlayer();
+		
+		
+		if(pLoged != null && pLoged.getNickname().equals(nickname)) {
+			controller.usuarioJaLogado(nickname);
+			
+			return false;
+		}
+		
+		
 		for (Player p: playersRegistrados ) {
 			if (p.getNickname().equals(nickname) && p.getPassword().equals(senha)){
 				controller.logou(p);
