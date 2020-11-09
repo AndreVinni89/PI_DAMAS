@@ -8,14 +8,13 @@ import view.ViewLogin;
 
 public class ControllerLogin {
 
-	public ViewLogin frame;
-
+	public ViewLogin viewLogin;
 	public Login login;
 
-	private ControllerGame ctrlpartida;
+	private ControllerGame ctrlGame;
 
 	public ControllerLogin(ControllerGame ctrl) {
-		this.ctrlpartida = ctrl;
+		this.ctrlGame = ctrl;
 
 	}
 
@@ -23,9 +22,9 @@ public class ControllerLogin {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new ViewLogin(ctrlogin);
+					viewLogin = new ViewLogin(ctrlogin);
 					login = new Login(ctrlogin);
-					frame.setVisible(true);
+					viewLogin.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -40,32 +39,30 @@ public class ControllerLogin {
 	}
 
 	public void logou(Player p) {
-		if (ctrlpartida.getPlayer1() == null) {
-			ctrlpartida.setPlayer1(p);
-		} else if (ctrlpartida.getPlayer2() == null) {
-			ctrlpartida.setPlayer2(p);
+		if (ctrlGame.getPlayer1() == null) {
+			ctrlGame.setPlayer1(p);
+		} else if (ctrlGame.getPlayer2() == null) {
+			ctrlGame.setPlayer2(p);
 		}
-		if (ctrlpartida.getPlayer1() != null && ctrlpartida.getPlayer2() != null) {
-			ctrlpartida.initializeGame();
+		if (ctrlGame.getPlayer1() != null && ctrlGame.getPlayer2() != null) {
+			ctrlGame.initializeGame();
 		}
 	}
 
-	public void cancelarPartida() {
-		ctrlpartida.cancelGame();
+	public void cancelGame() {
+		ctrlGame.cancelGame();
 	}
 
 	public void closeWindow() {
-		frame.dispose();
+		viewLogin.dispose();
 	}
 
-	public Player getLogedPlayer() {
-		return ctrlpartida.getPlayer1();
-		
+	public Player getLoggedPlayer() {
+		return ctrlGame.getPlayer1();
 	}
 
 	public void usuarioJaLogado(String nickname) {
-		frame.usuarioJaLogado(nickname);
-		
+		viewLogin.usuarioJaLogado(nickname);
 	}
 	
 	

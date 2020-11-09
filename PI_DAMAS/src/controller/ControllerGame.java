@@ -32,6 +32,16 @@ public class ControllerGame {
 
 	// CRIANDO A TELA DO JOGO
 	public void initializeGame() {
+		
+		player1.setCorPeca(PieceColor.PRETO);
+		player2.setCorPeca(PieceColor.BRANCO);
+		
+		System.out.println("CORES:");
+		System.out.println(player1.getNickname());
+		System.out.println(player1.getCorPeca());
+		System.out.println(player2.getCorPeca());
+		
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -51,22 +61,6 @@ public class ControllerGame {
 				}
 			}
 		});
-	}
-
-	public Player getPlayer1() {
-		return player1;
-	}
-
-	public void setPlayer1(Player player1) {
-		this.player1 = player1;
-	}
-
-	public Player getPlayer2() {
-		return player2;
-	}
-
-	public void setPlayer2(Player player2) {
-		this.player2 = player2;
 	}
 
 	public List<Posicao> selectPiece(int x, int y) {
@@ -102,6 +96,22 @@ public class ControllerGame {
 	}
 
 	
+	public Player getPlayer1() {
+		return player1;
+	}
+
+	public void setPlayer1(Player player1) {
+		this.player1 = player1;
+	}
+
+	public Player getPlayer2() {
+		return player2;
+	}
+
+	public void setPlayer2(Player player2) {
+		this.player2 = player2;
+	}
+
 	
 
 	public void fim(PieceColor branco, boolean b) {
