@@ -36,10 +36,6 @@ public class ControllerGame {
 		player1.setCorPeca(PieceColor.PRETO);
 		player2.setCorPeca(PieceColor.BRANCO);
 		
-		System.out.println("CORES:");
-		System.out.println(player1.getNickname());
-		System.out.println(player1.getCorPeca());
-		System.out.println(player2.getCorPeca());
 		
 		
 		EventQueue.invokeLater(new Runnable() {
