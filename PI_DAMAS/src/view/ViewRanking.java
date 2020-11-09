@@ -11,7 +11,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import controller.ControllerRanking;
 
 public class ViewRanking extends JFrame {
 
@@ -20,12 +19,11 @@ public class ViewRanking extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTable table;
-	private ControllerRanking controller;
+	private JTable usersDataTable;
 
 
-	public ViewRanking(ControllerRanking controller, Object[][] tableData) {
-		this.controller = controller;
+	public ViewRanking(Object[][] tableData) {
+
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 602, 781);
 		contentPane = new JPanel();
@@ -33,22 +31,22 @@ public class ViewRanking extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		table = new JTable();
+		usersDataTable = new JTable();
 
 		
-		table.setModel(new DefaultTableModel(
+		usersDataTable.setModel(new DefaultTableModel(
 			tableData,
 			new String[] {
 				"NICK", "VITORIAS", "EMPATES", "DERROTAS", "PONTUCOES"
 			}
 		));
-		table.setBorder(new LineBorder(new Color(0, 0, 0)));
-		table.setBounds(70, 40, 884, 456);
+		usersDataTable.setBorder(new LineBorder(new Color(0, 0, 0)));
+		usersDataTable.setBounds(70, 40, 884, 456);
 		
 		
 		ScrollPane scroll = new ScrollPane();
 		scroll.setBounds(70, 40, 884, 456);
-		scroll.add(table);
+		scroll.add(usersDataTable);
 		
 		contentPane.add(scroll);
 		
@@ -56,4 +54,9 @@ public class ViewRanking extends JFrame {
 		
 
 	}
+
+
+
+
+
 }

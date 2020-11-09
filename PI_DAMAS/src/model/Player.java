@@ -7,7 +7,7 @@ public class Player implements Comparable<Player>{
 	private int numDerrotas;
 	private int numEmpates;
 	private int pontuation;
-	private CorPeca corPeca;
+	private PieceColor pieceColor;
 	
 	
 
@@ -63,12 +63,12 @@ public class Player implements Comparable<Player>{
 		this.pontuation += pontuation;
 	}
 
-	public CorPeca getCorPeca() {
-		return corPeca;
+	public PieceColor getCorPeca() {
+		return pieceColor;
 	}
 
-	public void setCorPeca(CorPeca corPeca) {
-		this.corPeca = corPeca;
+	public void setCorPeca(PieceColor pieceColor) {
+		this.pieceColor = pieceColor;
 	}
 
 	public void setPassword(String password) {

@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import controller.ControllerLogin;
+import model.dao.PlayerDao;
 
 public class Login {
 
@@ -15,10 +16,10 @@ public class Login {
 	}
 
 	public boolean logar(String nickname, String senha) {
-		List<Player> playersRegistrados = ConnectionUsersData.readUserData();
+		List<Player> playersRegistrados = PlayerDao.readUserData();
 		
 		
-		Player pLoged = controller.getLogedPlayer();
+		Player pLoged = controller.getLoggedPlayer();
 		
 		
 		if(pLoged != null && pLoged.getNickname().equals(nickname)) {

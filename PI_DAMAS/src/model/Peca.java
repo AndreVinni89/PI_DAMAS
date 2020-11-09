@@ -2,7 +2,7 @@ package model;
 
 public class Peca {
 	//ATRIBUTO QUE IDENTIFICA A COR DA PEÇA
-	private final CorPeca cor;
+	private final PieceColor cor;
 	
 	
 	private Boolean dama;
@@ -10,13 +10,13 @@ public class Peca {
 	//0 - REPRESENTA PRETO
 	//1 - REPRESENTA BRANCO
 	
-	public Peca(CorPeca cor){
+	public Peca(PieceColor cor){
 		this.cor = cor;
 		dama = false;
 	}
 
 
-	public CorPeca getCor() {
+	public PieceColor getCor() {
 		return cor;
 	}
 

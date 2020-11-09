@@ -84,7 +84,7 @@ public class ViewLogin extends JFrame {
 		cancelar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				ctrlogin.cancelarPartida();
+				ctrlogin.cancelGame();
 			}
 		});
 		cancelar.addActionListener(new ActionListener() {

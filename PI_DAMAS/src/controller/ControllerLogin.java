@@ -12,9 +12,9 @@ public class ControllerLogin {
 
 	public Login login;
 
-	private ControllerPartida ctrlpartida;
+	private ControllerGame ctrlpartida;
 
-	public ControllerLogin(ControllerPartida ctrl) {
+	public ControllerLogin(ControllerGame ctrl) {
 		this.ctrlpartida = ctrl;
 
 	}
@@ -46,15 +46,15 @@ public class ControllerLogin {
 			ctrlpartida.setPlayer2(p);
 		}
 		if (ctrlpartida.getPlayer1() != null && ctrlpartida.getPlayer2() != null) {
-			ctrlpartida.iniciarJogo();
+			ctrlpartida.initializeGame();
 		}
 	}
 
 	public void cancelarPartida() {
-		ctrlpartida.cancelarPartida();
+		ctrlpartida.cancelGame();
 	}
 
-	public void fecharjanela() {
+	public void closeWindow() {
 		frame.dispose();
 	}
 

@@ -3,19 +3,15 @@ package model;
 import java.util.Collections;
 import java.util.List;
 
-import controller.ControllerRanking;
+import model.dao.PlayerDao;
 
 public class Ranking {
 
-	private ControllerRanking controller;
-
-	public Ranking(ControllerRanking controller) {
-		this.controller = controller;
-
-	}
 
 	public Object[][] getTableData() {
-		List<Player> players = ConnectionUsersData.readUserData();
+		
+		
+		List<Player> players = PlayerDao.readUserData();
 
 		
 		Collections.sort(players);

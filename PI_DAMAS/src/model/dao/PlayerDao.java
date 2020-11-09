@@ -1,4 +1,4 @@
-package model;
+package model.dao;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -8,25 +8,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public abstract class ConnectionUsersData {
+import model.Player;
+
+public class PlayerDao {
 
 	public static List<Player> readUserData() {
 
 		List<Player> playersRegistrados = new ArrayList<>();
+		
 		File file = new File("C:\\PI_Damas\\users");
 		Scanner obj = null;
 		try {
 			obj = new Scanner(file);
 			while (obj.hasNextLine()) {
 				String[] dados = obj.nextLine().split(";");
-				
-
 				playersRegistrados.add(new Player(dados[0], dados[1], Integer.parseInt(dados[2]),
 						Integer.parseInt(dados[3]), Integer.parseInt(dados[4]), Integer.parseInt(dados[5])));
-				
-				
-
-				
 			}
 		} catch (IOException e) {
 			System.out.println("Error: " + e.getMessage());
@@ -39,7 +36,7 @@ public abstract class ConnectionUsersData {
 		return playersRegistrados;
 	}
 
-	public static Boolean registerUser(List<Player> playersRegistrados, String nickname, String senha) {
+	public static Boolean registerUser(String nickname, String senha) {
 
 		try {
 			String[] lines = new String[] { nickname, ";", senha, ";", "0", ";", "0", ";", "0", ";", "0", ";", "\n" };
@@ -62,7 +59,7 @@ public abstract class ConnectionUsersData {
 
 	}
 
-	public static Boolean attUserData(Player player1, Player player2) {
+	public static Boolean attUserData(Player player) {
 		List<Player> playersRegistrados = readUserData();
 
 		
@@ -71,21 +68,14 @@ public abstract class ConnectionUsersData {
 		file.delete();
 
 		for (Player p : playersRegistrados) {
-			if (p.getNickname().equals(player1.getNickname())) {
-				p.attData(player1.getNumVitorias(), player1.getNumEmpates(), player1.getNumDerrotas(), player1.getPontuation());
+			if (p.getNickname().equals(player.getNickname())) {
+				p.attData(player.getNumVitorias(), player.getNumEmpates(), player.getNumDerrotas(), player.getPontuation());
 			}
 		}
 		
-		for (Player p : playersRegistrados) {
-			if (p.getNickname().equals(player2.getNickname())) {
-				p.attData(player2.getNumVitorias(), player2.getNumEmpates(), player2.getNumDerrotas(), player2.getPontuation());
-			}
-		}
-		System.out.println("Depois da modificação:");
-		for(Player p: playersRegistrados) {	
-			
 
-			
+		
+		for(Player p: playersRegistrados) {	
 			String[] lines = new String[] { p.getNickname(), ";", p.getPassword(), ";",
 					Integer.toString(p.getNumVitorias()), ";", Integer.toString(p.getNumEmpates()), ";",
 					Integer.toString(p.getNumDerrotas()), ";", Integer.toString(p.getPontuation()), ";", "\n" };
@@ -106,4 +96,6 @@ public abstract class ConnectionUsersData {
 		playersRegistrados.clear();
 		return true;
 	}
+
+
 }

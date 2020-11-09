@@ -1,5 +1,5 @@
 package model;
 
-public enum CorPeca {
+public enum PieceColor {
 	BRANCO, PRETO
 }

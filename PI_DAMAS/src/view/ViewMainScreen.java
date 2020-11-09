@@ -14,18 +14,17 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.ControllerMainScreen;
-import controller.ControllerRegistro;
+
 
 import java.awt.Color;
 import java.awt.Toolkit;
 
 public class ViewMainScreen extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	
+	
 	//REFERENCIA DO CONTROLLER DA MAIN SCREEN
 	private ControllerMainScreen controller;
 	

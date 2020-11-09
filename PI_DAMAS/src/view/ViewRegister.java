@@ -1,7 +1,5 @@
 package view;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -13,13 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import controller.ControllerRegistro;
+import controller.ControllerRegister;
 
-public class ViewRegistro extends JFrame {
+public class ViewRegister extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private JPanel contentPane;
@@ -28,20 +23,14 @@ public class ViewRegistro extends JFrame {
 	private JTextField senha;
 	private JTextField senhaconfirm;
 	private JLabel lblConfirmarSenha;
-	private JButton cadastro;
-
-	/**
-	 * Launch the application.
-	 */
-	private ControllerRegistro controller;
-
+	
+	
+	private JButton btnRegister;
 	private boolean nickExist = false;
 
-	/**
-	 * Create the frame.
-	 */
-	public ViewRegistro(ControllerRegistro controller) {
-		this.controller = controller;
+
+	public ViewRegister(ControllerRegister controller) {
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -76,8 +65,8 @@ public class ViewRegistro extends JFrame {
 		lblConfirmarSenha.setBounds(85, 155, 130, 14);
 		contentPane.add(lblConfirmarSenha);
 
-		cadastro = new JButton("CADASTRAR-SE");
-		cadastro.addMouseListener(new MouseAdapter() {
+		btnRegister = new JButton("CADASTRAR-SE");
+		btnRegister.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (nickname.getText().contains(";")) {
@@ -110,7 +99,7 @@ public class ViewRegistro extends JFrame {
 					senhaconfirm.setText("");
 					senhaconfirm.requestFocus();
 				} else {
-					Boolean result = controller.registro(nickname.getText().trim(), senha.getText().trim());
+					Boolean result = controller.register(nickname.getText().trim(), senha.getText().trim());
 					if (result) {
 						JOptionPane.showMessageDialog(null, "REGISTRO REALIZADO COM SUCESSO!!!");
 						dispose();
@@ -123,8 +112,8 @@ public class ViewRegistro extends JFrame {
 
 			}
 		});
-		cadastro.setBounds(154, 227, 130, 23);
-		contentPane.add(cadastro);
+		btnRegister.setBounds(154, 227, 130, 23);
+		contentPane.add(btnRegister);
 
 	}
 

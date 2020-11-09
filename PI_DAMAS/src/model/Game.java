@@ -3,9 +3,10 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.ControllerPartida;
+import controller.ControllerGame;
+import model.dao.PlayerDao;
 
-public class Partida {
+public class Game {
 	// INSTANCIA DO TABULEIRO
 	private Tabuleiro tabuleiro;
 	// CAMPO SELECIONADO PELO USUARIO
@@ -26,9 +27,9 @@ public class Partida {
 	private int contBlackPieces;
 
 	// INSTANCIA DO CONTROLLER
-	private ControllerPartida controller;
+	private ControllerGame controller;
 	// VARIAVEL QUE CONTROLA O JOGADOR DA VEZ
-	private CorPeca corDaVez = CorPeca.BRANCO;
+	private PieceColor corDaVez = PieceColor.BRANCO;
 
 	// JOGADORES DA PARTIDA
 	private Player player1;
@@ -38,7 +39,7 @@ public class Partida {
 	
 	
 	// CONSTRUTOR
-	public Partida(ControllerPartida controller, Player p1, Player p2) {
+	public Game(ControllerGame controller, Player p1, Player p2) {
 		// RECEBE A INSTANCIA DO CONTROLLER
 		this.controller = controller;
 		// INSTANCIA O TABULEIRO
@@ -183,10 +184,10 @@ public class Partida {
 		tabuleiro.movePiece(origem, destino);
 		// ZERANDO O VALOR O CAMPO SELECIONADO POIS O MOVIMENTO JA FOI REALIZADO
 		selectedField = null;
-		if (corDaVez == CorPeca.BRANCO) {
-			corDaVez = CorPeca.PRETO;
+		if (corDaVez == PieceColor.BRANCO) {
+			corDaVez = PieceColor.PRETO;
 		} else {
-			corDaVez = CorPeca.BRANCO;
+			corDaVez = PieceColor.BRANCO;
 		}
 
 		int maxCapture = 0;
@@ -244,10 +245,10 @@ public class Partida {
 			endGame(null, true);
 		}
 		if(noMoves == true) {
-			if(corDaVez == CorPeca.PRETO) {
-				endGame(CorPeca.BRANCO , false);
+			if(corDaVez == PieceColor.PRETO) {
+				endGame(PieceColor.BRANCO , false);
 			} else {
-				endGame(CorPeca.PRETO, false);
+				endGame(PieceColor.PRETO, false);
 			}	
 		}
 		
@@ -313,10 +314,10 @@ public class Partida {
 		}
 
 		// ALTERA A COR DA VEZ
-		if (corDaVez == CorPeca.BRANCO) {
-			corDaVez = CorPeca.PRETO;
+		if (corDaVez == PieceColor.BRANCO) {
+			corDaVez = PieceColor.PRETO;
 		} else {
-			corDaVez = CorPeca.BRANCO;
+			corDaVez = PieceColor.BRANCO;
 		}
 		
 		Boolean noMoves = true;
@@ -329,7 +330,7 @@ public class Partida {
 			for (Posicao pos : lin) {
 				if (pos.getTemPeca()) {
 					
-					if(pos.getPeca().getCor() == CorPeca.PRETO) {
+					if(pos.getPeca().getCor() == PieceColor.PRETO) {
 						contBlackPieces++;
 					}else {
 						contWhitePieces++;
@@ -383,16 +384,16 @@ public class Partida {
 		
 		
 		if(contBlackPieces == 0) {
-			endGame(CorPeca.PRETO, false);
+			endGame(PieceColor.PRETO, false);
 		} else if(contWhitePieces == 0){
-			endGame(CorPeca.BRANCO, false);
+			endGame(PieceColor.BRANCO, false);
 		}
 		
 		if(noMoves == true) {
-			if(corDaVez == CorPeca.PRETO) {
-				endGame(CorPeca.BRANCO , false);
+			if(corDaVez == PieceColor.PRETO) {
+				endGame(PieceColor.BRANCO , false);
 			} else {
-				endGame(CorPeca.PRETO, false);
+				endGame(PieceColor.PRETO, false);
 			}	
 		}
 		
@@ -405,7 +406,7 @@ public class Partida {
 	
 	
 
-	private void endGame(CorPeca corVitoria, Boolean empate) {
+	private void endGame(PieceColor corVitoria, Boolean empate) {
 		
 		if(empate) {
 			System.out.println("PARTIDA EMPATADA");
@@ -436,7 +437,8 @@ public class Partida {
 			controller.endGame(corVitoria, empate);
 		}
 		
-		ConnectionUsersData.attUserData(player1, player2);
+		PlayerDao.attUserData(player1);
+		PlayerDao.attUserData(player2);
 	}
 
 	private void sendObrigatedCaptureInfo() {
@@ -648,7 +650,7 @@ public class Partida {
 	private void verifyNormalMovements() {
 
 		// VALIDAÇÃO PARA PEÇAS PRETAS
-		if (selectedField.getPeca().getCor() == CorPeca.PRETO && selectedField.getPeca().getDama() == false) {
+		if (selectedField.getPeca().getCor() == PieceColor.PRETO && selectedField.getPeca().getDama() == false) {
 			// VERIFICAÇÃO DE MOVIMENTOS PARA AS PEÇA QUE ESTÃO NA ULTIMA CASA DA DIREITA
 			// PARA ESQUERDA
 			if (selectedField.getX() == 0) {
@@ -666,7 +668,7 @@ public class Partida {
 			}
 		}
 		// VALIDAÇÃO PARA PEÇAS BRANCAS
-		if (selectedField.getPeca().getCor() == CorPeca.BRANCO && selectedField.getPeca().getDama() == false) {
+		if (selectedField.getPeca().getCor() == PieceColor.BRANCO && selectedField.getPeca().getDama() == false) {
 			// VERIFICAÇÃO DE MOVIMENTOS PARA AS PEÇA QUE ESTÃO NA ULTIMA CASA DA DIREITA
 			// PARA ESQUERDA
 			if (selectedField.getX() == 0) {
@@ -747,7 +749,7 @@ public class Partida {
 
 	// VERIFICAÇÃO DE CAPTURA
 
-	private List<Posicao> verifyCaptureMovement(Posicao originPiece, CorPeca cor, Posicao noVerify) {
+	private List<Posicao> verifyCaptureMovement(Posicao originPiece, PieceColor cor, Posicao noVerify) {
 		List<Posicao> captureInfo = new ArrayList<>();
 
 		System.out.println("VERIFICAÇÃO DE CAPTURA CHAMADA");
@@ -812,7 +814,7 @@ public class Partida {
 		return captureInfo;
 	}
 
-	void verifyCaptureMovementRigTop(Posicao originPiece, CorPeca cor, List<Posicao> captureInfo,
+	void verifyCaptureMovementRigTop(Posicao originPiece, PieceColor cor, List<Posicao> captureInfo,
 			Posicao noVerify) {
 
 		if (tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1].getTemPeca() == true
@@ -850,7 +852,7 @@ public class Partida {
 		}
 	}
 
-	void verifyCaptureMovementLefTop(Posicao originPiece, CorPeca cor, List<Posicao> captureInfo,
+	void verifyCaptureMovementLefTop(Posicao originPiece, PieceColor cor, List<Posicao> captureInfo,
 			Posicao noVerify) {
 
 		if (tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1].getTemPeca() == true
@@ -891,7 +893,7 @@ public class Partida {
 		}
 	}
 
-	void verifyCaptureMovementRigBot(Posicao originPiece, CorPeca cor, List<Posicao> captureInfo,
+	void verifyCaptureMovementRigBot(Posicao originPiece, PieceColor cor, List<Posicao> captureInfo,
 			Posicao noVerify) {
 		if (tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1].getTemPeca() == true
 				&& tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1].getPeca().getCor() != cor) {
@@ -930,7 +932,7 @@ public class Partida {
 		}
 	}
 
-	void verifyCaptureMovementLefBot(Posicao originPiece, CorPeca cor, List<Posicao> captureInfo,
+	void verifyCaptureMovementLefBot(Posicao originPiece, PieceColor cor, List<Posicao> captureInfo,
 			Posicao noVerify) {
 		if (tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1].getTemPeca() == true
 				&& tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1].getPeca().getCor() != cor) {
@@ -964,7 +966,7 @@ public class Partida {
 
 	
 	
-	public void fim(CorPeca branco, boolean b) {
+	public void fim(PieceColor branco, boolean b) {
 		endGame(branco, b);
 		
 	}

@@ -3,24 +3,24 @@ package controller;
 import java.awt.EventQueue;
 import java.util.List;
 
-import model.CorPeca;
-import model.Partida;
+import model.PieceColor;
+import model.Game;
 import model.Player;
 import model.Posicao;
-import view.ViewPartida;
+import view.ViewGame;
 
-public class ControllerPartida {
+public class ControllerGame {
 	// INSTANCIA DO MODEL
-	private Partida game;
+	private Game game;
 	// INSTANCIA DA VIEW
-	private ViewPartida view;
+	private ViewGame view;
 	private ControllerLogin ctrlogin1;
 	private ControllerLogin ctrlogin2;
 	private Player player1 = null;
 	private Player player2 = null;
-	private ControllerPartida ctrl;
+	private ControllerGame ctrl;
 
-	public void init(ControllerPartida ctrl) {
+	public void init(ControllerGame ctrl) {
 		this.ctrl = ctrl;
 		ctrlogin1 = new ControllerLogin(ctrl);
 		ctrlogin1.init(ctrlogin1);
@@ -31,17 +31,17 @@ public class ControllerPartida {
 	}
 
 	// CRIANDO A TELA DO JOGO
-	public void iniciarJogo() {
+	public void initializeGame() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 
 					// INSTANCIANDO O MODEL PARTIDA
-					game = new Partida(ctrl, player1, player2);
+					game = new Game(ctrl, player1, player2);
 
 					// INSTANCIANDO A VIEW
 					// PASSANDO UMA INSTANCIA DE SI MESMO PARA A VIEW
-					view = new ViewPartida(ctrl, player1, player2);
+					view = new ViewGame(ctrl, player1, player2);
 					view.setVisible(true);
 					view.setSize(1024, 576);
 					view.posicionarPecas();
@@ -75,14 +75,14 @@ public class ControllerPartida {
 		return game.selectField(x, y);
 	}
 
-	public void movePiece(Posicao origem, Posicao destino) {
+	public void movePiece(Posicao origin, Posicao destiny) {
 		// MANDA PARA A VIEW
-		view.movePiece(origem, destino);
+		view.movePiece(origin, destiny);
 	}
 
-	public void capturePiece(Posicao origem, Posicao destino, List<Posicao> capturedPiece) {
+	public void capturePiece(Posicao origin, Posicao destiny, List<Posicao> capturedPiece) {
 
-		view.capturePiece(origem, destino, capturedPiece);
+		view.capturePiece(origin, destiny, capturedPiece);
 
 	}
 
@@ -91,17 +91,20 @@ public class ControllerPartida {
 
 	}
 
-	public void endGame(CorPeca corVitoria, Boolean empate) {
-		view.endGame(corVitoria, empate);
+	public void endGame(PieceColor victoryColor, Boolean empate) {
+		view.endGame(victoryColor, empate);
 
 	}
 
-	public void cancelarPartida() {
-		ctrlogin1.fecharjanela();
-		ctrlogin2.fecharjanela();
+	public void cancelGame() {
+		ctrlogin1.closeWindow();
+		ctrlogin2.closeWindow();
 	}
 
-	public void fim(CorPeca branco, boolean b) {
+	
+	
+
+	public void fim(PieceColor branco, boolean b) {
 		game.fim(branco, b);
 		
 	}
