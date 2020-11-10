@@ -50,6 +50,8 @@ public class ViewGame extends JFrame {
 	private ControllerGame controller;
 
 	private List<Posicao> movimentos = new ArrayList<>();
+	
+	
 	private JLabel moldura_vertical2;
 
 	public ViewGame(ControllerGame ctrl, Player p1, Player p2) {
@@ -425,7 +427,7 @@ public class ViewGame extends JFrame {
 			JOptionPane.showMessageDialog(null, "PARTIDA EMPATADA!!!");
 		}else {
 			
-			if(corVitoria == p1.getCorPeca()) {
+			if(corVitoria == p1.getPieceColor()) {
 				JOptionPane.showMessageDialog(null, p1.getNickname() +" VENCEU!!!");
 			} else {
 				JOptionPane.showMessageDialog(null, p2.getNickname() +" VENCEU!!!");

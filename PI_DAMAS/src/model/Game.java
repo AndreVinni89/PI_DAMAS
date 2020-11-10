@@ -9,8 +9,11 @@ import model.dao.PlayerDao;
 public class Game {
 	// INSTANCIA DO TABULEIRO
 	private Tabuleiro tabuleiro;
+	
 	// CAMPO SELECIONADO PELO USUARIO
 	private Posicao selectedField;
+	
+	
 	// ARRAY COM OS MOVIMENTOS NORMAIS POSSIVEIS
 	private List<Posicao> possibleNormalMovements = new ArrayList<>();
 	// ARRAY COM OS MOVIMENTOS DE CAPTURA POSSIVEIS
@@ -18,7 +21,7 @@ public class Game {
 
 	private List<List<Posicao>> capturedPieces = new ArrayList<>();
 
-	private List<Posicao> capturedPiecesTemp = new ArrayList<>();
+	List<Posicao> capturedPiecesTemp = new ArrayList<>();
 
 	private List<Posicao> possibleSelectedFields = new ArrayList<>();
 	
@@ -420,7 +423,7 @@ public class Game {
 		} else {
 			System.out.println("O jogador da cor " + corVitoria + " Venceu");
 			
-			if(player1.getCorPeca() == corVitoria) {
+			if(player1.getPieceColor() == corVitoria) {
 				player1.setNumVitorias(1);
 				player1.setPontuation(3);
 				

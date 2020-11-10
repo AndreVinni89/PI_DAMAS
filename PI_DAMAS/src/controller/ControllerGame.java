@@ -33,8 +33,8 @@ public class ControllerGame {
 	// CRIANDO A TELA DO JOGO
 	public void initializeGame() {
 		
-		player1.setCorPeca(PieceColor.PRETO);
-		player2.setCorPeca(PieceColor.BRANCO);
+		player1.setPieceColor(PieceColor.PRETO);
+		player2.setPieceColor(PieceColor.BRANCO);
 		
 		
 		

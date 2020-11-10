@@ -16,7 +16,7 @@ public class Player implements Comparable<Player>{
 	public Player(String nickname, String password, int numVitorias,  int numEmpates, int numDerrotas, int pontuation) {
 		super();
 		this.nickname = nickname;
-		this.setPassword(password);
+		this.password = password;
 		this.numVitorias = numVitorias;
 		this.numDerrotas = numDerrotas;
 		this.numEmpates = numEmpates;
@@ -63,21 +63,14 @@ public class Player implements Comparable<Player>{
 		this.pontuation += pontuation;
 	}
 
-	public PieceColor getCorPeca() {
+	public PieceColor getPieceColor() {
 		return pieceColor;
 	}
 
-	public void setCorPeca(PieceColor pieceColor) {
+	public void setPieceColor(PieceColor pieceColor) {
 		this.pieceColor = pieceColor;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getPassword() {
-		return password;
-	}
 
 	@Override
 	public String toString() {
@@ -105,6 +98,10 @@ public class Player implements Comparable<Player>{
 
         return 0;
       }
+
+	public String getPassword() {
+		return password;
+	}
 	
 	
 	
