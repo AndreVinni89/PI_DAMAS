@@ -13,7 +13,6 @@ import model.Player;
 public class PlayerDao {
 
 	public static List<Player> readUserData() {
-
 		List<Player> playersRegistrados = new ArrayList<>();
 		
 		File file = new File("C:\\PI_Damas\\users");
@@ -72,9 +71,6 @@ public class PlayerDao {
 				p.attData(player.getNumVitorias(), player.getNumEmpates(), player.getNumDerrotas(), player.getPontuation());
 			}
 		}
-		
-
-		
 		for(Player p: playersRegistrados) {	
 			String[] lines = new String[] { p.getNickname(), ";", p.getPassword(), ";",
 					Integer.toString(p.getNumVitorias()), ";", Integer.toString(p.getNumEmpates()), ";",

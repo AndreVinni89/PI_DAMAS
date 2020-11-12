@@ -7,8 +7,6 @@ public class Peca {
 	
 	private Boolean dama;
 	
-	//0 - REPRESENTA PRETO
-	//1 - REPRESENTA BRANCO
 	
 	public Peca(PieceColor cor){
 		this.cor = cor;

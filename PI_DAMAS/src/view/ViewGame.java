@@ -36,22 +36,21 @@ public class ViewGame extends JFrame {
 	private JPanel contentPane;
 
 	private JLabel indicadorCorAtual;
-	
+
 	private JLabel player1;
 
 	private JLabel player2;
-	
+
 	private Player p1;
 	private Player p2;
-	
+
 	private List<Posicao> SelectedFields = new ArrayList<>();
-	
+
 	// INSTANCIA DO CONTROLLER
 	private ControllerGame controller;
 
 	private List<Posicao> movimentos = new ArrayList<>();
-	
-	
+
 	private JLabel moldura_vertical2;
 
 	public ViewGame(ControllerGame ctrl, Player p1, Player p2) {
@@ -62,16 +61,6 @@ public class ViewGame extends JFrame {
 
 		this.p1 = p1;
 		this.p2 = p2;
-		
-		
-		this.controller = ctrl;
-		viewTabuleiroBts = new JButton[8][8];
-		int posIniX = 300;
-		int posIniY = 65;
-
-		int x = posIniX;
-		int y = posIniY;
-		int tamBt = 50;
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 477, 300);
@@ -98,43 +87,51 @@ public class ViewGame extends JFrame {
 		indicadorCorAtual.setForeground(Color.WHITE);
 		indicadorCorAtual.setBounds(420, -3, 300, 50);
 		contentPane.add(indicadorCorAtual);
-		
+
 		moldura_vertical2 = new JLabel("");
 		moldura_vertical2.setBounds(700, 65, 34, 400);
 		moldura_vertical2.setIcon(new ImageIcon("src\\img\\vertical_moldura.png"));
 		contentPane.add(moldura_vertical2);
-		
+
 		JLabel moldura_vertical1 = new JLabel("");
 		moldura_vertical1.setBounds(266, 65, 34, 400);
 		moldura_vertical1.setIcon(new ImageIcon("src\\img\\vertical_moldura.png"));
 		contentPane.add(moldura_vertical1);
-		
+
 		JLabel moldura_horizontal1 = new JLabel("");
 		moldura_horizontal1.setBounds(266, 34, 468, 31);
 		moldura_horizontal1.setIcon(new ImageIcon("src\\img\\horizontal_moldura.png"));
 		contentPane.add(moldura_horizontal1);
-		
+
 		JLabel moldura_horizontal2 = new JLabel("");
 		moldura_horizontal2.setBounds(266, 465, 468, 31);
 		moldura_horizontal2.setIcon(new ImageIcon("src\\img\\horizontal_moldura.png"));
 		contentPane.add(moldura_horizontal2);
-		
-		//TESTE TODO 
-		//-------------------------------------------------------------------------------
+
+		// TESTE TODO
+		// -------------------------------------------------------------------------------
 		JButton btnNewButton = new JButton("fim de jogo");
 
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				controller.fim(PieceColor.BRANCO, true);
 
 			}
 		});
 
-		
 		btnNewButton.setBounds(50, 15, 89, 23);
 		contentPane.add(btnNewButton);
-		//-------------------------------------------------------------------------------;
+		// -------------------------------------------------------------------------------;
+
+		this.controller = ctrl;
+		viewTabuleiroBts = new JButton[8][8];
+		int posIniX = 300;
+		int posIniY = 65;
+
+		int x = posIniX;
+		int y = posIniY;
+		int tamBt = 50;
 
 		for (int contY = 0; contY < 8; contY++) {
 			for (int contX = 0; contX < 8; contX++) {
@@ -147,23 +144,16 @@ public class ViewGame extends JFrame {
 				if (contY % 2 == 0) {
 					if (contX % 2 == 0) {
 						viewTabuleiroBts[contX][contY].setIcon(new ImageIcon("src\\img\\white_field.png"));
-
 					} else {
 						viewTabuleiroBts[contX][contY].setIcon(new ImageIcon("src\\img\\black_field.png"));
 					}
-
-				}
-
-				else {
-
+				} else {
 					if (contX % 2 == 0) {
 						viewTabuleiroBts[contX][contY].setIcon(new ImageIcon("src\\img\\black_field.png"));
 					} else {
 						viewTabuleiroBts[contX][contY].setIcon(new ImageIcon("src\\img\\white_field.png"));
 					}
-
 				}
-
 				// ADICIONANDO O EVENT LISTENER A TODOS OS BOTOES PARA ACIONAR O CONTROLLER
 				// QUANDO ELES FOREM DISPARADO
 				viewTabuleiroBts[contX][contY].addMouseListener(new MouseAdapter() {
@@ -195,39 +185,31 @@ public class ViewGame extends JFrame {
 							}
 						}
 
-						
-						
-						
-						for(Posicao pos: SelectedFields) {
-							if(!pos.getPeca().getDama()) {
-								if(pos.getPeca().getCor() == PieceColor.PRETO) {
+						for (Posicao pos : SelectedFields) {
+							if (!pos.getPeca().getDama()) {
+								if (pos.getPeca().getCor() == PieceColor.PRETO) {
 									viewTabuleiroBts[pos.getX()][pos.getY()]
 											.setIcon(new ImageIcon("src\\img\\black_piece_capture.png"));
-									
-								}else {
+
+								} else {
 									viewTabuleiroBts[pos.getX()][pos.getY()]
 											.setIcon(new ImageIcon("src\\img\\white_piece_capture.png"));
 								}
 							}
-							
+
 							else {
-								if(pos.getPeca().getCor() == PieceColor.PRETO) {
+								if (pos.getPeca().getCor() == PieceColor.PRETO) {
 									viewTabuleiroBts[pos.getX()][pos.getY()]
 											.setIcon(new ImageIcon("src\\img\\black_piece_dama_capture.png"));
-									
-								}else {
+
+								} else {
 									viewTabuleiroBts[pos.getX()][pos.getY()]
 											.setIcon(new ImageIcon("src\\img\\white_piece_dama_capture.png"));
 								}
 							}
-	
+
 						}
-					
-						
-						
-						
-						
-						
+
 						// CHAMA O METODO NO CONTROLLER
 						movimentos = controller.selectPiece(posX, posY);
 
@@ -327,31 +309,26 @@ public class ViewGame extends JFrame {
 	}
 
 	public void capturePiece(Posicao origem, Posicao destino, List<Posicao> capturedPieces) {
-		
-		//ITERA-SE SOBRE AS PEÇAS CAPTURADAS
+
+		// ITERA-SE SOBRE AS PEÇAS CAPTURADAS
 		for (Posicao capturedPiece : capturedPieces) {
 			viewTabuleiroBts[capturedPiece.getX()][capturedPiece.getY()]
 					.setIcon(new ImageIcon("src\\img\\black_field.png"));
 		}
-		
-		
-		if(SelectedFields.size() > 0) {
-			for(Posicao pos: SelectedFields) {
-				if(origem.getPeca().getCor() == PieceColor.BRANCO) {
-					viewTabuleiroBts[pos.getX()][pos.getY()]
-							.setIcon(new ImageIcon("src\\img\\white_piece.png"));
+
+		if (SelectedFields.size() > 0) {
+			for (Posicao pos : SelectedFields) {
+				if (origem.getPeca().getCor() == PieceColor.BRANCO) {
+					viewTabuleiroBts[pos.getX()][pos.getY()].setIcon(new ImageIcon("src\\img\\white_piece.png"));
 				} else {
-					viewTabuleiroBts[pos.getX()][pos.getY()]
-							.setIcon(new ImageIcon("src\\img\\black_piece.png"));
+					viewTabuleiroBts[pos.getX()][pos.getY()].setIcon(new ImageIcon("src\\img\\black_piece.png"));
 				}
 			}
 			SelectedFields.clear();
 		}
-		
-		
-		
+
 		viewTabuleiroBts[origem.getX()][origem.getY()].setIcon(new ImageIcon("src\\img\\black_field.png"));
-		
+
 		if (origem.getPeca().getCor() == PieceColor.PRETO) {
 			if (destino.getY() == 0) {
 				viewTabuleiroBts[destino.getX()][destino.getY()]
@@ -368,7 +345,7 @@ public class ViewGame extends JFrame {
 			indicadorCorAtual.setText("VEZ DAS PEÇAS BRANCAS");
 			player2.setForeground(Color.GREEN);
 			player1.setForeground(Color.WHITE);
-			
+
 		} else if (origem.getPeca().getCor() == PieceColor.BRANCO) {
 			if (destino.getY() == 7) {
 				viewTabuleiroBts[destino.getX()][destino.getY()]
@@ -389,61 +366,50 @@ public class ViewGame extends JFrame {
 
 	}
 
-	
-	
 	public void sendObrigatedCaptureInfo(List<Posicao> possibleSelectedFields) {
 		SelectedFields.clear();
-		for(Posicao pos: possibleSelectedFields) {
+		for (Posicao pos : possibleSelectedFields) {
 			SelectedFields.add(pos);
 			if (!pos.getPeca().getDama()) {
-				if(pos.getPeca().getCor() == PieceColor.PRETO) {
+				if (pos.getPeca().getCor() == PieceColor.PRETO) {
 					viewTabuleiroBts[pos.getX()][pos.getY()]
 							.setIcon(new ImageIcon("src\\img\\black_piece_capture.png"));
-					
-				}else {
+
+				} else {
 					viewTabuleiroBts[pos.getX()][pos.getY()]
 							.setIcon(new ImageIcon("src\\img\\white_piece_capture.png"));
 				}
 			}
-			
+
 			else {
-				if(pos.getPeca().getCor() == PieceColor.PRETO) {
+				if (pos.getPeca().getCor() == PieceColor.PRETO) {
 					viewTabuleiroBts[pos.getX()][pos.getY()]
 							.setIcon(new ImageIcon("src\\img\\black_piece_dama_capture.png"));
-					
-				}else {
+
+				} else {
 					viewTabuleiroBts[pos.getX()][pos.getY()]
 							.setIcon(new ImageIcon("src\\img\\white_piece_dama_capture.png"));
 				}
 			}
-				
 
 		}
-		
+
 	}
 
 	public void endGame(PieceColor corVitoria, Boolean empate) {
-		if(empate) {
+		if (empate) {
 			JOptionPane.showMessageDialog(null, "PARTIDA EMPATADA!!!");
-		}else {
-			
-			if(corVitoria == p1.getPieceColor()) {
-				JOptionPane.showMessageDialog(null, p1.getNickname() +" VENCEU!!!");
+		} else {
+
+			if (corVitoria == p1.getPieceColor()) {
+				JOptionPane.showMessageDialog(null, p1.getNickname() + " VENCEU!!!");
 			} else {
-				JOptionPane.showMessageDialog(null, p2.getNickname() +" VENCEU!!!");
+				JOptionPane.showMessageDialog(null, p2.getNickname() + " VENCEU!!!");
 			}
-			
-			
-			
-			
+
 		}
-		
 
 		dispose();
-		
-		
-		
-		
-		
+
 	}
 }
