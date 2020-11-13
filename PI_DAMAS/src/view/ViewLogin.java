@@ -18,6 +18,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Toolkit;
 
 public class ViewLogin extends JFrame {
 
@@ -32,28 +35,36 @@ public class ViewLogin extends JFrame {
 
 	private ControllerLogin ctrlogin;
 
-	public ViewLogin(ControllerLogin ctrlogin) {
+	public ViewLogin(ControllerLogin ctrlogin, String player) {
+		setTitle("Login");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ViewLogin.class.getResource("/img/black_piece_dama.png")));
+		setBackground(Color.GRAY);
 		setResizable(false);
 		this.ctrlogin = ctrlogin;
 
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		nickname = new JTextField();
+		nickname.setBackground(Color.LIGHT_GRAY);
 		nickname.setBounds(123, 88, 193, 20);
 		contentPane.add(nickname);
 		nickname.setColumns(10);
 
 		senha = new JTextField();
+		senha.setBackground(Color.LIGHT_GRAY);
 		senha.setColumns(10);
 		senha.setBounds(123, 152, 193, 20);
 		contentPane.add(senha);
 
 		JButton Logar = new JButton("LOGAR");
+		Logar.setForeground(Color.WHITE);
+		Logar.setBackground(Color.DARK_GRAY);
 		Logar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -73,14 +84,18 @@ public class ViewLogin extends JFrame {
 		contentPane.add(Logar);
 
 		JLabel lblNewLabel = new JLabel("NICKNAME");
+		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setBounds(124, 63, 96, 14);
 		contentPane.add(lblNewLabel);
 
 		JLabel lblSenha = new JLabel("SENHA");
+		lblSenha.setForeground(Color.WHITE);
 		lblSenha.setBounds(123, 127, 96, 14);
 		contentPane.add(lblSenha);
 		
 		JButton cancelar = new JButton("Cancelar Partida");
+		cancelar.setForeground(Color.WHITE);
+		cancelar.setBackground(Color.DARK_GRAY);
 		cancelar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -91,8 +106,15 @@ public class ViewLogin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		cancelar.setBounds(156, 237, 126, 23);
+		cancelar.setBounds(139, 237, 160, 23);
 		contentPane.add(cancelar);
+		
+		JLabel Player = new JLabel("");
+		Player.setFont(new Font("Impact", Font.PLAIN, 20));
+		Player.setForeground(Color.WHITE);
+		Player.setBounds(166, 11, 165, 30);
+		Player.setText(player);
+		contentPane.add(Player);
 	}
 
 	public void usuarioJaLogado(String nickname2) {
@@ -100,6 +122,5 @@ public class ViewLogin extends JFrame {
 		
 	}
 
-	
-	
+
 }

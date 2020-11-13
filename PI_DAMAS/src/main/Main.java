@@ -15,6 +15,7 @@ public class Main {
 					frame.setVisible(true);
 					//DEFININDO TAMANHO DA JANELA
 					frame.setSize(1024, 576);
+					//frame.setBounds(1000, 100, 1024, 576);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

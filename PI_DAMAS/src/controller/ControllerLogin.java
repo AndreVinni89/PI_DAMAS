@@ -18,11 +18,12 @@ public class ControllerLogin {
 
 	}
 
-	public void init(ControllerLogin ctrlogin) {
+	public void init(ControllerLogin ctrlogin, int x, String player) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					viewLogin = new ViewLogin(ctrlogin);
+					viewLogin = new ViewLogin(ctrlogin, player);
+					viewLogin.setBounds(x, 250, 433, 310);
 					login = new Login(ctrlogin);
 					viewLogin.setVisible(true);
 				} catch (Exception e) {

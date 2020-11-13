@@ -22,11 +22,12 @@ public class ControllerGame {
 
 	public void init(ControllerGame ctrl) {
 		this.ctrl = ctrl;
+		int x = 400;
 		ctrlogin1 = new ControllerLogin(ctrl);
-		ctrlogin1.init(ctrlogin1);
+		ctrlogin1.init(ctrlogin1, x, "JOGADOR 1");
 
 		ctrlogin2 = new ControllerLogin(ctrl);
-		ctrlogin2.init(ctrlogin2);
+		ctrlogin2.init(ctrlogin2, x + 450, "JOGADOR 2");
 
 	}
 
