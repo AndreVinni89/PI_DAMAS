@@ -111,8 +111,8 @@ public class ControllerGame {
 
 	
 
-	public void fim(PieceColor branco, boolean b) {
-		game.fim(branco, b);
+	public void desistir() {
+		game.desistir();
 		
 	}
 

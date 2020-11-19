@@ -110,18 +110,20 @@ public class ViewGame extends JFrame {
 
 		// TESTE TODO
 		// -------------------------------------------------------------------------------
-		JButton btnNewButton = new JButton("fim de jogo");
+		JButton desistir = new JButton("DESISTIR");
+		desistir.setForeground(Color.WHITE);
+		desistir.setBackground(Color.DARK_GRAY);
 
-		btnNewButton.addActionListener(new ActionListener() {
+		desistir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				controller.fim(PieceColor.BRANCO, true);
+				controller.desistir();
 
 			}
 		});
 
-		btnNewButton.setBounds(50, 15, 89, 23);
-		contentPane.add(btnNewButton);
+		desistir.setBounds(50, 15, 89, 23);
+		contentPane.add(desistir);
 		// -------------------------------------------------------------------------------;
 
 		this.controller = ctrl;
