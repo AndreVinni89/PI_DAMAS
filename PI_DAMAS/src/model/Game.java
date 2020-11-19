@@ -969,9 +969,16 @@ public class Game {
 
 	
 	
-	public void fim(PieceColor branco, boolean b) {
-		endGame(branco, b);
+
+	public void desistir() {
+		if (corDaVez == PieceColor.BRANCO) {
+		endGame(PieceColor.PRETO, false);
 		
+		}
+		
+		else {
+			endGame(PieceColor.BRANCO, false);
+		}
 	}
 
 }

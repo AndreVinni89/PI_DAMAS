@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Toolkit;
+import java.awt.Font;
 
 
 public class ViewRanking extends JFrame {
@@ -36,6 +37,7 @@ public class ViewRanking extends JFrame {
 		contentPane.setLayout(null);
 		
 		usersDataTable = new JTable();
+		usersDataTable.setFont(new Font("Impact", Font.PLAIN, 18));
 		usersDataTable.setForeground(Color.WHITE);
 		usersDataTable.setBackground(Color.GRAY);
 
