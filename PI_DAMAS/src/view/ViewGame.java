@@ -111,6 +111,7 @@ public class ViewGame extends JFrame {
 		// TESTE TODO
 		// -------------------------------------------------------------------------------
 		JButton desistir = new JButton("DESISTIR");
+		desistir.setFont(new Font("Impact", Font.PLAIN, 15));
 		desistir.setForeground(Color.WHITE);
 		desistir.setBackground(Color.DARK_GRAY);
 

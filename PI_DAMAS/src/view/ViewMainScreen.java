@@ -46,6 +46,7 @@ public class ViewMainScreen extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnPlay = new JButton("JOGAR");
+		btnPlay.setFont(new Font("Impact", Font.PLAIN, 18));
 		btnPlay.setBackground(Color.DARK_GRAY);
 		btnPlay.setForeground(Color.WHITE);
 		//LISTENER DO BOTÃO DE PLAY
@@ -62,6 +63,7 @@ public class ViewMainScreen extends JFrame {
 		
 		//LISTENER DO BOTÃO RANKING PARA ACESSAR A TELA DE RANKING
 		JButton btnRanking = new JButton("RANKING");
+		btnRanking.setFont(new Font("Impact", Font.PLAIN, 18));
 		btnRanking.setForeground(Color.WHITE);
 		btnRanking.setBackground(Color.DARK_GRAY);
 		btnRanking.addActionListener(new ActionListener() {
@@ -80,6 +82,7 @@ public class ViewMainScreen extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JButton btnCadastrar = new JButton("CADASTRAR-SE");
+		btnCadastrar.setFont(new Font("Impact", Font.PLAIN, 18));
 		btnCadastrar.setForeground(Color.WHITE);
 		btnCadastrar.setBackground(Color.DARK_GRAY);
 		btnCadastrar.addMouseListener(new MouseAdapter() {

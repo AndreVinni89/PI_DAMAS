@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 import controller.ControllerRegister;
 import java.awt.Color;
 import java.awt.Toolkit;
+import java.awt.Font;
 
 public class ViewRegister extends JFrame {
 
@@ -46,40 +47,47 @@ public class ViewRegister extends JFrame {
 		contentPane.setLayout(null);
 
 		nickname = new JTextField();
+		nickname.setFont(new Font("Impact", Font.PLAIN, 14));
 		nickname.setBackground(Color.LIGHT_GRAY);
 		nickname.setBounds(85, 67, 256, 20);
 		contentPane.add(nickname);
 		nickname.setColumns(10);
 
 		senha = new JTextField();
+		senha.setFont(new Font("Impact", Font.PLAIN, 14));
 		senha.setBackground(Color.LIGHT_GRAY);
 		senha.setColumns(10);
 		senha.setBounds(85, 124, 256, 20);
 		contentPane.add(senha);
 
 		senhaconfirm = new JTextField();
+		senhaconfirm.setFont(new Font("Impact", Font.PLAIN, 14));
 		senhaconfirm.setBackground(Color.LIGHT_GRAY);
 		senhaconfirm.setColumns(10);
 		senhaconfirm.setBounds(85, 180, 256, 20);
 		contentPane.add(senhaconfirm);
 
 		JLabel lblNewLabel = new JLabel("NICKNAME");
+		lblNewLabel.setFont(new Font("Impact", Font.PLAIN, 14));
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setBackground(Color.WHITE);
 		lblNewLabel.setBounds(85, 42, 130, 14);
 		contentPane.add(lblNewLabel);
 
 		JLabel lblSenha = new JLabel("SENHA");
+		lblSenha.setFont(new Font("Impact", Font.PLAIN, 14));
 		lblSenha.setForeground(Color.WHITE);
 		lblSenha.setBounds(85, 96, 130, 14);
 		contentPane.add(lblSenha);
 
 		lblConfirmarSenha = new JLabel("CONFIRMAR SENHA");
+		lblConfirmarSenha.setFont(new Font("Impact", Font.PLAIN, 14));
 		lblConfirmarSenha.setForeground(Color.WHITE);
 		lblConfirmarSenha.setBounds(85, 155, 130, 14);
 		contentPane.add(lblConfirmarSenha);
 
 		btnRegister = new JButton("CADASTRAR-SE");
+		btnRegister.setFont(new Font("Impact", Font.PLAIN, 18));
 		btnRegister.setBackground(Color.DARK_GRAY);
 		btnRegister.setForeground(Color.WHITE);
 		btnRegister.addMouseListener(new MouseAdapter() {
@@ -128,7 +136,7 @@ public class ViewRegister extends JFrame {
 
 			}
 		});
-		btnRegister.setBounds(154, 227, 130, 23);
+		btnRegister.setBounds(129, 225, 175, 23);
 		contentPane.add(btnRegister);
 
 	}

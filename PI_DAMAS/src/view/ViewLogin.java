@@ -51,18 +51,21 @@ public class ViewLogin extends JFrame {
 		contentPane.setLayout(null);
 
 		nickname = new JTextField();
+		nickname.setFont(new Font("Impact", Font.PLAIN, 14));
 		nickname.setBackground(Color.LIGHT_GRAY);
 		nickname.setBounds(123, 88, 193, 20);
 		contentPane.add(nickname);
 		nickname.setColumns(10);
 
 		senha = new JTextField();
+		senha.setFont(new Font("Impact", Font.PLAIN, 14));
 		senha.setBackground(Color.LIGHT_GRAY);
 		senha.setColumns(10);
 		senha.setBounds(123, 152, 193, 20);
 		contentPane.add(senha);
 
 		JButton Logar = new JButton("LOGAR");
+		Logar.setFont(new Font("Impact", Font.PLAIN, 18));
 		Logar.setForeground(Color.WHITE);
 		Logar.setBackground(Color.DARK_GRAY);
 		Logar.addMouseListener(new MouseAdapter() {
@@ -80,20 +83,23 @@ public class ViewLogin extends JFrame {
 				}
 			}
 		});
-		Logar.setBounds(172, 196, 89, 23);
+		Logar.setBounds(172, 196, 89, 30);
 		contentPane.add(Logar);
 
 		JLabel lblNewLabel = new JLabel("NICKNAME");
+		lblNewLabel.setFont(new Font("Impact", Font.PLAIN, 14));
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setBounds(124, 63, 96, 14);
 		contentPane.add(lblNewLabel);
 
 		JLabel lblSenha = new JLabel("SENHA");
+		lblSenha.setFont(new Font("Impact", Font.PLAIN, 14));
 		lblSenha.setForeground(Color.WHITE);
 		lblSenha.setBounds(123, 127, 96, 14);
 		contentPane.add(lblSenha);
 		
 		JButton cancelar = new JButton("Cancelar Partida");
+		cancelar.setFont(new Font("Impact", Font.PLAIN, 17));
 		cancelar.setForeground(Color.WHITE);
 		cancelar.setBackground(Color.DARK_GRAY);
 		cancelar.addMouseListener(new MouseAdapter() {

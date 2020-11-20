@@ -61,7 +61,7 @@ public class ViewRanking extends JFrame {
 			}
 		}	
 				);
-		usersDataTable.setBorder(new LineBorder(new Color(0, 0, 0)));
+		usersDataTable.setBorder(null);
 		usersDataTable.setBounds(70, 40, 884, 456);
 		
 		
