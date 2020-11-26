@@ -52,7 +52,6 @@ public class Tabuleiro {
 	}
 
 	public void movePiece(Posicao origem, Posicao destino) {
-
 		// MOVENDO A PEÇA DA POSIÇÃO INICIAL PARA A POSIÇÃO DESTINO
 		tabuleiro[destino.getX()][destino.getY()].setTemPeca(true);
 		tabuleiro[destino.getX()][destino.getY()].setPeca(tabuleiro[origem.getX()][origem.getY()].getPeca());
@@ -61,11 +60,12 @@ public class Tabuleiro {
 		tabuleiro[origem.getX()][origem.getY()].setPeca(null);
 		tabuleiro[origem.getX()][origem.getY()].setTemPeca(false);
 
+		
+		//Definindo a peça como dama
 		if ((destino.getY() == 0 && tabuleiro[destino.getX()][destino.getY()].getPeca().getCor() == PieceColor.PRETO)
 				|| (destino.getY() == 7 && tabuleiro[destino.getX()][destino.getY()].getPeca().getCor() == PieceColor.BRANCO)) {
 			tabuleiro[destino.getX()][destino.getY()].getPeca().setDama(true);
 		}
-
 	}
 
 	public void capturePiece(Posicao origem, Posicao destino, List<Posicao> capturedPieces) {
@@ -77,19 +77,17 @@ public class Tabuleiro {
 		tabuleiro[origem.getX()][origem.getY()].setPeca(null);
 		tabuleiro[origem.getX()][origem.getY()].setTemPeca(false);
 
-		// EXCLUINDO A PEÇA CAPTURADA
+		// EXCLUINDO As PEÇAs CAPTURADAs
 		for(Posicao capturedPiece : capturedPieces) {
 			tabuleiro[capturedPiece.getX()][capturedPiece.getY()].setPeca(null);
 			tabuleiro[capturedPiece.getX()][capturedPiece.getY()].setTemPeca(false);
 		}
 
-
+		//Definindo a peça como dama
 		if ((destino.getY() == 0 && tabuleiro[destino.getX()][destino.getY()].getPeca().getCor() == PieceColor.PRETO)
 				|| (destino.getY() == 7 && tabuleiro[destino.getX()][destino.getY()].getPeca().getCor() == PieceColor.BRANCO)) {
 			tabuleiro[destino.getX()][destino.getY()].getPeca().setDama(true);
-			System.out.println("VIROU DAMA");
 		}
-
 	}
 
 	public Posicao[][] getTabuleiro() {

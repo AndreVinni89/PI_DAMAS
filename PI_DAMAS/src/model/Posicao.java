@@ -26,7 +26,6 @@ public class Posicao {
 
 	// CONSTRUTOR COM PECA
 	public Posicao(int x, int y, Peca peca) {
-		super();
 		this.x = x;
 		this.y = y;
 		this.peca = peca;
@@ -37,13 +36,18 @@ public class Posicao {
 
 	// CONTRUTOR SEM PECA
 	public Posicao(int x, int y) {
-		super();
 		this.x = x;
 		this.y = y;
+		
+		
 		// COMO NAO FOI INFORMADO A PECA JA É DEFINIDO O ATRIBUTO TEMPECA COMO FALSE
 		this.temPeca = false;
 
 	}
+	
+	
+	
+	
 	// GETTERS E SETTERS
 	public Boolean getTemPeca() {
 		return temPeca;

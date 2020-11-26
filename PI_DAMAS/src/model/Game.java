@@ -9,28 +9,29 @@ import model.dao.PlayerDao;
 public class Game {
 	// INSTANCIA DO TABULEIRO
 	private Tabuleiro tabuleiro;
-	
+
 	// CAMPO SELECIONADO PELO USUARIO
 	private Posicao selectedField;
-	
-	
+
 	// ARRAY COM OS MOVIMENTOS NORMAIS POSSIVEIS
 	private List<Posicao> possibleNormalMovements = new ArrayList<>();
 	// ARRAY COM OS MOVIMENTOS DE CAPTURA POSSIVEIS
+
 	private List<Posicao> possibleCaptureMovements = new ArrayList<>();
 
 	private List<List<Posicao>> capturedPieces = new ArrayList<>();
 
-	List<Posicao> capturedPiecesTemp = new ArrayList<>();
+	private List<Posicao> capturedPiecesTemp = new ArrayList<>();
 
 	private List<Posicao> possibleSelectedFields = new ArrayList<>();
-	
+
 	private int contWhitePieces;
-	
+
 	private int contBlackPieces;
 
 	// INSTANCIA DO CONTROLLER
 	private ControllerGame controller;
+
 	// VARIAVEL QUE CONTROLA O JOGADOR DA VEZ
 	private PieceColor corDaVez = PieceColor.BRANCO;
 
@@ -39,8 +40,7 @@ public class Game {
 	private Player player2;
 
 	private int contEmpateMoves = 0;
-	
-	
+
 	// CONSTRUTOR
 	public Game(ControllerGame controller, Player p1, Player p2) {
 		// RECEBE A INSTANCIA DO CONTROLLER
@@ -135,9 +135,7 @@ public class Game {
 							movimentosView.add(movimentos);
 						}
 					}
-					
-					
-					
+
 				}
 
 			} else {
@@ -168,8 +166,6 @@ public class Game {
 				}
 
 			}
-			
-
 
 		}
 
@@ -195,11 +191,10 @@ public class Game {
 
 		int maxCapture = 0;
 		Boolean noMoves = true;
-		
-		
+
 		possibleCaptureMovements.clear();
 		possibleNormalMovements.clear();
-		
+
 		for (Posicao[] lin : tabuleiro.getTabuleiro()) {
 			for (Posicao pos : lin) {
 				if (pos.getTemPeca()) {
@@ -224,13 +219,11 @@ public class Game {
 					}
 				}
 
-				if(possibleCaptureMovements.size() > 0 || possibleNormalMovements.size() > 0) {
+				if (possibleCaptureMovements.size() > 0 || possibleNormalMovements.size() > 0) {
 
 					noMoves = false;
 				}
 
-				
-				
 				possibleCaptureMovements.clear();
 				possibleNormalMovements.clear();
 				capturedPieces.clear();
@@ -239,26 +232,26 @@ public class Game {
 
 			}
 		}
-		if(possibleSelectedFields.size()> 0 ) {
+		if (possibleSelectedFields.size() > 0) {
 			sendObrigatedCaptureInfo();
 		}
-		
 
-		if(contEmpateMoves == 20) {
+		if (contEmpateMoves == 20) {
 			endGame(null, true);
 		}
-		if(noMoves == true) {
-			if(corDaVez == PieceColor.PRETO) {
-				endGame(PieceColor.BRANCO , false);
+
+		if (noMoves == true) {
+			if (corDaVez == PieceColor.PRETO) {
+				endGame(PieceColor.BRANCO, false);
 			} else {
 				endGame(PieceColor.PRETO, false);
-			}	
+			}
 		}
-		
-		
+
 	}
 
 	// COMANDO DE CAPTURAR PEÇA
+
 	private void capturePiece(Posicao origem, Posicao destino) {
 		contEmpateMoves = 0;
 		int capturedPieceX;
@@ -322,25 +315,23 @@ public class Game {
 		} else {
 			corDaVez = PieceColor.BRANCO;
 		}
-		
+
 		Boolean noMoves = true;
 		int maxCapture = 0;
-		
-		contBlackPieces=0;
-		contWhitePieces=0;
+
+		contBlackPieces = 0;
+		contWhitePieces = 0;
 
 		for (Posicao[] lin : tabuleiro.getTabuleiro()) {
 			for (Posicao pos : lin) {
 				if (pos.getTemPeca()) {
-					
-					if(pos.getPeca().getCor() == PieceColor.PRETO) {
+
+					if (pos.getPeca().getCor() == PieceColor.PRETO) {
 						contBlackPieces++;
-					}else {
+					} else {
 						contWhitePieces++;
 					}
-					
-					
-					
+
 					if (pos.getPeca().getCor() == corDaVez) {
 						selectedField = pos;
 
@@ -364,13 +355,10 @@ public class Game {
 					}
 				}
 
-				if(possibleCaptureMovements.size() > 0 || possibleNormalMovements.size() > 0) {
-					System.out.println("Caiu dentro");
+				if (possibleCaptureMovements.size() > 0 || possibleNormalMovements.size() > 0) {
 					noMoves = false;
 				}
 
-				
-				
 				possibleCaptureMovements.clear();
 				possibleNormalMovements.clear();
 				selectedField = null;
@@ -379,74 +367,63 @@ public class Game {
 
 			}
 		}
-		
-		
-		if(possibleSelectedFields.size()> 0 ) {
+
+		if (possibleSelectedFields.size() > 0) {
 			sendObrigatedCaptureInfo();
 		}
-		
-		
-		if(contBlackPieces == 0) {
+
+		if (contBlackPieces == 0) {
 			endGame(PieceColor.PRETO, false);
-		} else if(contWhitePieces == 0){
+		} else if (contWhitePieces == 0) {
 			endGame(PieceColor.BRANCO, false);
 		}
-		
-		if(noMoves == true) {
-			if(corDaVez == PieceColor.PRETO) {
-				endGame(PieceColor.BRANCO , false);
+
+		if (noMoves == true) {
+			if (corDaVez == PieceColor.PRETO) {
+				endGame(PieceColor.BRANCO, false);
 			} else {
 				endGame(PieceColor.PRETO, false);
-			}	
+			}
 		}
-		
-		
-		
 
 	}
-	
-	
-	
-	
 
 	private void endGame(PieceColor corVitoria, Boolean empate) {
-		
-		if(empate) {
+
+		if (empate) {
 			System.out.println("PARTIDA EMPATADA");
 			player1.setNumEmpates(1);
 			player2.setNumEmpates(1);
 			player1.setPontuation(1);
 			player2.setPontuation(1);
-			
+
 			controller.endGame(corVitoria, empate);
-			
+
 		} else {
 			System.out.println("O jogador da cor " + corVitoria + " Venceu");
-			
-			if(player1.getPieceColor() == corVitoria) {
+
+			if (player1.getPieceColor() == corVitoria) {
 				player1.setNumVitorias(1);
 				player1.setPontuation(3);
-				
-				
+
 				player2.setNumDerrotas(1);
-				
-						
+
 			} else {
 				player2.setNumVitorias(1);
 				player2.setPontuation(3);
 				player1.setNumDerrotas(1);
-				
+
 			}
 			controller.endGame(corVitoria, empate);
 		}
-		
+
 		PlayerDao.attUserData(player1);
 		PlayerDao.attUserData(player2);
 	}
 
 	private void sendObrigatedCaptureInfo() {
 		controller.sendObrigatedCaptureInfo(possibleSelectedFields);
-		
+
 	}
 
 	// FUNÇÃO QUE CHAMA AS VERIFICAÇÕES
@@ -592,8 +569,6 @@ public class Game {
 						else if (possibleCaptureMovements.get(0).getContCaptured() == list.get(contPos)
 								.getContCaptured() && !possibleCaptureMovements.contains(list.get(contPos))) {
 
-							System.out.println(
-									"CAI DENTRO DESSA PORRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 							possibleCaptureMovements.add(list.get(contPos));
 
 							List<Posicao> temp = new ArrayList<>();
@@ -817,8 +792,7 @@ public class Game {
 		return captureInfo;
 	}
 
-	void verifyCaptureMovementRigTop(Posicao originPiece, PieceColor cor, List<Posicao> captureInfo,
-			Posicao noVerify) {
+	void verifyCaptureMovementRigTop(Posicao originPiece, PieceColor cor, List<Posicao> captureInfo, Posicao noVerify) {
 
 		if (tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1].getTemPeca() == true
 				&& tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() - 1].getPeca().getCor() != cor) {
@@ -855,8 +829,7 @@ public class Game {
 		}
 	}
 
-	void verifyCaptureMovementLefTop(Posicao originPiece, PieceColor cor, List<Posicao> captureInfo,
-			Posicao noVerify) {
+	void verifyCaptureMovementLefTop(Posicao originPiece, PieceColor cor, List<Posicao> captureInfo, Posicao noVerify) {
 
 		if (tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1].getTemPeca() == true
 				&& tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() - 1].getPeca().getCor() != cor) {
@@ -896,8 +869,7 @@ public class Game {
 		}
 	}
 
-	void verifyCaptureMovementRigBot(Posicao originPiece, PieceColor cor, List<Posicao> captureInfo,
-			Posicao noVerify) {
+	void verifyCaptureMovementRigBot(Posicao originPiece, PieceColor cor, List<Posicao> captureInfo, Posicao noVerify) {
 		if (tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1].getTemPeca() == true
 				&& tabuleiro.getTabuleiro()[originPiece.getX() + 1][originPiece.getY() + 1].getPeca().getCor() != cor) {
 			if (tabuleiro.getTabuleiro()[originPiece.getX() + 2][originPiece.getY() + 2].getTemPeca() == false) {
@@ -935,8 +907,7 @@ public class Game {
 		}
 	}
 
-	void verifyCaptureMovementLefBot(Posicao originPiece, PieceColor cor, List<Posicao> captureInfo,
-			Posicao noVerify) {
+	void verifyCaptureMovementLefBot(Posicao originPiece, PieceColor cor, List<Posicao> captureInfo, Posicao noVerify) {
 		if (tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1].getTemPeca() == true
 				&& tabuleiro.getTabuleiro()[originPiece.getX() - 1][originPiece.getY() + 1].getPeca().getCor() != cor) {
 			if (tabuleiro.getTabuleiro()[originPiece.getX() - 2][originPiece.getY() + 2].getTemPeca() == false) {
@@ -967,15 +938,11 @@ public class Game {
 		}
 	}
 
-	
-	
-
 	public void desistir() {
 		if (corDaVez == PieceColor.BRANCO) {
-		endGame(PieceColor.PRETO, false);
-		
+			endGame(PieceColor.PRETO, false);
 		}
-		
+
 		else {
 			endGame(PieceColor.BRANCO, false);
 		}
