@@ -183,6 +183,9 @@ public class Game {
 		tabuleiro.movePiece(origem, destino);
 		// ZERANDO O VALOR O CAMPO SELECIONADO POIS O MOVIMENTO JA FOI REALIZADO
 		selectedField = null;
+		
+		
+		
 		if (corDaVez == PieceColor.BRANCO) {
 			corDaVez = PieceColor.PRETO;
 		} else {
@@ -373,12 +376,14 @@ public class Game {
 		}
 
 		if (contBlackPieces == 0) {
-			endGame(PieceColor.PRETO, false);
-		} else if (contWhitePieces == 0) {
+			
+			System.out.println("CAI DENTRO DASSA PORRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 			endGame(PieceColor.BRANCO, false);
+		} else if (contWhitePieces == 0) {
+			endGame(PieceColor.PRETO, false);
 		}
 
-		if (noMoves == true) {
+		else if (noMoves == true) {
 			if (corDaVez == PieceColor.PRETO) {
 				endGame(PieceColor.BRANCO, false);
 			} else {

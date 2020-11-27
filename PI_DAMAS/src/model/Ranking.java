@@ -16,8 +16,6 @@ public class Ranking {
 		
 		Collections.sort(players);
 		
-		
-		
 		int size = players.size() + 1;
 		
 		Object[][] tableData = new Object[size][5];
