@@ -7,6 +7,9 @@ import controller.ControllerGame;
 import model.dao.PlayerDao;
 
 public class Game {
+	
+	//ATRIBUTOS
+	
 	// INSTANCIA DO TABULEIRO
 	private Tabuleiro tabuleiro;
 
@@ -15,6 +18,8 @@ public class Game {
 
 	// ARRAY COM OS MOVIMENTOS NORMAIS POSSIVEIS
 	private List<Posicao> possibleNormalMovements = new ArrayList<>();
+	
+	
 	// ARRAY COM OS MOVIMENTOS DE CAPTURA POSSIVEIS
 
 	private List<Posicao> possibleCaptureMovements = new ArrayList<>();
@@ -25,8 +30,11 @@ public class Game {
 
 	private List<Posicao> possibleSelectedFields = new ArrayList<>();
 
+	
+	//INDICA O NUMERO DE PEÇAS BRANCAS
 	private int contWhitePieces;
 
+	//INDICA O NUMERO DE PEÇAS PRETAS
 	private int contBlackPieces;
 
 	// INSTANCIA DO CONTROLLER
@@ -41,6 +49,14 @@ public class Game {
 
 	private int contEmpateMoves = 0;
 
+	
+	
+	//--------------------------------------
+	
+	
+	
+	
+	
 	// CONSTRUTOR
 	public Game(ControllerGame controller, Player p1, Player p2) {
 		// RECEBE A INSTANCIA DO CONTROLLER
@@ -51,6 +67,9 @@ public class Game {
 		this.player1 = p1;
 		this.player2 = p2;
 	}
+	
+	
+	
 
 	// FUNCAO DISPARADA NO MOMENTO QUE O JOGADOR CLICA EM UM CAMPO
 	public List<Posicao> selectField(int x, int y) {
@@ -254,7 +273,6 @@ public class Game {
 	}
 
 	// COMANDO DE CAPTURAR PEÇA
-
 	private void capturePiece(Posicao origem, Posicao destino) {
 		contEmpateMoves = 0;
 		int capturedPieceX;
@@ -377,7 +395,6 @@ public class Game {
 
 		if (contBlackPieces == 0) {
 			
-			System.out.println("CAI DENTRO DASSA PORRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 			endGame(PieceColor.BRANCO, false);
 		} else if (contWhitePieces == 0) {
 			endGame(PieceColor.PRETO, false);
@@ -393,6 +410,9 @@ public class Game {
 
 	}
 
+	
+	
+	
 	private void endGame(PieceColor corVitoria, Boolean empate) {
 
 		if (empate) {
@@ -426,12 +446,21 @@ public class Game {
 		PlayerDao.attUserData(player2);
 	}
 
+	
+
+	
+	
 	private void sendObrigatedCaptureInfo() {
 		controller.sendObrigatedCaptureInfo(possibleSelectedFields);
 
 	}
 
 	// FUNÇÃO QUE CHAMA AS VERIFICAÇÕES
+	
+
+	
+	
+	
 	private void verifyPossibleMoviments() {
 		// REALIZA A VERIFICAÇÃO E SALVA NO ARRAY POSSIBLEMOVEMENTS OS MOVIMENTOS
 		// VALIDOS
@@ -630,6 +659,10 @@ public class Game {
 	}
 
 	// VERIFICAÇÃO DE MOVIMENTOS NORMAIS
+	
+
+	
+	
 	private void verifyNormalMovements() {
 
 		// VALIDAÇÃO PARA PEÇAS PRETAS
@@ -732,6 +765,11 @@ public class Game {
 
 	// VERIFICAÇÃO DE CAPTURA
 
+	
+
+	
+	
+	
 	private List<Posicao> verifyCaptureMovement(Posicao originPiece, PieceColor cor, Posicao noVerify) {
 		List<Posicao> captureInfo = new ArrayList<>();
 
@@ -943,6 +981,9 @@ public class Game {
 		}
 	}
 
+	
+
+	
 	public void desistir() {
 		if (corDaVez == PieceColor.BRANCO) {
 			endGame(PieceColor.PRETO, false);
